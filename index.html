@@ -345,12 +345,15 @@ ad.innerHTML+=`
 </div>`;
 });
 
+const loginBox = document.getElementById("loginBox");
+const adminPanel = document.getElementById("adminPanel");
+
 if(admin){
-loginBox.style.display="none";
-adminPanel.style.display="block";
+  loginBox.style.display = "none";
+  adminPanel.style.display = "block";
 }else{
-loginBox.style.display="block";
-adminPanel.style.display="none";
+  loginBox.style.display = "block";
+  adminPanel.style.display = "none";
 }
 
 }
@@ -390,7 +393,7 @@ save();
 
 }
 
-render();
+render()
 
 </script>
 
