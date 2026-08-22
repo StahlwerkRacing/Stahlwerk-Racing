@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stahlwerk Racing</title>
+<title>Stahlwerk Racing V4</title>
 
 <style>
 body{
@@ -14,33 +14,38 @@ body{
 }
 header{
     background:#222;
-    text-align:center;
     padding:25px;
+    text-align:center;
     border-bottom:4px solid #f7c600;
 }
-h1{color:#f7c600;}
+h1{color:#f7c600;margin:0;}
 nav{
     display:flex;
     justify-content:center;
-    gap:10px;
+    gap:8px;
     background:#1a1a1a;
     padding:10px;
+    flex-wrap:wrap;
 }
 nav button{
     background:#333;
     color:white;
     border:none;
-    padding:10px 18px;
+    padding:10px 15px;
     border-radius:8px;
     cursor:pointer;
+    font-weight:bold;
 }
-nav button:hover{background:#f7c600;color:#111;}
-section{padding:20px;display:none;}
+nav button:hover{
+    background:#f7c600;
+    color:#111;
+}
+section{display:none;padding:20px;}
 section.active{display:block;}
 .card{
     background:#222;
-    padding:15px;
     border-radius:12px;
+    padding:15px;
     margin-bottom:15px;
 }
 input,select{
@@ -50,20 +55,32 @@ input,select{
     border:none;
     border-radius:8px;
 }
-button.main{
+.main{
     width:100%;
+    padding:12px;
     background:#f7c600;
     color:#111;
     border:none;
-    padding:12px;
     border-radius:8px;
     font-weight:bold;
+    cursor:pointer;
 }
 .driver{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     background:#333;
     padding:10px;
     border-radius:8px;
     margin-top:8px;
+}
+.small{
+    background:#c62828;
+    color:white;
+    border:none;
+    padding:6px 8px;
+    border-radius:6px;
+    cursor:pointer;
 }
 table{
     width:100%;
@@ -72,8 +89,15 @@ table{
 th,td{
     padding:10px;
     border-bottom:1px solid #444;
+    text-align:left;
 }
 th{color:#f7c600;}
+.notice{
+    background:#3b3000;
+    padding:10px;
+    border-radius:8px;
+    color:#ffe082;
+}
 </style>
 </head>
 
@@ -81,7 +105,7 @@ th{color:#f7c600;}
 
 <header>
 <h1>🏁 Stahlwerk Racing</h1>
-<p>GT7 SimRacing Team</p>
+<p>GT7 Endurance League</p>
 </header>
 
 <nav>
@@ -89,22 +113,29 @@ th{color:#f7c600;}
 <button onclick="show('anmeldung')">Anmeldung</button>
 <button onclick="show('fahrer')">Fahrer</button>
 <button onclick="show('tabelle')">Tabelle</button>
+<button onclick="show('admin')">Admin</button>
 </nav>
 
 <section id="start" class="active">
 <div class="card">
-<h2>Willkommen!</h2>
-<p>Offizielle Website von Stahlwerk Racing.</p>
-<p><b>Nächster Lauf:</b> Nürburgring • Samstag 20:00</p>
+<h2>Willkommen</h2>
+<p>Nächster Lauf: Nürburgring • Samstag 20:00</p>
 </div>
 </section>
 
 <section id="anmeldung">
 <div class="card">
-<h2>Für einen Cup anmelden</h2>
+<h2>Fahrer anmelden</h2>
 
 <input id="name" placeholder="PSN Name">
 <input id="nr" type="number" placeholder="Startnummer">
+
+<select id="car">
+<option>BMW M6 GT3</option>
+<option>Porsche GT3 R</option>
+<option>Mercedes AMG GT3</option>
+<option>Audi R8 LMS</option>
+</select>
 
 <select id="cup">
 <option>Unter der Woche</option>
@@ -112,14 +143,15 @@ th{color:#f7c600;}
 <option>Sonntag</option>
 </select>
 
-<button class="main" onclick="anmelden()">Eintragen</button>
+<button class="main" onclick="register()">Eintragen</button>
+
 </div>
 </section>
 
 <section id="fahrer">
 <div class="card">
-<h2>Fahrerliste</h2>
-<div id="liste"></div>
+<h2>Fahrer</h2>
+<div id="driverList"></div>
 </div>
 </section>
 
@@ -134,13 +166,50 @@ th{color:#f7c600;}
 <th>Punkte</th>
 </tr>
 </thead>
-<tbody id="punkte"></tbody>
+<tbody id="tableBody"></tbody>
 </table>
 </div>
 </section>
 
+<section id="admin">
+
+<div id="loginBox" class="card">
+<div class="notice">Admin Login</div>
+<input id="pw" type="password" placeholder="Passwort">
+<button class="main" onclick="login()">Einloggen</button>
+</div>
+
+<div id="adminPanel" style="display:none;">
+
+<div class="card">
+<h2>🏆 Punkte vergeben</h2>
+
+<select id="driverSelect"></select>
+
+<input id="pts" type="number" placeholder="25">
+
+<button class="main" onclick="givePoints()">Punkte vergeben</button>
+</div>
+
+<div class="card">
+<h2>🗑 Fahrer löschen</h2>
+<div id="adminDrivers"></div>
+</div>
+
+</div>
+
+</section>
+
 <script>
-let fahrer=[];
+const PASSWORD="stahlwerk26";
+
+let drivers=JSON.parse(localStorage.getItem("stahlwerkDrivers")||"[]");
+let admin=false;
+
+function save(){
+localStorage.setItem("stahlwerkDrivers",JSON.stringify(drivers));
+render();
+}
 
 function show(id){
 document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
@@ -148,52 +217,122 @@ document.getElementById(id).classList.add("active");
 render();
 }
 
-function anmelden(){
-const n=document.getElementById("name").value;
-const nr=document.getElementById("nr").value;
-const cup=document.getElementById("cup").value;
+function register(){
 
-if(n=="") return;
+const d={
+name:name.value.trim(),
+nr:nr.value,
+car:car.value,
+cup:cup.value,
+points:0
+};
 
-fahrer.push({
-name:n,
-nr:nr,
-cup:cup,
-punkte:0
-});
+if(d.name=="") return;
 
-document.getElementById("name").value="";
-document.getElementById("nr").value="";
+drivers.push(d);
 
+name.value="";
+nr.value="";
+
+save();
 show("fahrer");
 }
 
 function render(){
-let l=document.getElementById("liste");
-l.innerHTML="";
 
-fahrer.forEach(f=>{
-l.innerHTML+=`
+let list=document.getElementById("driverList");
+list.innerHTML="";
+
+drivers.forEach(d=>{
+list.innerHTML+=`
 <div class="driver">
-<b>#${f.nr} ${f.name}</b><br>
-${f.cup}
+<div>
+<b>#${d.nr} ${d.name}</b><br>
+<small>${d.car} • ${d.cup}</small>
+</div>
+<div>${d.points} P</div>
 </div>`;
 });
 
-let p=document.getElementById("punkte");
-p.innerHTML="";
+let body=document.getElementById("tableBody");
+body.innerHTML="";
 
-fahrer.sort((a,b)=>b.punkte-a.punkte);
+let sorted=[...drivers].sort((a,b)=>b.points-a.points);
 
-fahrer.forEach((f,i)=>{
-p.innerHTML+=`
+sorted.forEach((d,i)=>{
+body.innerHTML+=`
 <tr>
 <td>${i+1}</td>
-<td>#${f.nr} ${f.name}</td>
-<td>${f.punkte}</td>
+<td>#${d.nr} ${d.name}</td>
+<td>${d.points}</td>
 </tr>`;
 });
+
+let sel=document.getElementById("driverSelect");
+sel.innerHTML="";
+
+drivers.forEach((d,i)=>{
+sel.innerHTML+=`<option value="${i}">#${d.nr} ${d.name}</option>`;
+});
+
+let ad=document.getElementById("adminDrivers");
+ad.innerHTML="";
+
+drivers.forEach((d,i)=>{
+ad.innerHTML+=`
+<div class="driver">
+<span>#${d.nr} ${d.name}</span>
+<button class="small" onclick="removeDriver(${i})">Löschen</button>
+</div>`;
+});
+
+if(admin){
+loginBox.style.display="none";
+adminPanel.style.display="block";
+}else{
+loginBox.style.display="block";
+adminPanel.style.display="none";
 }
+
+}
+
+function login(){
+
+if(pw.value===PASSWORD){
+admin=true;
+render();
+}else{
+alert("Falsches Passwort");
+}
+
+}
+
+function givePoints(){
+
+let i=driverSelect.value;
+let p=Number(pts.value);
+
+if(isNaN(p)) return;
+
+drivers[i].points+=p;
+
+pts.value="";
+
+save();
+
+}
+
+function removeDriver(i){
+
+if(confirm("Fahrer löschen?")){
+drivers.splice(i,1);
+save();
+}
+
+}
+
+render();
+
 </script>
 
 </body>
