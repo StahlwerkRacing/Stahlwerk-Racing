@@ -277,25 +277,24 @@ render();
 
 function register(){
 
-const d={
-name:name.value.trim(),
-nr:nr.value,
-car:car.value,
-cup:cup.value,
-points:0
-};
+  const d = {
+    name: document.getElementById("name").value.trim(),
+    nr: document.getElementById("nr").value,
+    car: document.getElementById("car").value,
+    cup: document.getElementById("cup").value,
+    points: 0
+  };
 
-if(d.name=="") return;
+  if(d.name === "") return;
 
-drivers.push(d);
+  drivers.push(d);
 
-name.value="";
-nr.value="";
+  document.getElementById("name").value = "";
+  document.getElementById("nr").value = "";
 
-save();
-show("fahrer");
+  save();
+  show("fahrer");
 }
-
 
 
 function render(){
