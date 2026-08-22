@@ -296,6 +296,17 @@ save();
 show("fahrer");
 }
 
+if(d.name=="") return;
+
+drivers.push(d);
+
+name.value="";
+nr.value="";
+
+save();
+show("fahrer");
+}
+
 function render(){
 
 let list=document.getElementById("driverList");
