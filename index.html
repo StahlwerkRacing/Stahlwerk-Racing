@@ -3,22 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Stahlwerk Racing V4</title>
 
 <style>
+
 body{
     margin:0;
     font-family:Arial,Helvetica,sans-serif;
     background:#111;
     color:white;
 }
+
 header{
     background:#222;
     padding:25px;
     text-align:center;
     border-bottom:4px solid #f7c600;
 }
-h1{color:#f7c600;margin:0;}
+
+h1{
+    color:#f7c600;
+    margin:0;
+}
+
 nav{
     display:flex;
     justify-content:center;
@@ -27,6 +35,7 @@ nav{
     padding:10px;
     flex-wrap:wrap;
 }
+
 nav button{
     background:#333;
     color:white;
@@ -36,25 +45,37 @@ nav button{
     cursor:pointer;
     font-weight:bold;
 }
+
 nav button:hover{
     background:#f7c600;
     color:#111;
 }
-section{display:none;padding:20px;}
-section.active{display:block;}
+
+section{
+    display:none;
+    padding:20px;
+}
+
+section.active{
+    display:block;
+}
+
 .card{
     background:#222;
     border-radius:12px;
     padding:15px;
     margin-bottom:15px;
 }
+
 input,select{
     width:100%;
     padding:10px;
     margin:8px 0;
     border:none;
     border-radius:8px;
+    box-sizing:border-box;
 }
+
 .main{
     width:100%;
     padding:12px;
@@ -65,15 +86,21 @@ input,select{
     font-weight:bold;
     cursor:pointer;
 }
+
+.main:hover{
+    background:#ffd83d;
+}
+
 .driver{
     display:flex;
     justify-content:space-between;
     align-items:center;
     background:#333;
-    padding:10px;
+    padding:12px;
     border-radius:8px;
     margin-top:8px;
 }
+
 .small{
     background:#c62828;
     color:white;
@@ -82,324 +109,1196 @@ input,select{
     border-radius:6px;
     cursor:pointer;
 }
+
+.small:hover{
+    background:#e53935;
+}
+
 table{
     width:100%;
     border-collapse:collapse;
 }
+
 th,td{
     padding:10px;
     border-bottom:1px solid #444;
     text-align:left;
 }
-th{color:#f7c600;}
+
+th{
+    color:#f7c600;
+}
+
 .notice{
     background:#3b3000;
     padding:10px;
     border-radius:8px;
     color:#ffe082;
 }
+
+.loading{
+    text-align:center;
+    color:#aaa;
+    padding:20px;
+}
+
+.empty{
+    text-align:center;
+    color:#aaa;
+    padding:20px;
+}
+
+.error{
+    background:#4a1515;
+    color:#ffb3b3;
+    padding:12px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+.success{
+    background:#164d20;
+    color:#b8ffbf;
+    padding:12px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
 </style>
 </head>
 
 <body>
 
+
 <header>
+
 <h1>🏁 Stahlwerk Racing</h1>
+
 <p>GT7 Endurance League</p>
+
 </header>
 
+
 <nav>
-<button onclick="show('start')">Start</button>
-<button onclick="show('anmeldung')">Anmeldung</button>
-<button onclick="show('fahrer')">Fahrer</button>
-<button onclick="show('tabelle')">Tabelle</button>
-<button onclick="show('admin')">Admin</button>
+
+<button onclick="show('start')">
+Start
+</button>
+
+<button onclick="show('anmeldung')">
+Anmeldung
+</button>
+
+<button onclick="show('fahrer')">
+Fahrer
+</button>
+
+<button onclick="show('tabelle')">
+Tabelle
+</button>
+
+<button onclick="show('admin')">
+Admin
+</button>
+
 </nav>
 
+
+<!-- =========================
+     START
+========================= -->
+
 <section id="start" class="active">
+
 <div class="card">
+
 <h2>Willkommen</h2>
 
-<p>Nächster Lauf: Nürburgring • Samstag 20:00</p>
+<p>
+Nächster Lauf: Nürburgring • Samstag 20:00
+</p>
 
-<button class="main" onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
+<button
+class="main"
+onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
+
 💬 Discord beitreten
+
 </button>
 
 </div>
+
 </section>
 
-<section id="anmeldung">
-<div class="card">
-<h2>Fahrer anmelden</h2>
 
-<input id="name" placeholder="PSN Name">
-<input id="nr" type="number" placeholder="Startnummer">
+<!-- =========================
+     ANMELDUNG
+========================= -->
+
+<section id="anmeldung">
+
+<div class="card">
+
+<h2>🏎️ Fahrer anmelden</h2>
+
+<input
+id="name"
+placeholder="PSN Name">
+
+<input
+id="nr"
+type="number"
+placeholder="Startnummer">
+
 
 <select id="car">
-  <optgroup label="Gr.3">
-    <option>Alfa Romeo 4C Gr.3</option>
-    <option>Aston Martin DBR9 GT1</option>
-    <option>Aston Martin V12 Vantage Gr.3</option>
-    <option>Audi R8 LMS Evo Gr.3</option>
-    <option>BMW M3 GT</option>
-    <option>BMW M6 GT3</option>
-    <option>Chevrolet Corvette C7 Gr.3</option>
-    <option>Ferrari 458 Italia GT3</option>
-    <option>Ferrari 488 GT3</option>
-    <option>Ferrari 296 GT3</option>
-    <option>Ford GT LM Spec II</option>
-    <option>Genesis X GR3</option>
-    <option>Honda NSX Gr.3</option>
-    <option>Jaguar F-Type Gr.3</option>
-    <option>Lamborghini Huracán GT3</option>
-    <option>Lexus RC F GT3</option>
-    <option>McLaren 650S GT3</option>
-    <option>Mercedes-AMG GT3</option>
-    <option>Nissan GT-R NISMO GT3</option>
-    <option>Peugeot RCZ Gr.3</option>
-    <option>Porsche 911 RSR (991)</option>
-    <option>Renault R.S.01 GT3</option>
-    <option>Subaru BRZ GT300</option>
-    <option>Suzuki Vision Gr.3</option>
-    <option>Toyota GR Supra Racing Concept</option>
-    <option>Volkswagen Beetle Gr.3</option>
-  </optgroup>
 
-  <optgroup label="Gr.2">
-    <option>Honda NSX GT500 '16</option>
-    <option>Lexus RC F GT500 '16</option>
-    <option>Nissan GT-R GT500 '16</option>
-  </optgroup>
+<optgroup label="Gr.3">
 
-  <optgroup label="Gr.1">
-    <option>Toyota GR010 Hybrid</option>
-    <option>Toyota TS050 Hybrid</option>
-    <option>Porsche 919 Hybrid</option>
-    <option>Audi R18 TDI</option>
-    <option>Peugeot 908 HDi FAP</option>
-    <option>Mazda 787B</option>
-    <option>Sauber Mercedes C9</option>
-  </optgroup>
+<option>Alfa Romeo 4C Gr.3</option>
+<option>Aston Martin DBR9 GT1</option>
+<option>Aston Martin V12 Vantage Gr.3</option>
+<option>Audi R8 LMS Evo Gr.3</option>
+<option>BMW M3 GT</option>
+<option>BMW M6 GT3</option>
+<option>Chevrolet Corvette C7 Gr.3</option>
+<option>Ferrari 458 Italia GT3</option>
+<option>Ferrari 488 GT3</option>
+<option>Ferrari 296 GT3</option>
+<option>Ford GT LM Spec II</option>
+<option>Genesis X GR3</option>
+<option>Honda NSX Gr.3</option>
+<option>Jaguar F-Type Gr.3</option>
+<option>Lamborghini Huracán GT3</option>
+<option>Lexus RC F GT3</option>
+<option>McLaren 650S GT3</option>
+<option>Mercedes-AMG GT3</option>
+<option>Nissan GT-R NISMO GT3</option>
+<option>Peugeot RCZ Gr.3</option>
+<option>Porsche 911 RSR (991)</option>
+<option>Renault R.S.01 GT3</option>
+<option>Subaru BRZ GT300</option>
+<option>Suzuki Vision Gr.3</option>
+<option>Toyota GR Supra Racing Concept</option>
+<option>Volkswagen Beetle Gr.3</option>
 
-  <optgroup label="Gr.4">
-    <option>Alfa Romeo 4C Gr.4</option>
-    <option>Audi TT Cup</option>
-    <option>BMW M4 Gr.4</option>
-    <option>Bugatti Veyron Gr.4</option>
-    <option>Chevrolet Corvette Gr.4</option>
-    <option>Ferrari 458 Gr.4</option>
-    <option>Ford Mustang Gr.4</option>
-    <option>Jaguar F-Type Gr.4</option>
-    <option>Lamborghini Huracán Gr.4</option>
-    <option>McLaren 650S Gr.4</option>
-    <option>Mercedes-AMG SLS Gr.4</option>
-    <option>Nissan GT-R Gr.4</option>
-    <option>Porsche Cayman GT4 Clubsport</option>
-    <option>Subaru WRX Gr.4</option>
-    <option>Toyota GR Supra Gr.4</option>
-  </optgroup>
+</optgroup>
+
+
+<optgroup label="Gr.2">
+
+<option>Honda NSX GT500 '16</option>
+<option>Lexus RC F GT500 '16</option>
+<option>Nissan GT-R GT500 '16</option>
+
+</optgroup>
+
+
+<optgroup label="Gr.1">
+
+<option>Toyota GR010 Hybrid</option>
+<option>Toyota TS050 Hybrid</option>
+<option>Porsche 919 Hybrid</option>
+<option>Audi R18 TDI</option>
+<option>Peugeot 908 HDi FAP</option>
+<option>Mazda 787B</option>
+<option>Sauber Mercedes C9</option>
+
+</optgroup>
+
+
+<optgroup label="Gr.4">
+
+<option>Alfa Romeo 4C Gr.4</option>
+<option>Audi TT Cup</option>
+<option>BMW M4 Gr.4</option>
+<option>Bugatti Veyron Gr.4</option>
+<option>Chevrolet Corvette Gr.4</option>
+<option>Ferrari 458 Gr.4</option>
+<option>Ford Mustang Gr.4</option>
+<option>Jaguar F-Type Gr.4</option>
+<option>Lamborghini Huracán Gr.4</option>
+<option>McLaren 650S Gr.4</option>
+<option>Mercedes-AMG SLS Gr.4</option>
+<option>Nissan GT-R Gr.4</option>
+<option>Porsche Cayman GT4 Clubsport</option>
+<option>Subaru WRX Gr.4</option>
+<option>Toyota GR Supra Gr.4</option>
+
+</optgroup>
+
 </select>
 
+
 <select id="cup">
+
 <option>Unter der Woche</option>
 <option>Samstag</option>
 <option>Sonntag</option>
+
 </select>
 
-<button class="main" onclick="register()">Eintragen</button>
+
+<button
+class="main"
+onclick="register()">
+
+Eintragen
+
+</button>
+
+<div id="registerMessage"></div>
 
 </div>
+
 </section>
+
+
+<!-- =========================
+     FAHRER
+========================= -->
 
 <section id="fahrer">
+
 <div class="card">
-<h2>Fahrer</h2>
-<div id="driverList"></div>
+
+<h2>🏎️ Fahrer</h2>
+
+<div id="driverList">
+
+<div class="loading">
+Fahrer werden geladen...
 </div>
+
+</div>
+
+</div>
+
 </section>
 
+
+<!-- =========================
+     TABELLE
+========================= -->
+
 <section id="tabelle">
+
 <div class="card">
-<h2>Meisterschaft</h2>
+
+<h2>🏆 Meisterschaft</h2>
+
 <table>
+
 <thead>
+
 <tr>
+
 <th>Platz</th>
 <th>Fahrer</th>
 <th>Punkte</th>
+
 </tr>
+
 </thead>
-<tbody id="tableBody"></tbody>
+
+<tbody id="tableBody">
+
+</tbody>
+
 </table>
+
 </div>
+
 </section>
+
+
+<!-- =========================
+     ADMIN
+========================= -->
 
 <section id="admin">
 
+
 <div id="loginBox" class="card">
-<div class="notice">Admin Login</div>
-<input id="pw" type="password" placeholder="Passwort">
-<button class="main" onclick="login()">Einloggen</button>
+
+<div class="notice">
+
+Admin Login
+
 </div>
 
-<div id="adminPanel" style="display:none;">
+<input
+id="pw"
+type="password"
+placeholder="Passwort">
+
+<button
+class="main"
+onclick="login()">
+
+Einloggen
+
+</button>
+
+</div>
+
+
+<div
+id="adminPanel"
+style="display:none;">
+
 
 <div class="card">
+
 <h2>🏆 Punkte vergeben</h2>
 
 <select id="driverSelect"></select>
 
-<input id="pts" type="number" placeholder="25">
+<input
+id="pts"
+type="number"
+placeholder="Punkte">
 
-<button class="main" onclick="givePoints()">Punkte vergeben</button>
+<button
+class="main"
+onclick="givePoints()">
+
+Punkte vergeben
+
+</button>
+
+<div id="pointsMessage"></div>
+
 </div>
+
 
 <div class="card">
-<h2>🗑 Fahrer löschen</h2>
+
+<h2>🗑️ Fahrer löschen</h2>
+
 <div id="adminDrivers"></div>
+
 </div>
+
 
 </div>
 
 </section>
 
+
 <script>
-const PASSWORD="stahlwerk26";
 
-let drivers=JSON.parse(localStorage.getItem("stahlwerkDrivers")||"[]");
-let admin=false;
+/* ==================================================
+   SUPABASE EINSTELLUNGEN
+================================================== */
 
-function save(){
-localStorage.setItem("stahlwerkDrivers",JSON.stringify(drivers));
-render();
+const SUPABASE_URL =
+"https://apvstlhttuaeenqdcrtk.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_2CZK_bsj_HSMLlSax9eAGQ_xWF90ibr";
+
+
+/* ==================================================
+   ADMIN PASSWORT
+================================================== */
+
+const PASSWORD =
+"stahlwerk26";
+
+
+/* ==================================================
+   VARIABLEN
+================================================== */
+
+let drivers = [];
+
+let admin = false;
+
+
+/* ==================================================
+   SUPABASE ANFRAGE
+================================================== */
+
+async function supabaseRequest(
+    url,
+    options = {}
+){
+
+    options.headers = {
+
+        "apikey": SUPABASE_KEY,
+
+        "Authorization":
+        "Bearer " + SUPABASE_KEY,
+
+        "Content-Type":
+        "application/json",
+
+        ...(options.headers || {})
+
+    };
+
+    return await fetch(
+        url,
+        options
+    );
 }
+
+
+/* ==================================================
+   FAHRER LADEN
+================================================== */
+
+async function loadDrivers(){
+
+    try{
+
+        const response =
+        await supabaseRequest(
+            SUPABASE_URL +
+            "/rest/v1/drivers?select=*&order=id.asc"
+        );
+
+
+        if(!response.ok){
+
+            const error =
+            await response.text();
+
+            console.error(error);
+
+            document.getElementById(
+                "driverList"
+            ).innerHTML =
+
+            `<div class="error">
+            Fahrer konnten nicht geladen werden.
+            </div>`;
+
+            return;
+        }
+
+
+        drivers =
+        await response.json();
+
+
+        render();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        document.getElementById(
+            "driverList"
+        ).innerHTML =
+
+        `<div class="error">
+        Keine Verbindung zur Datenbank.
+        </div>`;
+
+    }
+
+}
+
+
+/* ==================================================
+   FAHRER REGISTRIEREN
+================================================== */
+
+async function register(){
+
+    const name =
+    document.getElementById(
+        "name"
+    ).value.trim();
+
+
+    const nummer =
+    document.getElementById(
+        "nr"
+    ).value;
+
+
+    const auto =
+    document.getElementById(
+        "car"
+    ).value;
+
+
+    const cup =
+    document.getElementById(
+        "cup"
+    ).value;
+
+
+    const message =
+    document.getElementById(
+        "registerMessage"
+    );
+
+
+    if(name === ""){
+
+        message.innerHTML =
+        `<div class="error">
+        Bitte einen PSN Namen eingeben.
+        </div>`;
+
+        return;
+
+    }
+
+
+    if(nummer === ""){
+
+        message.innerHTML =
+        `<div class="error">
+        Bitte eine Startnummer eingeben.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const data = {
+
+        name: name,
+
+        nummer: Number(nummer),
+
+        auto: auto,
+
+        cup: cup,
+
+        points: 0
+
+    };
+
+
+    try{
+
+        const response =
+        await supabaseRequest(
+
+            SUPABASE_URL +
+            "/rest/v1/drivers",
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Prefer":
+                    "return=minimal"
+
+                },
+
+                body:
+                JSON.stringify(data)
+
+            }
+
+        );
+
+
+        if(!response.ok){
+
+            const error =
+            await response.text();
+
+            console.error(error);
+
+            message.innerHTML =
+            `<div class="error">
+            Fahrer konnte nicht eingetragen werden.
+            </div>`;
+
+            return;
+
+        }
+
+
+        message.innerHTML =
+        `<div class="success">
+        ✅ Fahrer erfolgreich eingetragen!
+        </div>`;
+
+
+        document.getElementById(
+            "name"
+        ).value = "";
+
+
+        document.getElementById(
+            "nr"
+        ).value = "";
+
+
+        await loadDrivers();
+
+
+        setTimeout(
+            function(){
+
+                show("fahrer");
+
+            },
+            500
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        message.innerHTML =
+        `<div class="error">
+        Fehler bei der Verbindung zur Datenbank.
+        </div>`;
+
+    }
+
+}
+
+
+/* ==================================================
+   SEITEN WECHSELN
+================================================== */
 
 function show(id){
-document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-render();
+
+    document
+    .querySelectorAll("section")
+    .forEach(
+        function(section){
+
+            section.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    document
+    .getElementById(id)
+    .classList.add("active");
+
+
+    render();
+
 }
 
-function register(){
 
-  const d = {
-    name: document.getElementById("name").value.trim(),
-    nr: document.getElementById("nr").value,
-    car: document.getElementById("car").value,
-    cup: document.getElementById("cup").value,
-    points: 0
-  };
-
-  if(d.name === "") return;
-
-  drivers.push(d);
-
-  document.getElementById("name").value = "";
-  document.getElementById("nr").value = "";
-
-  save();
-  show("fahrer");
-}
-
+/* ==================================================
+   WEBSITE RENDERN
+================================================== */
 
 function render(){
 
-let list=document.getElementById("driverList");
-list.innerHTML="";
 
-drivers.forEach(d=>{
-list.innerHTML+=`
-<div class="driver">
-<div>
-<b>#${d.nr} ${d.name}</b><br>
-<small>${d.car} • ${d.cup}</small>
-</div>
-<div>${d.points} P</div>
-</div>`;
-});
+    /* FAHRER */
 
-let body=document.getElementById("tableBody");
-body.innerHTML="";
+    const list =
+    document.getElementById(
+        "driverList"
+    );
 
-let sorted=[...drivers].sort((a,b)=>b.points-a.points);
 
-sorted.forEach((d,i)=>{
-body.innerHTML+=`
-<tr>
-<td>${i+1}</td>
-<td>#${d.nr} ${d.name}</td>
-<td>${d.points}</td>
-</tr>`;
-});
+    if(drivers.length === 0){
 
-let sel=document.getElementById("driverSelect");
-sel.innerHTML="";
+        list.innerHTML =
+        `<div class="empty">
+        Noch keine Fahrer angemeldet.
+        </div>`;
 
-drivers.forEach((d,i)=>{
-sel.innerHTML+=`<option value="${i}">#${d.nr} ${d.name}</option>`;
-});
+    }
 
-let ad=document.getElementById("adminDrivers");
-ad.innerHTML="";
+    else{
 
-drivers.forEach((d,i)=>{
-ad.innerHTML+=`
-<div class="driver">
-<span>#${d.nr} ${d.name}</span>
-<button class="small" onclick="removeDriver(${i})">Löschen</button>
-</div>`;
-});
+        list.innerHTML = "";
 
-const loginBox = document.getElementById("loginBox");
-const adminPanel = document.getElementById("adminPanel");
 
-if(admin){
-  loginBox.style.display = "none";
-  adminPanel.style.display = "block";
-}else{
-  loginBox.style.display = "block";
-  adminPanel.style.display = "none";
+        drivers.forEach(
+            function(driver){
+
+                list.innerHTML += `
+
+                <div class="driver">
+
+                    <div>
+
+                        <b>
+                        #${driver.nummer}
+                        ${escapeHTML(driver.name)}
+                        </b>
+
+                        <br>
+
+                        <small>
+                        ${escapeHTML(driver.auto)}
+                        •
+                        ${escapeHTML(driver.cup)}
+                        </small>
+
+                    </div>
+
+                    <div>
+                        ${driver.points || 0} P
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    /* MEISTERSCHAFT */
+
+    const body =
+    document.getElementById(
+        "tableBody"
+    );
+
+
+    body.innerHTML = "";
+
+
+    const sorted =
+    [...drivers].sort(
+        function(a,b){
+
+            return Number(
+                b.points || 0
+            )
+            -
+            Number(
+                a.points || 0
+            );
+
+        }
+    );
+
+
+    sorted.forEach(
+        function(driver,index){
+
+            body.innerHTML += `
+
+            <tr>
+
+                <td>
+                ${index + 1}
+                </td>
+
+                <td>
+                #${driver.nummer}
+                ${escapeHTML(driver.name)}
+                </td>
+
+                <td>
+                ${driver.points || 0}
+                </td>
+
+            </tr>
+
+            `;
+
+        }
+    );
+
+
+    /* ADMIN AUSWAHL */
+
+    const select =
+    document.getElementById(
+        "driverSelect"
+    );
+
+
+    select.innerHTML = "";
+
+
+    drivers.forEach(
+        function(driver,index){
+
+            select.innerHTML += `
+
+            <option value="${index}">
+
+            #${driver.nummer}
+            ${escapeHTML(driver.name)}
+
+            </option>
+
+            `;
+
+        }
+    );
+
+
+    /* ADMIN LÖSCHEN */
+
+    const adminDrivers =
+    document.getElementById(
+        "adminDrivers"
+    );
+
+
+    adminDrivers.innerHTML = "";
+
+
+    if(drivers.length === 0){
+
+        adminDrivers.innerHTML =
+        `<div class="empty">
+        Keine Fahrer vorhanden.
+        </div>`;
+
+    }
+
+
+    drivers.forEach(
+        function(driver,index){
+
+            adminDrivers.innerHTML += `
+
+            <div class="driver">
+
+                <span>
+
+                #${driver.nummer}
+                ${escapeHTML(driver.name)}
+
+                </span>
+
+
+                <button
+                class="small"
+                onclick="removeDriver(${index})">
+
+                Löschen
+
+                </button>
+
+            </div>
+
+            `;
+
+        }
+    );
+
+
+    /* ADMIN PANEL */
+
+    const loginBox =
+    document.getElementById(
+        "loginBox"
+    );
+
+
+    const adminPanel =
+    document.getElementById(
+        "adminPanel"
+    );
+
+
+    if(admin){
+
+        loginBox.style.display =
+        "none";
+
+        adminPanel.style.display =
+        "block";
+
+    }
+
+    else{
+
+        loginBox.style.display =
+        "block";
+
+        adminPanel.style.display =
+        "none";
+
+    }
+
 }
 
+
+/* ==================================================
+   HTML SICHER MACHEN
+================================================== */
+
+function escapeHTML(text){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+    div.textContent =
+    text ?? "";
+
+    return div.innerHTML;
+
 }
+
+
+/* ==================================================
+   ADMIN LOGIN
+================================================== */
 
 function login(){
 
-if(pw.value===PASSWORD){
-admin=true;
-render();
-}else{
-alert("Falsches Passwort");
-}
+    const password =
+    document.getElementById(
+        "pw"
+    ).value;
+
+
+    if(password === PASSWORD){
+
+        admin = true;
+
+        render();
+
+    }
+
+    else{
+
+        alert(
+            "Falsches Passwort"
+        );
+
+    }
 
 }
 
-function givePoints(){
 
-let i=driverSelect.value;
-let p=Number(pts.value);
+/* ==================================================
+   PUNKTE VERGEBEN
+================================================== */
 
-if(isNaN(p)) return;
+async function givePoints(){
 
-drivers[i].points+=p;
+    const index =
+    document.getElementById(
+        "driverSelect"
+    ).value;
 
-pts.value="";
 
-save();
+    const points =
+    Number(
+        document.getElementById(
+            "pts"
+        ).value
+    );
+
+
+    const driver =
+    drivers[index];
+
+
+    const message =
+    document.getElementById(
+        "pointsMessage"
+    );
+
+
+    if(!driver){
+
+        return;
+
+    }
+
+
+    if(isNaN(points)){
+
+        message.innerHTML =
+        `<div class="error">
+        Bitte eine Punktzahl eingeben.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const newPoints =
+    Number(
+        driver.points || 0
+    )
+    +
+    points;
+
+
+    try{
+
+        const response =
+        await supabaseRequest(
+
+            SUPABASE_URL +
+            "/rest/v1/drivers?id=eq." +
+            driver.id,
+
+            {
+
+                method:"PATCH",
+
+                body:
+                JSON.stringify({
+
+                    points:
+                    newPoints
+
+                })
+
+            }
+
+        );
+
+
+        if(!response.ok){
+
+            console.error(
+                await response.text()
+            );
+
+            message.innerHTML =
+            `<div class="error">
+            Punkte konnten nicht gespeichert werden.
+            </div>`;
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "pts"
+        ).value = "";
+
+
+        message.innerHTML =
+        `<div class="success">
+        ✅ Punkte gespeichert!
+        </div>`;
+
+
+        await loadDrivers();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        message.innerHTML =
+        `<div class="error">
+        Fehler beim Speichern.
+        </div>`;
+
+    }
 
 }
 
-function removeDriver(i){
 
-if(confirm("Fahrer löschen?")){
-drivers.splice(i,1);
-save();
+/* ==================================================
+   FAHRER LÖSCHEN
+================================================== */
+
+async function removeDriver(index){
+
+    const driver =
+    drivers[index];
+
+
+    if(!driver){
+
+        return;
+
+    }
+
+
+    if(
+        !confirm(
+            "Fahrer wirklich löschen?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+        await supabaseRequest(
+
+            SUPABASE_URL +
+            "/rest/v1/drivers?id=eq." +
+            driver.id,
+
+            {
+
+                method:"DELETE"
+
+            }
+
+        );
+
+
+        if(!response.ok){
+
+            console.error(
+                await response.text()
+            );
+
+            alert(
+                "Fahrer konnte nicht gelöscht werden."
+            );
+
+            return;
+
+        }
+
+
+        await loadDrivers();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Fehler beim Löschen."
+        );
+
+    }
+
 }
 
-}
 
-render()
+/* ==================================================
+   START
+================================================== */
+
+loadDrivers();
 
 </script>
 
