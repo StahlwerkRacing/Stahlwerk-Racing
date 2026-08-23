@@ -839,7 +839,7 @@ function render(){
         list.innerHTML = "";
 
 
-        drivers.forEach(
+       sorted.forEach(
             function(driver){
 
                 list.innerHTML += `
@@ -887,18 +887,11 @@ function render(){
 
     body.innerHTML = "";
 
+const liga = document.getElementById("filter").value;
 
-    const sorted =
-    [...drivers].sort(
-        function(a,b){
-
-            return Number(
-                b.points || 0
-            )
-            -
-            Number(
-                a.points || 0
-            );
+const sorted = drivers
+  .filter(driver => driver.meisterschaft === liga)
+  .sort((a, b) => Number(b.points || 0) - Number(a.points || 0)); );
 
         }
     );
