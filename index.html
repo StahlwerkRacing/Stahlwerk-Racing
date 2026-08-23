@@ -337,7 +337,13 @@ placeholder="Startnummer">
 <option>Sonntag</option>
 
 </select>
+<label>Meisterschaft</label>
 
+<select id="meisterschaft">
+  <option>Unter der Woche</option>
+  <option>Samstag</option>
+  <option>Sonntag</option>
+</select>
 
 <button
 class="main"
@@ -386,6 +392,16 @@ Fahrer werden geladen...
 <div class="card">
 
 <h2>🏆 Meisterschaft</h2>
+
+<label>Meisterschaft auswählen</label>
+
+<select id="filter" onchange="render()">
+  <option>Unter der Woche</option>
+  <option>Samstag</option>
+  <option>Sonntag</option>
+</select>
+
+<table>
 
 <table>
 
@@ -665,18 +681,14 @@ async function register(){
 
     }
 
-
-    const data = {
-
-        name: name,
-
-        nummer: Number(nummer),
-
-        auto: auto,
-
-        cup: cup,
-
-        points: 0
+const data = {
+    name: name,
+    nummer: Number(nummer),
+    auto: auto,
+    cup: cup,
+    meisterschaft: document.getElementById("meisterschaft").value,
+    points: 0
+};
 
     };
 
