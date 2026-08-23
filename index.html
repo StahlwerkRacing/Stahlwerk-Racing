@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Stahlwerk Racing V4</title>
+<title>Stahlwerk Racing</title>
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -25,6 +31,11 @@ header{
 h1{
     color:#f7c600;
     margin:0;
+}
+
+header p{
+    margin-bottom:0;
+    color:#ccc;
 }
 
 nav{
@@ -54,6 +65,8 @@ nav button:hover{
 section{
     display:none;
     padding:20px;
+    max-width:1000px;
+    margin:auto;
 }
 
 section.active{
@@ -63,17 +76,17 @@ section.active{
 .card{
     background:#222;
     border-radius:12px;
-    padding:15px;
+    padding:20px;
     margin-bottom:15px;
 }
 
-input,select{
+input,
+select{
     width:100%;
-    padding:10px;
+    padding:11px;
     margin:8px 0;
     border:none;
     border-radius:8px;
-    box-sizing:border-box;
 }
 
 .main{
@@ -91,6 +104,18 @@ input,select{
     background:#ffd83d;
 }
 
+.league-buttons{
+    display:flex;
+    gap:8px;
+    margin:15px 0;
+    flex-wrap:wrap;
+}
+
+.league-buttons button{
+    flex:1;
+    min-width:150px;
+}
+
 .driver{
     display:flex;
     justify-content:space-between;
@@ -101,11 +126,20 @@ input,select{
     margin-top:8px;
 }
 
+.driver-info{
+    line-height:1.5;
+}
+
+.points{
+    font-weight:bold;
+    color:#f7c600;
+}
+
 .small{
     background:#c62828;
     color:white;
     border:none;
-    padding:6px 8px;
+    padding:7px 10px;
     border-radius:6px;
     cursor:pointer;
 }
@@ -117,10 +151,12 @@ input,select{
 table{
     width:100%;
     border-collapse:collapse;
+    margin-top:15px;
 }
 
-th,td{
-    padding:10px;
+th,
+td{
+    padding:12px 10px;
     border-bottom:1px solid #444;
     text-align:left;
 }
@@ -131,9 +167,10 @@ th{
 
 .notice{
     background:#3b3000;
-    padding:10px;
+    padding:12px;
     border-radius:8px;
     color:#ffe082;
+    margin-bottom:12px;
 }
 
 .loading{
@@ -164,8 +201,33 @@ th{
     margin-top:10px;
 }
 
+footer{
+    text-align:center;
+    color:#777;
+    padding:30px;
+}
+
+@media(max-width:600px){
+
+    .driver{
+        gap:10px;
+    }
+
+    table{
+        font-size:14px;
+    }
+
+    th,
+    td{
+        padding:8px 5px;
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
@@ -204,6 +266,7 @@ Admin
 </nav>
 
 
+
 <!-- =========================
      START
 ========================= -->
@@ -212,10 +275,16 @@ Admin
 
 <div class="card">
 
-<h2>Willkommen</h2>
+<h2>🏁 Willkommen bei Stahlwerk Racing</h2>
 
 <p>
-Nächster Lauf: Nürburgring • Samstag 20:00 (Wiederholung)
+Willkommen auf der offiziellen Website der
+Stahlwerk Racing GT7 Endurance League.
+</p>
+
+<p>
+Nächster Lauf:
+<b>Nürburgring • Samstag 20:00</b>
 </p>
 
 <button
@@ -229,6 +298,7 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 </div>
 
 </section>
+
 
 
 <!-- =========================
@@ -245,11 +315,14 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 id="name"
 placeholder="PSN Name">
 
+
 <input
 id="nr"
 type="number"
 placeholder="Startnummer">
 
+
+<label>Fahrzeug</label>
 
 <select id="car">
 
@@ -330,6 +403,9 @@ placeholder="Startnummer">
 </select>
 
 
+
+<label>Renntermin</label>
+
 <select id="cup">
 
 <option>Unter der Woche</option>
@@ -337,35 +413,35 @@ placeholder="Startnummer">
 <option>Sonntag</option>
 
 </select>
-<div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
 
-<button class="main" style="flex:1;" onclick="setLeague('Unter der Woche')">
-🏆 Unter der Woche
-</button>
 
-<button class="main" style="flex:1;" onclick="setLeague('Samstag')">
-🏁 Samstag
-</button>
 
-<button class="main" style="flex:1;" onclick="setLeague('Sonntag')">
-🏎️ Sonntag
-</button>
+<label>Meisterschaft</label>
 
-</div>
+<select id="meisterschaft">
+
+<option>Unter der Woche</option>
+<option>Samstag</option>
+<option>Sonntag</option>
+
+</select>
+
 
 <button
 class="main"
 onclick="register()">
 
-Eintragen
+🏎️ Fahrer eintragen
 
 </button>
+
 
 <div id="registerMessage"></div>
 
 </div>
 
 </section>
+
 
 
 <!-- =========================
@@ -391,6 +467,7 @@ Fahrer werden geladen...
 </section>
 
 
+
 <!-- =========================
      TABELLE
 ========================= -->
@@ -401,28 +478,37 @@ Fahrer werden geladen...
 
 <h2>🏆 Meisterschaft</h2>
 
-<label>Meisterschaft auswählen</label>
+<label>
+Meisterschaft auswählen
+</label>
 
-<select id="filter" onchange="render()">
-  <option>Unter der Woche</option>
-  <option>Samstag</option>
-  <option>Sonntag</option>
+<select
+id="filter"
+onchange="render()">
+
+<option>Unter der Woche</option>
+<option>Samstag</option>
+<option>Sonntag</option>
+
 </select>
 
-<table>
 
+<table>
 
 <thead>
 
 <tr>
 
 <th>Platz</th>
+
 <th>Fahrer</th>
+
 <th>Punkte</th>
 
 </tr>
 
 </thead>
+
 
 <tbody id="tableBody">
 
@@ -435,6 +521,7 @@ Fahrer werden geladen...
 </section>
 
 
+
 <!-- =========================
      ADMIN
 ========================= -->
@@ -442,18 +529,22 @@ Fahrer werden geladen...
 <section id="admin">
 
 
-<div id="loginBox" class="card">
+<div
+id="loginBox"
+class="card">
 
 <div class="notice">
 
-Admin Login
+🔐 Admin Login
 
 </div>
+
 
 <input
 id="pw"
 type="password"
-placeholder="Passwort">
+placeholder="Admin Passwort">
+
 
 <button
 class="main"
@@ -466,6 +557,7 @@ Einloggen
 </div>
 
 
+
 <div
 id="adminPanel"
 style="display:none;">
@@ -475,12 +567,15 @@ style="display:none;">
 
 <h2>🏆 Punkte vergeben</h2>
 
+
 <select id="driverSelect"></select>
+
 
 <input
 id="pts"
 type="number"
 placeholder="Punkte">
+
 
 <button
 class="main"
@@ -490,14 +585,17 @@ Punkte vergeben
 
 </button>
 
+
 <div id="pointsMessage"></div>
 
 </div>
 
 
+
 <div class="card">
 
 <h2>🗑️ Fahrer löschen</h2>
+
 
 <div id="adminDrivers"></div>
 
@@ -509,10 +607,20 @@ Punkte vergeben
 </section>
 
 
+
+<footer>
+
+Stahlwerk Racing © 2026
+
+</footer>
+
+
+
 <script>
 
+
 /* ==================================================
-   SUPABASE EINSTELLUNGEN
+   SUPABASE
 ================================================== */
 
 const SUPABASE_URL =
@@ -523,12 +631,14 @@ const SUPABASE_KEY =
 "sb_publishable_2CZK_bsj_HSMLlSax9eAGQ_xWF90ibr";
 
 
+
 /* ==================================================
-   ADMIN PASSWORT
+   ADMIN
 ================================================== */
 
 const PASSWORD =
 "stahlwerk26";
+
 
 
 /* ==================================================
@@ -540,8 +650,9 @@ let drivers = [];
 let admin = false;
 
 
+
 /* ==================================================
-   SUPABASE ANFRAGE
+   SUPABASE REQUEST
 ================================================== */
 
 async function supabaseRequest(
@@ -551,7 +662,8 @@ async function supabaseRequest(
 
     options.headers = {
 
-        "apikey": SUPABASE_KEY,
+        "apikey":
+        SUPABASE_KEY,
 
         "Authorization":
         "Bearer " + SUPABASE_KEY,
@@ -563,11 +675,14 @@ async function supabaseRequest(
 
     };
 
+
     return await fetch(
         url,
         options
     );
+
 }
+
 
 
 /* ==================================================
@@ -580,17 +695,18 @@ async function loadDrivers(){
 
         const response =
         await supabaseRequest(
+
             SUPABASE_URL +
             "/rest/v1/drivers?select=*&order=id.asc"
+
         );
 
 
         if(!response.ok){
 
-            const error =
-            await response.text();
-
-            console.error(error);
+            console.error(
+                await response.text()
+            );
 
             document.getElementById(
                 "driverList"
@@ -601,6 +717,7 @@ async function loadDrivers(){
             </div>`;
 
             return;
+
         }
 
 
@@ -627,6 +744,7 @@ async function loadDrivers(){
     }
 
 }
+
 
 
 /* ==================================================
@@ -659,6 +777,12 @@ async function register(){
     ).value;
 
 
+    const meisterschaft =
+    document.getElementById(
+        "meisterschaft"
+    ).value;
+
+
     const message =
     document.getElementById(
         "registerMessage"
@@ -688,16 +812,24 @@ async function register(){
 
     }
 
-const data = {
-    name: name,
-    nummer: Number(nummer),
-    auto: auto,
-    cup: cup,
-    meisterschaft: document.getElementById("meisterschaft").value,
-    points: 0
-};
 
-    
+
+    const data = {
+
+        name:name,
+
+        nummer:Number(nummer),
+
+        auto:auto,
+
+        cup:cup,
+
+        meisterschaft:meisterschaft,
+
+        points:0
+
+    };
+
 
 
     try{
@@ -729,10 +861,9 @@ const data = {
 
         if(!response.ok){
 
-            const error =
-            await response.text();
-
-            console.error(error);
+            console.error(
+                await response.text()
+            );
 
             message.innerHTML =
             `<div class="error">
@@ -788,8 +919,9 @@ const data = {
 }
 
 
+
 /* ==================================================
-   SEITEN WECHSELN
+   SEITEN WECHSEL
 ================================================== */
 
 function show(id){
@@ -809,12 +941,15 @@ function show(id){
 
     document
     .getElementById(id)
-    .classList.add("active");
+    .classList.add(
+        "active"
+    );
 
 
     render();
 
 }
+
 
 
 /* ==================================================
@@ -824,7 +959,9 @@ function show(id){
 function render(){
 
 
-    /* FAHRER */
+    /* =========================
+       FAHRER
+    ========================= */
 
     const list =
     document.getElementById(
@@ -846,14 +983,14 @@ function render(){
         list.innerHTML = "";
 
 
-      drivers.forEach(
+        drivers.forEach(
             function(driver){
 
                 list.innerHTML += `
 
                 <div class="driver">
 
-                    <div>
+                    <div class="driver-info">
 
                         <b>
                         #${driver.nummer}
@@ -863,15 +1000,26 @@ function render(){
                         <br>
 
                         <small>
+
                         ${escapeHTML(driver.auto)}
-                        •
+
+                        • Renntermin:
                         ${escapeHTML(driver.cup)}
+
+                        <br>
+
+                        Meisterschaft:
+                        ${escapeHTML(driver.meisterschaft)}
+
                         </small>
 
                     </div>
 
-                    <div>
-                        ${driver.points || 0} P
+
+                    <div class="points">
+
+                    ${driver.points || 0} P
+
                     </div>
 
                 </div>
@@ -884,7 +1032,10 @@ function render(){
     }
 
 
-    /* MEISTERSCHAFT */
+
+    /* =========================
+       TABELLE
+    ========================= */
 
     const body =
     document.getElementById(
@@ -894,11 +1045,60 @@ function render(){
 
     body.innerHTML = "";
 
-const liga = document.getElementById("filter").value;
 
-const sorted = drivers
-  .filter(driver => driver.meisterschaft === liga)
-  .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
+    const filter =
+    document.getElementById(
+        "filter"
+    );
+
+
+    const liga =
+    filter.value;
+
+
+    const sorted =
+    drivers
+    .filter(
+        function(driver){
+
+            return driver.meisterschaft === liga;
+
+        }
+    )
+    .sort(
+        function(a,b){
+
+            return Number(
+                b.points || 0
+            )
+            -
+            Number(
+                a.points || 0
+            );
+
+        }
+    );
+
+
+    if(sorted.length === 0){
+
+        body.innerHTML = `
+
+        <tr>
+
+            <td colspan="3"
+                style="text-align:center;color:#aaa;">
+
+                Noch keine Fahrer in dieser Meisterschaft.
+
+            </td>
+
+        </tr>
+
+        `;
+
+    }
+
 
     sorted.forEach(
         function(driver,index){
@@ -912,12 +1112,16 @@ const sorted = drivers
                 </td>
 
                 <td>
+
                 #${driver.nummer}
                 ${escapeHTML(driver.name)}
+
                 </td>
 
                 <td>
+
                 ${driver.points || 0}
+
                 </td>
 
             </tr>
@@ -928,7 +1132,10 @@ const sorted = drivers
     );
 
 
-    /* ADMIN AUSWAHL */
+
+    /* =========================
+       ADMIN AUSWAHL
+    ========================= */
 
     const select =
     document.getElementById(
@@ -948,6 +1155,8 @@ const sorted = drivers
 
             #${driver.nummer}
             ${escapeHTML(driver.name)}
+            -
+            ${escapeHTML(driver.meisterschaft)}
 
             </option>
 
@@ -957,7 +1166,10 @@ const sorted = drivers
     );
 
 
-    /* ADMIN LÖSCHEN */
+
+    /* =========================
+       ADMIN LÖSCHEN
+    ========================= */
 
     const adminDrivers =
     document.getElementById(
@@ -994,7 +1206,9 @@ const sorted = drivers
 
 
                 <button
+
                 class="small"
+
                 onclick="removeDriver(${index})">
 
                 Löschen
@@ -1009,7 +1223,10 @@ const sorted = drivers
     );
 
 
-    /* ADMIN PANEL */
+
+    /* =========================
+       ADMIN PANEL
+    ========================= */
 
     const loginBox =
     document.getElementById(
@@ -1046,6 +1263,7 @@ const sorted = drivers
 }
 
 
+
 /* ==================================================
    HTML SICHER MACHEN
 ================================================== */
@@ -1057,12 +1275,15 @@ function escapeHTML(text){
         "div"
     );
 
+
     div.textContent =
     text ?? "";
+
 
     return div.innerHTML;
 
 }
+
 
 
 /* ==================================================
@@ -1094,6 +1315,7 @@ function login(){
     }
 
 }
+
 
 
 /* ==================================================
@@ -1151,6 +1373,7 @@ async function givePoints(){
     )
     +
     points;
+
 
 
     try{
@@ -1222,6 +1445,7 @@ async function givePoints(){
     }
 
 }
+
 
 
 /* ==================================================
@@ -1302,6 +1526,7 @@ async function removeDriver(index){
 }
 
 
+
 /* ==================================================
    START
 ================================================== */
@@ -1310,5 +1535,7 @@ loadDrivers();
 
 </script>
 
+
 </body>
+
 </html>
