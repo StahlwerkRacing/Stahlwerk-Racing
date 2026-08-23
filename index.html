@@ -127,7 +127,7 @@ select{
 }
 
 .car-results{
-    max-height:300px;
+    max-height:350px;
     overflow-y:auto;
     margin-top:5px;
     border-radius:8px;
@@ -159,6 +159,12 @@ select{
     padding:12px;
     border-radius:8px;
     margin:10px 0;
+}
+
+.car-count{
+    color:#aaa;
+    font-size:13px;
+    margin-top:5px;
 }
 
 .driver{
@@ -323,9 +329,9 @@ Admin
 
 
 
-<!-- =========================
+<!-- ==================================================
      START
-========================= -->
+================================================== -->
 
 <section id="start" class="active">
 
@@ -357,15 +363,16 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 
 
 
-<!-- =========================
+<!-- ==================================================
      ANMELDUNG
-========================= -->
+================================================== -->
 
 <section id="anmeldung">
 
 <div class="card">
 
 <h2>🏎️ Fahrer anmelden</h2>
+
 
 <input
 id="name"
@@ -380,7 +387,7 @@ placeholder="Startnummer">
 
 
 <label>
-Fahrzeug suchen
+Fahrzeug
 </label>
 
 
@@ -402,6 +409,15 @@ Alle Hersteller
 </option>
 
 </select>
+
+</div>
+
+
+<div
+id="carCount"
+class="car-count">
+
+Fahrzeuge werden geladen...
 
 </div>
 
@@ -469,9 +485,9 @@ onclick="register()">
 
 
 
-<!-- =========================
+<!-- ==================================================
      FAHRER
-========================= -->
+================================================== -->
 
 <section id="fahrer">
 
@@ -523,9 +539,9 @@ Fahrer werden geladen...
 
 
 
-<!-- =========================
+<!-- ==================================================
      TABELLE
-========================= -->
+================================================== -->
 
 <section id="tabelle">
 
@@ -600,9 +616,9 @@ onchange="setLeague(this.value)">
 
 
 
-<!-- =========================
+<!-- ==================================================
      ADMIN
-========================= -->
+================================================== -->
 
 <section id="admin">
 
@@ -691,9 +707,9 @@ Stahlwerk Racing © 2026
 
 
 
-<!-- =========================
-     FAHRZEUGE
-========================= -->
+<!-- ==================================================
+     GT7 FAHRZEUGE
+================================================== -->
 
 <script src="cars.js"></script>
 
@@ -765,6 +781,99 @@ async function supabaseRequest(url,options={}){
 
 
 /* ==================================================
+   GT7 FAHRZEUGLISTE PRÜFEN
+================================================== */
+
+function validateCars(){
+
+    if(typeof GT7_CARS === "undefined"){
+
+        console.error(
+            "GT7_CARS wurde nicht gefunden."
+        );
+
+        return false;
+
+    }
+
+
+    const names =
+    GT7_CARS.map(
+        car => car.name
+    );
+
+
+    const duplicates =
+    names.filter(
+        (name,index) =>
+        names.indexOf(name) !== index
+    );
+
+
+    const uniqueDuplicates =
+    [...new Set(duplicates)];
+
+
+    console.log(
+        "================================="
+    );
+
+    console.log(
+        "GT7 FAHRZEUGLISTE"
+    );
+
+    console.log(
+        "Fahrzeuge:",
+        GT7_CARS.length
+    );
+
+    console.log(
+        "Doppelte:",
+        uniqueDuplicates.length
+    );
+
+    if(uniqueDuplicates.length > 0){
+
+        console.error(
+            "DOPPELTE FAHRZEUGE:",
+            uniqueDuplicates
+        );
+
+    }
+    else{
+
+        console.log(
+            "Keine doppelten Fahrzeuge gefunden."
+        );
+
+    }
+
+    console.log(
+        "================================="
+    );
+
+
+    const count =
+    document.getElementById(
+        "carCount"
+    );
+
+
+    if(count){
+
+        count.textContent =
+        GT7_CARS.length +
+        " Fahrzeuge geladen";
+
+    }
+
+
+    return true;
+
+}
+
+
+/* ==================================================
    HERSTELLER LADEN
 ================================================== */
 
@@ -775,16 +884,27 @@ function loadManufacturers(){
         "manufacturerFilter"
     );
 
-    if(!filter || typeof GT7_CARS === "undefined"){
+
+    if(
+        !filter
+        ||
+        typeof GT7_CARS === "undefined"
+    ){
+
         return;
+
     }
 
+
     const manufacturers =
-    [...new Set(
-        GT7_CARS.map(
-            car => car.manufacturer
+    [
+        ...new Set(
+            GT7_CARS.map(
+                car => car.manufacturer
+            )
         )
-    )].sort(
+    ]
+    .sort(
         (a,b) =>
         a.localeCompare(
             b,
@@ -801,11 +921,14 @@ function loadManufacturers(){
                 "option"
             );
 
+
             option.value =
             manufacturer;
 
+
             option.textContent =
             manufacturer;
+
 
             filter.appendChild(
                 option
@@ -826,7 +949,8 @@ function searchCars(){
     const search =
     document.getElementById(
         "carSearch"
-    ).value
+    )
+    .value
     .trim()
     .toLowerCase();
 
@@ -834,7 +958,8 @@ function searchCars(){
     const manufacturer =
     document.getElementById(
         "manufacturerFilter"
-    ).value;
+    )
+    .value;
 
 
     const results =
@@ -843,11 +968,13 @@ function searchCars(){
     );
 
 
-    if(typeof GT7_CARS === "undefined"){
+    if(
+        typeof GT7_CARS === "undefined"
+    ){
 
         results.innerHTML =
         `<div class="error">
-        cars.js wurde nicht gefunden.
+        ❌ cars.js wurde nicht gefunden.
         </div>`;
 
         return;
@@ -859,17 +986,31 @@ function searchCars(){
     GT7_CARS.filter(
         car => {
 
+            const fullName =
+            (
+                car.manufacturer
+                +
+                " "
+                +
+                car.name
+            )
+            .toLowerCase();
+
+
             const matchesSearch =
-            car.name
-            .toLowerCase()
-            .includes(search);
+            search === ""
+            ||
+            fullName.includes(
+                search
+            );
 
 
             const matchesManufacturer =
             manufacturer === ""
             ||
             car.manufacturer
-            === manufacturer;
+            ===
+            manufacturer;
 
 
             return (
@@ -907,11 +1048,16 @@ function searchCars(){
                 "div"
             );
 
+
             div.className =
             "car-result";
 
 
-            if(selectedCar === car.name){
+            if(
+                selectedCar
+                ===
+                car.name
+            ){
 
                 div.classList.add(
                     "selected"
@@ -923,15 +1069,17 @@ function searchCars(){
             div.innerHTML =
 
             `<b>
-            ${escapeHTML(car.name)}
+            ${escapeHTML(
+                car.name
+            )}
             </b>
+
             <br>
+
             <small>
-            ${escapeHTML(car.manufacturer)}
-            ${car.category ?
-            " • " + escapeHTML(car.category)
-            :
-            ""}
+            ${escapeHTML(
+                car.manufacturer
+            )}
             </small>`;
 
 
@@ -960,11 +1108,14 @@ function searchCars(){
             "div"
         );
 
+
         info.className =
         "empty";
 
+
         info.textContent =
         "Bitte genauer suchen. Es werden maximal 100 Treffer angezeigt.";
+
 
         results.appendChild(
             info
@@ -1024,6 +1175,7 @@ async function loadDrivers(){
                 await response.text()
             );
 
+
             document.getElementById(
                 "driverList"
             ).innerHTML =
@@ -1031,6 +1183,7 @@ async function loadDrivers(){
             `<div class="error">
             Fahrer konnten nicht geladen werden.
             </div>`;
+
 
             return;
 
@@ -1048,6 +1201,7 @@ async function loadDrivers(){
     catch(error){
 
         console.error(error);
+
 
         document.getElementById(
             "driverList"
@@ -1227,6 +1381,7 @@ async function register(){
                 await response.text()
             );
 
+
             message.innerHTML =
             `<div class="error">
             Fahrer konnte nicht eingetragen werden.
@@ -1292,6 +1447,7 @@ async function register(){
     catch(error){
 
         console.error(error);
+
 
         message.innerHTML =
         `<div class="error">
@@ -1479,7 +1635,11 @@ function render(){
         list.innerHTML = "";
 
 
-        if(filteredDrivers.length === 0){
+        if(
+            filteredDrivers.length
+            ===
+            0
+        ){
 
             list.innerHTML =
             `<div class="empty">
@@ -1500,7 +1660,9 @@ function render(){
 
                         <b>
                         #${driver.nummer}
-                        ${escapeHTML(driver.name)}
+                        ${escapeHTML(
+                            driver.name
+                        )}
                         </b>
 
                         <br>
@@ -1508,17 +1670,23 @@ function render(){
                         <small>
 
                         🏎️
-                        ${escapeHTML(driver.auto)}
+                        ${escapeHTML(
+                            driver.auto
+                        )}
 
                         <br>
 
                         🗓️ Renntermin:
-                        ${escapeHTML(driver.cup)}
+                        ${escapeHTML(
+                            driver.cup
+                        )}
 
                         <br>
 
                         🏆 Meisterschaft:
-                        ${escapeHTML(driver.meisterschaft)}
+                        ${escapeHTML(
+                            driver.meisterschaft
+                        )}
 
                         </small>
 
@@ -1577,10 +1745,11 @@ function render(){
 
             <tr>
 
-                <td colspan="4"
-                    style="text-align:center;color:#aaa;">
+                <td
+                colspan="4"
+                style="text-align:center;color:#aaa;">
 
-                    Noch keine Fahrer in dieser Meisterschaft.
+                Noch keine Fahrer in dieser Meisterschaft.
 
                 </td>
 
@@ -1604,11 +1773,15 @@ function render(){
 
                     <td>
                     #${driver.nummer}
-                    ${escapeHTML(driver.name)}
+                    ${escapeHTML(
+                        driver.name
+                    )}
                     </td>
 
                     <td>
-                    ${escapeHTML(driver.auto)}
+                    ${escapeHTML(
+                        driver.auto
+                    )}
                     </td>
 
                     <td>
@@ -1645,12 +1818,17 @@ function render(){
 
                 select.innerHTML += `
 
-                <option value="${index}">
+                <option
+                value="${index}">
 
                 #${driver.nummer}
-                ${escapeHTML(driver.name)}
+                ${escapeHTML(
+                    driver.name
+                )}
                 -
-                ${escapeHTML(driver.meisterschaft)}
+                ${escapeHTML(
+                    driver.meisterschaft
+                )}
 
                 </option>
 
@@ -1693,7 +1871,9 @@ function render(){
                     <span>
 
                     #${driver.nummer}
-                    ${escapeHTML(driver.name)}
+                    ${escapeHTML(
+                        driver.name
+                    )}
 
                     </span>
 
@@ -1731,7 +1911,11 @@ function render(){
     );
 
 
-    if(loginBox && adminPanel){
+    if(
+        loginBox
+        &&
+        adminPanel
+    ){
 
         if(admin){
 
@@ -1769,8 +1953,10 @@ function escapeHTML(text){
         "div"
     );
 
+
     div.textContent =
     text ?? "";
+
 
     return div.innerHTML;
 
@@ -1792,6 +1978,7 @@ function login(){
     if(password === PASSWORD){
 
         admin = true;
+
 
         document.getElementById(
             "pw"
@@ -1911,6 +2098,7 @@ async function givePoints(){
                 await response.text()
             );
 
+
             message.innerHTML =
             `<div class="error">
             Punkte konnten nicht gespeichert werden.
@@ -1937,6 +2125,7 @@ async function givePoints(){
     catch(error){
 
         console.error(error);
+
 
         message.innerHTML =
         `<div class="error">
@@ -2001,6 +2190,7 @@ async function removeDriver(index){
                 await response.text()
             );
 
+
             alert(
                 "Fahrer konnte nicht gelöscht werden."
             );
@@ -2018,6 +2208,7 @@ async function removeDriver(index){
 
         console.error(error);
 
+
         alert(
             "Fehler beim Löschen."
         );
@@ -2031,7 +2222,11 @@ async function removeDriver(index){
    START
 ================================================== */
 
+validateCars();
+
 loadManufacturers();
+
+searchCars();
 
 loadDrivers();
 
