@@ -2,7 +2,6 @@
 <html lang="de">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -47,7 +46,8 @@ nav{
     flex-wrap:wrap;
 }
 
-nav button{
+nav button,
+.league-buttons button{
     background:#333;
     color:white;
     border:none;
@@ -57,7 +57,9 @@ nav button{
     font-weight:bold;
 }
 
-nav button:hover{
+nav button:hover,
+.league-buttons button:hover,
+.league-buttons button.active{
     background:#f7c600;
     color:#111;
 }
@@ -65,7 +67,7 @@ nav button:hover{
 section{
     display:none;
     padding:20px;
-    max-width:1000px;
+    max-width:1100px;
     margin:auto;
 }
 
@@ -87,6 +89,8 @@ select{
     margin:8px 0;
     border:none;
     border-radius:8px;
+    background:#fff;
+    color:#111;
 }
 
 .main{
@@ -116,6 +120,47 @@ select{
     min-width:150px;
 }
 
+.car-search{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+}
+
+.car-results{
+    max-height:300px;
+    overflow-y:auto;
+    margin-top:5px;
+    border-radius:8px;
+}
+
+.car-result{
+    background:#333;
+    padding:12px;
+    margin-bottom:5px;
+    border-radius:7px;
+    cursor:pointer;
+    transition:0.15s;
+}
+
+.car-result:hover{
+    background:#f7c600;
+    color:#111;
+}
+
+.car-result.selected{
+    background:#f7c600;
+    color:#111;
+    font-weight:bold;
+}
+
+.selected-car{
+    background:#3b3000;
+    color:#ffe082;
+    padding:12px;
+    border-radius:8px;
+    margin:10px 0;
+}
+
 .driver{
     display:flex;
     justify-content:space-between;
@@ -124,6 +169,7 @@ select{
     padding:12px;
     border-radius:8px;
     margin-top:8px;
+    gap:10px;
 }
 
 .driver-info{
@@ -133,6 +179,7 @@ select{
 .points{
     font-weight:bold;
     color:#f7c600;
+    white-space:nowrap;
 }
 
 .small{
@@ -207,14 +254,23 @@ footer{
     padding:30px;
 }
 
-@media(max-width:600px){
+@media(max-width:650px){
+
+    .car-search{
+        grid-template-columns:1fr;
+    }
 
     .driver{
-        gap:10px;
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .points{
+        align-self:flex-end;
     }
 
     table{
-        font-size:14px;
+        font-size:13px;
     }
 
     th,
@@ -313,7 +369,8 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 
 <input
 id="name"
-placeholder="PSN Name">
+placeholder="PSN Name"
+autocomplete="off">
 
 
 <input
@@ -322,89 +379,56 @@ type="number"
 placeholder="Startnummer">
 
 
-<label>Fahrzeug</label>
-
-<select id="car">
-
-<optgroup label="Gr.3">
-
-<option>Alfa Romeo 4C Gr.3</option>
-<option>Aston Martin DBR9 GT1</option>
-<option>Aston Martin V12 Vantage Gr.3</option>
-<option>Audi R8 LMS Evo Gr.3</option>
-<option>BMW M3 GT</option>
-<option>BMW M6 GT3</option>
-<option>Chevrolet Corvette C7 Gr.3</option>
-<option>Ferrari 458 Italia GT3</option>
-<option>Ferrari 488 GT3</option>
-<option>Ferrari 296 GT3</option>
-<option>Ford GT LM Spec II</option>
-<option>Genesis X GR3</option>
-<option>Honda NSX Gr.3</option>
-<option>Jaguar F-Type Gr.3</option>
-<option>Lamborghini Huracán GT3</option>
-<option>Lexus RC F GT3</option>
-<option>McLaren 650S GT3</option>
-<option>Mercedes-AMG GT3</option>
-<option>Nissan GT-R NISMO GT3</option>
-<option>Peugeot RCZ Gr.3</option>
-<option>Porsche 911 RSR (991)</option>
-<option>Renault R.S.01 GT3</option>
-<option>Subaru BRZ GT300</option>
-<option>Suzuki Vision Gr.3</option>
-<option>Toyota GR Supra Racing Concept</option>
-<option>Volkswagen Beetle Gr.3</option>
-
-</optgroup>
+<label>
+Fahrzeug suchen
+</label>
 
 
-<optgroup label="Gr.2">
+<div class="car-search">
 
-<option>Honda NSX GT500 '16</option>
-<option>Lexus RC F GT500 '16</option>
-<option>Nissan GT-R GT500 '16</option>
-
-</optgroup>
-
-
-<optgroup label="Gr.1">
-
-<option>Toyota GR010 Hybrid</option>
-<option>Toyota TS050 Hybrid</option>
-<option>Porsche 919 Hybrid</option>
-<option>Audi R18 TDI</option>
-<option>Peugeot 908 HDi FAP</option>
-<option>Mazda 787B</option>
-<option>Sauber Mercedes C9</option>
-
-</optgroup>
+<input
+id="carSearch"
+placeholder="🔎 Fahrzeug suchen..."
+autocomplete="off"
+oninput="searchCars()">
 
 
-<optgroup label="Gr.4">
+<select
+id="manufacturerFilter"
+onchange="searchCars()">
 
-<option>Alfa Romeo 4C Gr.4</option>
-<option>Audi TT Cup</option>
-<option>BMW M4 Gr.4</option>
-<option>Bugatti Veyron Gr.4</option>
-<option>Chevrolet Corvette Gr.4</option>
-<option>Ferrari 458 Gr.4</option>
-<option>Ford Mustang Gr.4</option>
-<option>Jaguar F-Type Gr.4</option>
-<option>Lamborghini Huracán Gr.4</option>
-<option>McLaren 650S Gr.4</option>
-<option>Mercedes-AMG SLS Gr.4</option>
-<option>Nissan GT-R Gr.4</option>
-<option>Porsche Cayman GT4 Clubsport</option>
-<option>Subaru WRX Gr.4</option>
-<option>Toyota GR Supra Gr.4</option>
-
-</optgroup>
+<option value="">
+Alle Hersteller
+</option>
 
 </select>
 
+</div>
 
 
-<label>Renntermin</label>
+<div
+id="carResults"
+class="car-results">
+
+<div class="empty">
+Fahrzeug suchen...
+</div>
+
+</div>
+
+
+<div
+id="selectedCar"
+class="selected-car">
+
+Noch kein Fahrzeug ausgewählt.
+
+</div>
+
+
+<label>
+Renntermin
+</label>
 
 <select id="cup">
 
@@ -415,8 +439,9 @@ placeholder="Startnummer">
 </select>
 
 
-
-<label>Meisterschaft</label>
+<label>
+Meisterschaft
+</label>
 
 <select id="meisterschaft">
 
@@ -454,6 +479,36 @@ onclick="register()">
 
 <h2>🏎️ Fahrer</h2>
 
+
+<div class="league-buttons">
+
+<button
+id="driverLeagueWeek"
+onclick="setLeague('Unter der Woche')">
+
+Unter der Woche
+
+</button>
+
+<button
+id="driverLeagueSaturday"
+onclick="setLeague('Samstag')">
+
+Samstag
+
+</button>
+
+<button
+id="driverLeagueSunday"
+onclick="setLeague('Sonntag')">
+
+Sonntag
+
+</button>
+
+</div>
+
+
 <div id="driverList">
 
 <div class="loading">
@@ -478,13 +533,39 @@ Fahrer werden geladen...
 
 <h2>🏆 Meisterschaft</h2>
 
-<label>
-Meisterschaft auswählen
-</label>
+
+<div class="league-buttons">
+
+<button
+id="tableLeagueWeek"
+onclick="setLeague('Unter der Woche')">
+
+Unter der Woche
+
+</button>
+
+<button
+id="tableLeagueSaturday"
+onclick="setLeague('Samstag')">
+
+Samstag
+
+</button>
+
+<button
+id="tableLeagueSunday"
+onclick="setLeague('Sonntag')">
+
+Sonntag
+
+</button>
+
+</div>
+
 
 <select
 id="filter"
-onchange="render()">
+onchange="setLeague(this.value)">
 
 <option>Unter der Woche</option>
 <option>Samstag</option>
@@ -500,18 +581,15 @@ onchange="render()">
 <tr>
 
 <th>Platz</th>
-
 <th>Fahrer</th>
-
+<th>Fahrzeug</th>
 <th>Punkte</th>
 
 </tr>
 
 </thead>
 
-
 <tbody id="tableBody">
-
 </tbody>
 
 </table>
@@ -527,7 +605,6 @@ onchange="render()">
 ========================= -->
 
 <section id="admin">
-
 
 <div
 id="loginBox"
@@ -555,7 +632,6 @@ Einloggen
 </button>
 
 </div>
-
 
 
 <div
@@ -591,7 +667,6 @@ Punkte vergeben
 </div>
 
 
-
 <div class="card">
 
 <h2>🗑️ Fahrer löschen</h2>
@@ -616,8 +691,14 @@ Stahlwerk Racing © 2026
 
 
 
-<script>
+<!-- =========================
+     FAHRZEUGE
+========================= -->
 
+<script src="cars.js"></script>
+
+
+<script>
 
 /* ==================================================
    SUPABASE
@@ -631,14 +712,12 @@ const SUPABASE_KEY =
 "sb_publishable_2CZK_bsj_HSMLlSax9eAGQ_xWF90ibr";
 
 
-
 /* ==================================================
    ADMIN
 ================================================== */
 
 const PASSWORD =
 "stahlwerk26";
-
 
 
 /* ==================================================
@@ -649,16 +728,18 @@ let drivers = [];
 
 let admin = false;
 
+let selectedLeague =
+"Unter der Woche";
+
+let selectedCar =
+"";
 
 
 /* ==================================================
    SUPABASE REQUEST
 ================================================== */
 
-async function supabaseRequest(
-    url,
-    options = {}
-){
+async function supabaseRequest(url,options={}){
 
     options.headers = {
 
@@ -675,7 +756,6 @@ async function supabaseRequest(
 
     };
 
-
     return await fetch(
         url,
         options
@@ -683,6 +763,242 @@ async function supabaseRequest(
 
 }
 
+
+/* ==================================================
+   HERSTELLER LADEN
+================================================== */
+
+function loadManufacturers(){
+
+    const filter =
+    document.getElementById(
+        "manufacturerFilter"
+    );
+
+    if(!filter || typeof GT7_CARS === "undefined"){
+        return;
+    }
+
+    const manufacturers =
+    [...new Set(
+        GT7_CARS.map(
+            car => car.manufacturer
+        )
+    )].sort(
+        (a,b) =>
+        a.localeCompare(
+            b,
+            "de"
+        )
+    );
+
+
+    manufacturers.forEach(
+        manufacturer => {
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+            option.value =
+            manufacturer;
+
+            option.textContent =
+            manufacturer;
+
+            filter.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   FAHRZEUGE SUCHEN
+================================================== */
+
+function searchCars(){
+
+    const search =
+    document.getElementById(
+        "carSearch"
+    ).value
+    .trim()
+    .toLowerCase();
+
+
+    const manufacturer =
+    document.getElementById(
+        "manufacturerFilter"
+    ).value;
+
+
+    const results =
+    document.getElementById(
+        "carResults"
+    );
+
+
+    if(typeof GT7_CARS === "undefined"){
+
+        results.innerHTML =
+        `<div class="error">
+        cars.js wurde nicht gefunden.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const filtered =
+    GT7_CARS.filter(
+        car => {
+
+            const matchesSearch =
+            car.name
+            .toLowerCase()
+            .includes(search);
+
+
+            const matchesManufacturer =
+            manufacturer === ""
+            ||
+            car.manufacturer
+            === manufacturer;
+
+
+            return (
+                matchesSearch
+                &&
+                matchesManufacturer
+            );
+
+        }
+    );
+
+
+    results.innerHTML = "";
+
+
+    if(filtered.length === 0){
+
+        results.innerHTML =
+        `<div class="empty">
+        Kein Fahrzeug gefunden.
+        </div>`;
+
+        return;
+
+    }
+
+
+    filtered
+    .slice(0,100)
+    .forEach(
+        car => {
+
+            const div =
+            document.createElement(
+                "div"
+            );
+
+            div.className =
+            "car-result";
+
+
+            if(selectedCar === car.name){
+
+                div.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            div.innerHTML =
+
+            `<b>
+            ${escapeHTML(car.name)}
+            </b>
+            <br>
+            <small>
+            ${escapeHTML(car.manufacturer)}
+            ${car.category ?
+            " • " + escapeHTML(car.category)
+            :
+            ""}
+            </small>`;
+
+
+            div.onclick =
+            function(){
+
+                selectCar(
+                    car.name
+                );
+
+            };
+
+
+            results.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    if(filtered.length > 100){
+
+        const info =
+        document.createElement(
+            "div"
+        );
+
+        info.className =
+        "empty";
+
+        info.textContent =
+        "Bitte genauer suchen. Es werden maximal 100 Treffer angezeigt.";
+
+        results.appendChild(
+            info
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   FAHRZEUG AUSWÄHLEN
+================================================== */
+
+function selectCar(car){
+
+    selectedCar =
+    car;
+
+
+    document.getElementById(
+        "selectedCar"
+    ).innerHTML =
+
+    "🏎️ Ausgewähltes Fahrzeug: <b>"
+    +
+    escapeHTML(car)
+    +
+    "</b>";
+
+
+    searchCars();
+
+}
 
 
 /* ==================================================
@@ -746,7 +1062,6 @@ async function loadDrivers(){
 }
 
 
-
 /* ==================================================
    FAHRER REGISTRIEREN
 ================================================== */
@@ -762,12 +1077,6 @@ async function register(){
     const nummer =
     document.getElementById(
         "nr"
-    ).value;
-
-
-    const auto =
-    document.getElementById(
-        "car"
     ).value;
 
 
@@ -813,6 +1122,60 @@ async function register(){
     }
 
 
+    if(selectedCar === ""){
+
+        message.innerHTML =
+        `<div class="error">
+        Bitte ein Fahrzeug auswählen.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const nameExists =
+    drivers.some(
+        driver =>
+        String(driver.name)
+        .toLowerCase()
+        ===
+        name.toLowerCase()
+    );
+
+
+    if(nameExists){
+
+        message.innerHTML =
+        `<div class="error">
+        Dieser PSN Name ist bereits angemeldet.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const numberExists =
+    drivers.some(
+        driver =>
+        Number(driver.nummer)
+        ===
+        Number(nummer)
+    );
+
+
+    if(numberExists){
+
+        message.innerHTML =
+        `<div class="error">
+        Diese Startnummer ist bereits vergeben.
+        </div>`;
+
+        return;
+
+    }
+
 
     const data = {
 
@@ -820,7 +1183,7 @@ async function register(){
 
         nummer:Number(nummer),
 
-        auto:auto,
+        auto:selectedCar,
 
         cup:cup,
 
@@ -829,7 +1192,6 @@ async function register(){
         points:0
 
     };
-
 
 
     try{
@@ -891,6 +1253,28 @@ async function register(){
         ).value = "";
 
 
+        document.getElementById(
+            "carSearch"
+        ).value = "";
+
+
+        selectedCar = "";
+
+
+        document.getElementById(
+            "selectedCar"
+        ).textContent =
+        "Noch kein Fahrzeug ausgewählt.";
+
+
+        document.getElementById(
+            "carResults"
+        ).innerHTML =
+        `<div class="empty">
+        Fahrzeug suchen...
+        </div>`;
+
+
         await loadDrivers();
 
 
@@ -919,7 +1303,6 @@ async function register(){
 }
 
 
-
 /* ==================================================
    SEITEN WECHSEL
 ================================================== */
@@ -929,21 +1312,24 @@ function show(id){
     document
     .querySelectorAll("section")
     .forEach(
-        function(section){
-
-            section.classList.remove(
-                "active"
-            );
-
-        }
+        section =>
+        section.classList.remove(
+            "active"
+        )
     );
 
 
-    document
-    .getElementById(id)
-    .classList.add(
-        "active"
-    );
+    const section =
+    document.getElementById(id);
+
+
+    if(section){
+
+        section.classList.add(
+            "active"
+        );
+
+    }
 
 
     render();
@@ -951,12 +1337,122 @@ function show(id){
 }
 
 
+/* ==================================================
+   MEISTERSCHAFT
+================================================== */
+
+function setLeague(league){
+
+    selectedLeague =
+    league;
+
+
+    const filter =
+    document.getElementById(
+        "filter"
+    );
+
+
+    if(filter){
+
+        filter.value =
+        league;
+
+    }
+
+
+    render();
+
+}
+
 
 /* ==================================================
-   WEBSITE RENDERN
+   BUTTONS AKTUALISIEREN
+================================================== */
+
+function updateLeagueButtons(){
+
+    document
+    .querySelectorAll(
+        ".league-buttons button"
+    )
+    .forEach(
+        button =>
+        button.classList.remove(
+            "active"
+        )
+    );
+
+
+    const ids = {
+
+        "Unter der Woche":[
+            "driverLeagueWeek",
+            "tableLeagueWeek"
+        ],
+
+        "Samstag":[
+            "driverLeagueSaturday",
+            "tableLeagueSaturday"
+        ],
+
+        "Sonntag":[
+            "driverLeagueSunday",
+            "tableLeagueSunday"
+        ]
+
+    };
+
+
+    if(ids[selectedLeague]){
+
+        ids[selectedLeague]
+        .forEach(
+            id => {
+
+                const button =
+                document.getElementById(
+                    id
+                );
+
+
+                if(button){
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ==================================================
+   RENDER
 ================================================== */
 
 function render(){
+
+    updateLeagueButtons();
+
+
+    const filter =
+    document.getElementById(
+        "filter"
+    );
+
+
+    if(filter){
+
+        filter.value =
+        selectedLeague;
+
+    }
 
 
     /* =========================
@@ -969,22 +1465,32 @@ function render(){
     );
 
 
-    if(drivers.length === 0){
+    if(list){
 
-        list.innerHTML =
-        `<div class="empty">
-        Noch keine Fahrer angemeldet.
-        </div>`;
+        const filteredDrivers =
+        drivers.filter(
+            driver =>
+            driver.meisterschaft
+            ===
+            selectedLeague
+        );
 
-    }
-
-    else{
 
         list.innerHTML = "";
 
 
-        drivers.forEach(
-            function(driver){
+        if(filteredDrivers.length === 0){
+
+            list.innerHTML =
+            `<div class="empty">
+            Noch keine Fahrer in dieser Meisterschaft.
+            </div>`;
+
+        }
+
+
+        filteredDrivers.forEach(
+            driver => {
 
                 list.innerHTML += `
 
@@ -1001,20 +1507,22 @@ function render(){
 
                         <small>
 
+                        🏎️
                         ${escapeHTML(driver.auto)}
 
-                        • Renntermin:
+                        <br>
+
+                        🗓️ Renntermin:
                         ${escapeHTML(driver.cup)}
 
                         <br>
 
-                        Meisterschaft:
+                        🏆 Meisterschaft:
                         ${escapeHTML(driver.meisterschaft)}
 
                         </small>
 
                     </div>
-
 
                     <div class="points">
 
@@ -1032,7 +1540,6 @@ function render(){
     }
 
 
-
     /* =========================
        TABELLE
     ========================= */
@@ -1043,84 +1550,37 @@ function render(){
     );
 
 
-    body.innerHTML = "";
+    if(body){
+
+        body.innerHTML = "";
 
 
-    const filter =
-    document.getElementById(
-        "filter"
-    );
-
-
-    const liga =
-    filter.value;
-
-
-    const sorted =
-    drivers
-    .filter(
-        function(driver){
-
-            return driver.meisterschaft === liga;
-
-        }
-    )
-    .sort(
-        function(a,b){
-
-            return Number(
-                b.points || 0
-            )
+        const sorted =
+        drivers
+        .filter(
+            driver =>
+            driver.meisterschaft
+            ===
+            selectedLeague
+        )
+        .sort(
+            (a,b) =>
+            Number(b.points || 0)
             -
-            Number(
-                a.points || 0
-            );
-
-        }
-    );
+            Number(a.points || 0)
+        );
 
 
-    if(sorted.length === 0){
+        if(sorted.length === 0){
 
-        body.innerHTML = `
-
-        <tr>
-
-            <td colspan="3"
-                style="text-align:center;color:#aaa;">
-
-                Noch keine Fahrer in dieser Meisterschaft.
-
-            </td>
-
-        </tr>
-
-        `;
-
-    }
-
-
-    sorted.forEach(
-        function(driver,index){
-
-            body.innerHTML += `
+            body.innerHTML = `
 
             <tr>
 
-                <td>
-                ${index + 1}
-                </td>
+                <td colspan="4"
+                    style="text-align:center;color:#aaa;">
 
-                <td>
-
-                #${driver.nummer}
-                ${escapeHTML(driver.name)}
-
-                </td>
-
-                <td>
-
-                ${driver.points || 0}
+                    Noch keine Fahrer in dieser Meisterschaft.
 
                 </td>
 
@@ -1129,12 +1589,44 @@ function render(){
             `;
 
         }
-    );
 
+
+        sorted.forEach(
+            (driver,index) => {
+
+                body.innerHTML += `
+
+                <tr>
+
+                    <td>
+                    ${index + 1}
+                    </td>
+
+                    <td>
+                    #${driver.nummer}
+                    ${escapeHTML(driver.name)}
+                    </td>
+
+                    <td>
+                    ${escapeHTML(driver.auto)}
+                    </td>
+
+                    <td>
+                    ${driver.points || 0}
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        );
+
+    }
 
 
     /* =========================
-       ADMIN AUSWAHL
+       ADMIN
     ========================= */
 
     const select =
@@ -1143,33 +1635,32 @@ function render(){
     );
 
 
-    select.innerHTML = "";
+    if(select){
+
+        select.innerHTML = "";
 
 
-    drivers.forEach(
-        function(driver,index){
+        drivers.forEach(
+            (driver,index) => {
 
-            select.innerHTML += `
+                select.innerHTML += `
 
-            <option value="${index}">
+                <option value="${index}">
 
-            #${driver.nummer}
-            ${escapeHTML(driver.name)}
-            -
-            ${escapeHTML(driver.meisterschaft)}
+                #${driver.nummer}
+                ${escapeHTML(driver.name)}
+                -
+                ${escapeHTML(driver.meisterschaft)}
 
-            </option>
+                </option>
 
-            `;
+                `;
 
-        }
-    );
+            }
+        );
 
+    }
 
-
-    /* =========================
-       ADMIN LÖSCHEN
-    ========================= */
 
     const adminDrivers =
     document.getElementById(
@@ -1177,51 +1668,51 @@ function render(){
     );
 
 
-    adminDrivers.innerHTML = "";
+    if(adminDrivers){
+
+        adminDrivers.innerHTML = "";
 
 
-    if(drivers.length === 0){
+        if(drivers.length === 0){
 
-        adminDrivers.innerHTML =
-        `<div class="empty">
-        Keine Fahrer vorhanden.
-        </div>`;
-
-    }
-
-
-    drivers.forEach(
-        function(driver,index){
-
-            adminDrivers.innerHTML += `
-
-            <div class="driver">
-
-                <span>
-
-                #${driver.nummer}
-                ${escapeHTML(driver.name)}
-
-                </span>
-
-
-                <button
-
-                class="small"
-
-                onclick="removeDriver(${index})">
-
-                Löschen
-
-                </button>
-
-            </div>
-
-            `;
+            adminDrivers.innerHTML =
+            `<div class="empty">
+            Keine Fahrer vorhanden.
+            </div>`;
 
         }
-    );
 
+
+        drivers.forEach(
+            (driver,index) => {
+
+                adminDrivers.innerHTML += `
+
+                <div class="driver">
+
+                    <span>
+
+                    #${driver.nummer}
+                    ${escapeHTML(driver.name)}
+
+                    </span>
+
+                    <button
+                    class="small"
+                    onclick="removeDriver(${index})">
+
+                    Löschen
+
+                    </button>
+
+                </div>
+
+                `;
+
+            }
+        );
+
+    }
 
 
     /* =========================
@@ -1240,28 +1731,31 @@ function render(){
     );
 
 
-    if(admin){
+    if(loginBox && adminPanel){
 
-        loginBox.style.display =
-        "none";
+        if(admin){
 
-        adminPanel.style.display =
-        "block";
+            loginBox.style.display =
+            "none";
 
-    }
+            adminPanel.style.display =
+            "block";
 
-    else{
+        }
 
-        loginBox.style.display =
-        "block";
+        else{
 
-        adminPanel.style.display =
-        "none";
+            loginBox.style.display =
+            "block";
+
+            adminPanel.style.display =
+            "none";
+
+        }
 
     }
 
 }
-
 
 
 /* ==================================================
@@ -1275,15 +1769,12 @@ function escapeHTML(text){
         "div"
     );
 
-
     div.textContent =
     text ?? "";
-
 
     return div.innerHTML;
 
 }
-
 
 
 /* ==================================================
@@ -1302,6 +1793,11 @@ function login(){
 
         admin = true;
 
+        document.getElementById(
+            "pw"
+        ).value = "";
+
+
         render();
 
     }
@@ -1317,7 +1813,6 @@ function login(){
 }
 
 
-
 /* ==================================================
    PUNKTE VERGEBEN
 ================================================== */
@@ -1330,11 +1825,15 @@ async function givePoints(){
     ).value;
 
 
+    const pointsInput =
+    document.getElementById(
+        "pts"
+    );
+
+
     const points =
     Number(
-        document.getElementById(
-            "pts"
-        ).value
+        pointsInput.value
     );
 
 
@@ -1355,7 +1854,11 @@ async function givePoints(){
     }
 
 
-    if(isNaN(points)){
+    if(
+        pointsInput.value === ""
+        ||
+        isNaN(points)
+    ){
 
         message.innerHTML =
         `<div class="error">
@@ -1375,14 +1878,14 @@ async function givePoints(){
     points;
 
 
-
     try{
 
         const response =
         await supabaseRequest(
 
             SUPABASE_URL +
-            "/rest/v1/drivers?id=eq." +
+            "/rest/v1/drivers?id=eq."
+            +
             driver.id,
 
             {
@@ -1418,9 +1921,7 @@ async function givePoints(){
         }
 
 
-        document.getElementById(
-            "pts"
-        ).value = "";
+        pointsInput.value = "";
 
 
         message.innerHTML =
@@ -1445,7 +1946,6 @@ async function givePoints(){
     }
 
 }
-
 
 
 /* ==================================================
@@ -1482,7 +1982,8 @@ async function removeDriver(index){
         await supabaseRequest(
 
             SUPABASE_URL +
-            "/rest/v1/drivers?id=eq." +
+            "/rest/v1/drivers?id=eq."
+            +
             driver.id,
 
             {
@@ -1526,16 +2027,15 @@ async function removeDriver(index){
 }
 
 
-
 /* ==================================================
    START
 ================================================== */
+
+loadManufacturers();
 
 loadDrivers();
 
 </script>
 
-
 </body>
-
 </html>
