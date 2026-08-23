@@ -2,12 +2,19 @@
 <html lang="de">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Stahlwerk Racing</title>
 
 <style>
+
+/* ==================================================
+   GRUNDLAYOUT
+================================================== */
 
 *{
     box-sizing:border-box;
@@ -83,7 +90,8 @@ section.active{
 }
 
 input,
-select{
+select,
+textarea{
     width:100%;
     padding:11px;
     margin:8px 0;
@@ -91,6 +99,11 @@ select{
     border-radius:8px;
     background:#fff;
     color:#111;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
 }
 
 .main{
@@ -108,6 +121,21 @@ select{
     background:#ffd83d;
 }
 
+.secondary{
+    width:100%;
+    padding:12px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.secondary:hover{
+    background:#444;
+}
+
 .league-buttons{
     display:flex;
     gap:8px;
@@ -119,6 +147,10 @@ select{
     flex:1;
     min-width:150px;
 }
+
+/* ==================================================
+   FAHRZEUGE
+================================================== */
 
 .car-search{
     display:grid;
@@ -167,6 +199,10 @@ select{
     margin-top:5px;
 }
 
+/* ==================================================
+   FAHRER
+================================================== */
+
 .driver{
     display:flex;
     justify-content:space-between;
@@ -201,6 +237,96 @@ select{
     background:#e53935;
 }
 
+/* ==================================================
+   PROFILE
+================================================== */
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.profile-card{
+    background:#333;
+    border-radius:12px;
+    padding:15px;
+    cursor:pointer;
+    transition:0.15s;
+    text-align:center;
+}
+
+.profile-card:hover{
+    background:#444;
+    transform:translateY(-2px);
+}
+
+.profile-image-small{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid #f7c600;
+    background:#222;
+    margin-bottom:10px;
+}
+
+.profile-page{
+    text-align:center;
+}
+
+.profile-image-large{
+    width:160px;
+    height:160px;
+    object-fit:cover;
+    border-radius:50%;
+    border:5px solid #f7c600;
+    background:#222;
+}
+
+.profile-name{
+    font-size:28px;
+    font-weight:bold;
+    color:#f7c600;
+    margin-top:12px;
+}
+
+.profile-stat{
+    background:#333;
+    padding:15px;
+    border-radius:10px;
+    margin-top:10px;
+    text-align:left;
+}
+
+.profile-stat b{
+    color:#f7c600;
+}
+
+.profile-bio{
+    background:#333;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    text-align:left;
+    white-space:pre-wrap;
+}
+
+.default-profile{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#222;
+    color:#f7c600;
+    font-size:35px;
+    font-weight:bold;
+}
+
+/* ==================================================
+   TABELLEN
+================================================== */
+
 table{
     width:100%;
     border-collapse:collapse;
@@ -217,6 +343,10 @@ td{
 th{
     color:#f7c600;
 }
+
+/* ==================================================
+   MELDUNGEN
+================================================== */
 
 .notice{
     background:#3b3000;
@@ -254,10 +384,26 @@ th{
     margin-top:10px;
 }
 
+/* ==================================================
+   FOOTER
+================================================== */
+
 footer{
     text-align:center;
     color:#777;
     padding:30px;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media(max-width:800px){
+
+    .profile-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
 }
 
 @media(max-width:650px){
@@ -284,6 +430,15 @@ footer{
         padding:8px 5px;
     }
 
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-image-large{
+        width:130px;
+        height:130px;
+    }
+
 }
 
 </style>
@@ -294,6 +449,10 @@ footer{
 <body>
 
 
+<!-- ==================================================
+     HEADER
+================================================== -->
+
 <header>
 
 <h1>🏁 Stahlwerk Racing</h1>
@@ -302,6 +461,10 @@ footer{
 
 </header>
 
+
+<!-- ==================================================
+     NAVIGATION
+================================================== -->
 
 <nav>
 
@@ -317,6 +480,10 @@ Anmeldung
 Fahrer
 </button>
 
+<button onclick="show('profile')">
+Profile
+</button>
+
 <button onclick="show('tabelle')">
 Tabelle
 </button>
@@ -326,7 +493,6 @@ Admin
 </button>
 
 </nav>
-
 
 
 <!-- ==================================================
@@ -359,8 +525,27 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 
 </div>
 
-</section>
 
+<div class="card">
+
+<h2>👤 Fahrerprofile</h2>
+
+<p>
+Erstelle dein eigenes Stahlwerk-Racing-Fahrerprofil
+mit Profilbild, Fahrzeug, Meisterschaft und Punkten.
+</p>
+
+<button
+class="main"
+onclick="show('profileCreate')">
+
+👤 Profil erstellen
+
+</button>
+
+</div>
+
+</section>
 
 
 <!-- ==================================================
@@ -373,23 +558,19 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 
 <h2>🏎️ Fahrer anmelden</h2>
 
-
 <input
 id="name"
 placeholder="PSN Name"
 autocomplete="off">
-
 
 <input
 id="nr"
 type="number"
 placeholder="Startnummer">
 
-
 <label>
 Fahrzeug
 </label>
-
 
 <div class="car-search">
 
@@ -398,7 +579,6 @@ id="carSearch"
 placeholder="🔎 Fahrzeug suchen..."
 autocomplete="off"
 oninput="searchCars()">
-
 
 <select
 id="manufacturerFilter"
@@ -484,7 +664,6 @@ onclick="register()">
 </section>
 
 
-
 <!-- ==================================================
      FAHRER
 ================================================== -->
@@ -494,7 +673,6 @@ onclick="register()">
 <div class="card">
 
 <h2>🏎️ Fahrer</h2>
-
 
 <div class="league-buttons">
 
@@ -538,6 +716,156 @@ Fahrer werden geladen...
 </section>
 
 
+<!-- ==================================================
+     PROFILE ÜBERSICHT
+================================================== -->
+
+<section id="profile">
+
+<div class="card">
+
+<h2>👤 Fahrerprofile</h2>
+
+<p>
+Hier findest du die Profile der Stahlwerk-Racing-Fahrer.
+</p>
+
+<button
+class="main"
+onclick="show('profileCreate')">
+
+➕ Eigenes Profil erstellen / bearbeiten
+
+</button>
+
+<div id="profileList">
+
+<div class="loading">
+Profile werden geladen...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     PROFIL ERSTELLEN
+================================================== -->
+
+<section id="profileCreate">
+
+<div class="card">
+
+<h2>👤 Fahrerprofil erstellen</h2>
+
+<div class="notice">
+
+Dein Fahrer muss bereits in der Fahrer-Datenbank
+eingetragen sein.
+
+</div>
+
+
+<label>
+Dein PSN Name
+</label>
+
+<select id="profileDriver">
+
+<option value="">
+Fahrer auswählen...
+</option>
+
+</select>
+
+
+<label>
+Profilname
+</label>
+
+<input
+id="profileUsername"
+placeholder="z.B. StahlwerkFelix"
+maxlength="40">
+
+
+<label>
+Profilbild
+</label>
+
+<input
+id="profileImage"
+type="file"
+accept="image/png,image/jpeg,image/webp">
+
+
+<div
+id="profileImagePreview"
+style="text-align:center;margin:15px 0;">
+
+</div>
+
+
+<label>
+Über mich
+</label>
+
+<textarea
+id="profileBio"
+placeholder="Schreib etwas über dich..."
+maxlength="500"></textarea>
+
+
+<button
+class="main"
+onclick="saveProfile()">
+
+💾 Profil speichern
+
+</button>
+
+
+<div id="profileMessage"></div>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     EINZELNES PROFIL
+================================================== -->
+
+<section id="profileView">
+
+<div class="card profile-page">
+
+<button
+class="secondary"
+onclick="show('profile')">
+
+← Zurück zu den Profilen
+
+</button>
+
+
+<div
+id="profileViewContent"
+style="margin-top:20px;">
+
+<div class="loading">
+Profil wird geladen...
+</div>
+
+</div>
+
+</div>
+
+</section>
+
 
 <!-- ==================================================
      TABELLE
@@ -548,7 +876,6 @@ Fahrer werden geladen...
 <div class="card">
 
 <h2>🏆 Meisterschaft</h2>
-
 
 <div class="league-buttons">
 
@@ -613,7 +940,6 @@ onchange="setLeague(this.value)">
 </div>
 
 </section>
-
 
 
 <!-- ==================================================
@@ -698,13 +1024,15 @@ Punkte vergeben
 </section>
 
 
+<!-- ==================================================
+     FOOTER
+================================================== -->
 
 <footer>
 
 Stahlwerk Racing © 2026
 
 </footer>
-
 
 
 <!-- ==================================================
@@ -723,7 +1051,6 @@ Stahlwerk Racing © 2026
 const SUPABASE_URL =
 "https://apvstlhttuaeenqdcrtk.supabase.co";
 
-
 const SUPABASE_KEY =
 "sb_publishable_2CZK_bsj_HSMLlSax9eAGQ_xWF90ibr";
 
@@ -741,6 +1068,8 @@ const PASSWORD =
 ================================================== */
 
 let drivers = [];
+
+let profiles = [];
 
 let admin = false;
 
@@ -781,7 +1110,26 @@ async function supabaseRequest(url,options={}){
 
 
 /* ==================================================
-   GT7 FAHRZEUGLISTE PRÜFEN
+   HTML SICHER MACHEN
+================================================== */
+
+function escapeHTML(text){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+    div.textContent =
+    text ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* ==================================================
+   GT7 FAHRZEUGE PRÜFEN
 ================================================== */
 
 function validateCars(){
@@ -815,10 +1163,6 @@ function validateCars(){
 
 
     console.log(
-        "================================="
-    );
-
-    console.log(
         "GT7 FAHRZEUGLISTE"
     );
 
@@ -832,6 +1176,7 @@ function validateCars(){
         uniqueDuplicates.length
     );
 
+
     if(uniqueDuplicates.length > 0){
 
         console.error(
@@ -840,17 +1185,6 @@ function validateCars(){
         );
 
     }
-    else{
-
-        console.log(
-            "Keine doppelten Fahrzeuge gefunden."
-        );
-
-    }
-
-    console.log(
-        "================================="
-    );
 
 
     const count =
@@ -874,7 +1208,7 @@ function validateCars(){
 
 
 /* ==================================================
-   HERSTELLER LADEN
+   HERSTELLER
 ================================================== */
 
 function loadManufacturers(){
@@ -886,8 +1220,7 @@ function loadManufacturers(){
 
 
     if(
-        !filter
-        ||
+        !filter ||
         typeof GT7_CARS === "undefined"
     ){
 
@@ -903,8 +1236,7 @@ function loadManufacturers(){
                 car => car.manufacturer
             )
         )
-    ]
-    .sort(
+    ].sort(
         (a,b) =>
         a.localeCompare(
             b,
@@ -921,14 +1253,11 @@ function loadManufacturers(){
                 "option"
             );
 
-
             option.value =
             manufacturer;
 
-
             option.textContent =
             manufacturer;
-
 
             filter.appendChild(
                 option
@@ -946,26 +1275,41 @@ function loadManufacturers(){
 
 function searchCars(){
 
-    const search =
+    const searchInput =
     document.getElementById(
         "carSearch"
-    )
-    .value
-    .trim()
-    .toLowerCase();
+    );
 
-
-    const manufacturer =
+    const manufacturerInput =
     document.getElementById(
         "manufacturerFilter"
-    )
-    .value;
-
+    );
 
     const results =
     document.getElementById(
         "carResults"
     );
+
+
+    if(
+        !searchInput ||
+        !manufacturerInput ||
+        !results
+    ){
+
+        return;
+
+    }
+
+
+    const search =
+    searchInput.value
+    .trim()
+    .toLowerCase();
+
+
+    const manufacturer =
+    manufacturerInput.value;
 
 
     if(
@@ -993,30 +1337,23 @@ function searchCars(){
                 " "
                 +
                 car.name
-            )
-            .toLowerCase();
-
-
-            const matchesSearch =
-            search === ""
-            ||
-            fullName.includes(
-                search
-            );
-
-
-            const matchesManufacturer =
-            manufacturer === ""
-            ||
-            car.manufacturer
-            ===
-            manufacturer;
+            ).toLowerCase();
 
 
             return (
-                matchesSearch
+
+                (
+                    search === "" ||
+                    fullName.includes(search)
+                )
+
                 &&
-                matchesManufacturer
+
+                (
+                    manufacturer === "" ||
+                    car.manufacturer === manufacturer
+                )
+
             );
 
         }
@@ -1054,9 +1391,7 @@ function searchCars(){
 
 
             if(
-                selectedCar
-                ===
-                car.name
+                selectedCar === car.name
             ){
 
                 div.classList.add(
@@ -1069,17 +1404,11 @@ function searchCars(){
             div.innerHTML =
 
             `<b>
-            ${escapeHTML(
-                car.name
-            )}
+            ${escapeHTML(car.name)}
             </b>
-
             <br>
-
             <small>
-            ${escapeHTML(
-                car.manufacturer
-            )}
+            ${escapeHTML(car.manufacturer)}
             </small>`;
 
 
@@ -1108,14 +1437,11 @@ function searchCars(){
             "div"
         );
 
-
         info.className =
         "empty";
 
-
         info.textContent =
-        "Bitte genauer suchen. Es werden maximal 100 Treffer angezeigt.";
-
+        "Bitte genauer suchen. Maximal 100 Treffer werden angezeigt.";
 
         results.appendChild(
             info
@@ -1175,15 +1501,19 @@ async function loadDrivers(){
                 await response.text()
             );
 
-
+            const list =
             document.getElementById(
                 "driverList"
-            ).innerHTML =
+            );
 
-            `<div class="error">
-            Fahrer konnten nicht geladen werden.
-            </div>`;
+            if(list){
 
+                list.innerHTML =
+                `<div class="error">
+                Fahrer konnten nicht geladen werden.
+                </div>`;
+
+            }
 
             return;
 
@@ -1194,6 +1524,8 @@ async function loadDrivers(){
         await response.json();
 
 
+        populateProfileDrivers();
+
         render();
 
     }
@@ -1202,14 +1534,851 @@ async function loadDrivers(){
 
         console.error(error);
 
+    }
+
+}
+
+
+/* ==================================================
+   PROFILE LADEN
+================================================== */
+
+async function loadProfiles(){
+
+    try{
+
+        const response =
+        await supabaseRequest(
+
+            SUPABASE_URL +
+            "/rest/v1/driver_profiles?select=*&order=id.asc"
+
+        );
+
+
+        if(!response.ok){
+
+            console.error(
+                await response.text()
+            );
+
+            return;
+
+        }
+
+
+        profiles =
+        await response.json();
+
+
+        renderProfiles();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* ==================================================
+   PROFILE FAHRER SELECT
+================================================== */
+
+function populateProfileDrivers(){
+
+    const select =
+    document.getElementById(
+        "profileDriver"
+    );
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+    select.innerHTML =
+
+    `<option value="">
+    Fahrer auswählen...
+    </option>`;
+
+
+    drivers.forEach(
+        driver => {
+
+            const option =
+            document.createElement(
+                "option"
+            );
+
+            option.value =
+            driver.id;
+
+            option.textContent =
+            "#" +
+            driver.nummer +
+            " " +
+            driver.name;
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   PROFIL SPEICHERN
+================================================== */
+
+async function saveProfile(){
+
+    const driverId =
+    document.getElementById(
+        "profileDriver"
+    ).value;
+
+
+    const username =
+    document.getElementById(
+        "profileUsername"
+    ).value.trim();
+
+
+    const bio =
+    document.getElementById(
+        "profileBio"
+    ).value.trim();
+
+
+    const imageInput =
+    document.getElementById(
+        "profileImage"
+    );
+
+
+    const message =
+    document.getElementById(
+        "profileMessage"
+    );
+
+
+    if(!driverId){
+
+        message.innerHTML =
+        `<div class="error">
+        Bitte deinen Fahrer auswählen.
+        </div>`;
+
+        return;
+
+    }
+
+
+    if(!username){
+
+        message.innerHTML =
+        `<div class="error">
+        Bitte einen Profilnamen eingeben.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const driver =
+    drivers.find(
+        d =>
+        String(d.id)
+        ===
+        String(driverId)
+    );
+
+
+    if(!driver){
+
+        message.innerHTML =
+        `<div class="error">
+        Fahrer nicht gefunden.
+        </div>`;
+
+        return;
+
+    }
+
+
+    try{
+
+        let profile =
+        profiles.find(
+            p =>
+            Number(p.driver_id)
+            ===
+            Number(driverId)
+        );
+
+
+        let imageUrl =
+        profile
+        ?
+        profile.profile_image
+        :
+        null;
+
+
+        /* =========================
+           BILD HOCHLADEN
+        ========================= */
+
+        if(
+            imageInput.files &&
+            imageInput.files.length > 0
+        ){
+
+            const file =
+            imageInput.files[0];
+
+
+            if(
+                file.size >
+                5 * 1024 * 1024
+            ){
+
+                message.innerHTML =
+                `<div class="error">
+                Das Bild darf maximal 5 MB groß sein.
+                </div>`;
+
+                return;
+
+            }
+
+
+            const allowed =
+            [
+                "image/jpeg",
+                "image/png",
+                "image/webp"
+            ];
+
+
+            if(
+                !allowed.includes(
+                    file.type
+                )
+            ){
+
+                message.innerHTML =
+                `<div class="error">
+                Bitte JPG, PNG oder WEBP verwenden.
+                </div>`;
+
+                return;
+
+            }
+
+
+            const extension =
+            file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+            const fileName =
+            "driver-" +
+            driverId +
+            "-" +
+            Date.now() +
+            "." +
+            extension;
+
+
+            const uploadResponse =
+            await supabaseRequest(
+
+                SUPABASE_URL +
+                "/storage/v1/object/profile-images/"
+                +
+                fileName,
+
+                {
+
+                    method:"POST",
+
+                    body:file,
+
+                    headers:{
+
+                        "Content-Type":
+                        file.type
+
+                    }
+
+                }
+
+            );
+
+
+            if(!uploadResponse.ok){
+
+                const errorText =
+                await uploadResponse.text();
+
+                console.error(
+                    errorText
+                );
+
+                message.innerHTML =
+                `<div class="error">
+                Profilbild konnte nicht hochgeladen werden.
+                </div>`;
+
+                return;
+
+            }
+
+
+            imageUrl =
+            SUPABASE_URL +
+            "/storage/v1/object/public/profile-images/"
+            +
+            fileName;
+
+        }
+
+
+        /* =========================
+           PROFIL ERSTELLEN
+        ========================= */
+
+        if(!profile){
+
+            const response =
+            await supabaseRequest(
+
+                SUPABASE_URL +
+                "/rest/v1/driver_profiles",
+
+                {
+
+                    method:"POST",
+
+                    headers:{
+
+                        "Prefer":
+                        "return=representation"
+
+                    },
+
+                    body:
+                    JSON.stringify({
+
+                        driver_id:
+                        Number(driverId),
+
+                        username:
+                        username,
+
+                        profile_image:
+                        imageUrl,
+
+                        bio:
+                        bio
+
+                    })
+
+                }
+
+            );
+
+
+            if(!response.ok){
+
+                console.error(
+                    await response.text()
+                );
+
+                message.innerHTML =
+                `<div class="error">
+                Profil konnte nicht erstellt werden.
+                Prüfe, ob der Profilname bereits verwendet wird.
+                </div>`;
+
+                return;
+
+            }
+
+        }
+
+        else{
+
+            /* =========================
+               PROFIL AKTUALISIEREN
+            ========================= */
+
+            const response =
+            await supabaseRequest(
+
+                SUPABASE_URL +
+                "/rest/v1/driver_profiles?id=eq."
+                +
+                profile.id,
+
+                {
+
+                    method:"PATCH",
+
+                    headers:{
+
+                        "Prefer":
+                        "return=minimal"
+
+                    },
+
+                    body:
+                    JSON.stringify({
+
+                        username:
+                        username,
+
+                        profile_image:
+                        imageUrl,
+
+                        bio:
+                        bio
+
+                    })
+
+                }
+
+            );
+
+
+            if(!response.ok){
+
+                console.error(
+                    await response.text()
+                );
+
+                message.innerHTML =
+                `<div class="error">
+                Profil konnte nicht aktualisiert werden.
+                </div>`;
+
+                return;
+
+            }
+
+        }
+
+
+        message.innerHTML =
+        `<div class="success">
+        ✅ Profil erfolgreich gespeichert!
+        </div>`;
+
+
+        await loadProfiles();
+
+
+        setTimeout(
+            function(){
+
+                show("profile");
+
+            },
+            800
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        message.innerHTML =
+        `<div class="error">
+        Fehler beim Speichern des Profils.
+        </div>`;
+
+    }
+
+}
+
+
+/* ==================================================
+   PROFILE ANZEIGEN
+================================================== */
+
+function renderProfiles(){
+
+    const list =
+    document.getElementById(
+        "profileList"
+    );
+
+
+    if(!list){
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    if(profiles.length === 0){
+
+        list.innerHTML =
+        `<div class="empty">
+        Noch keine Fahrerprofile vorhanden.
+        </div>`;
+
+        return;
+
+    }
+
+
+    const grid =
+    document.createElement(
+        "div"
+    );
+
+    grid.className =
+    "profile-grid";
+
+
+    profiles.forEach(
+        profile => {
+
+            const driver =
+            drivers.find(
+                d =>
+                Number(d.id)
+                ===
+                Number(profile.driver_id)
+            );
+
+
+            if(!driver){
+
+                return;
+
+            }
+
+
+            const card =
+            document.createElement(
+                "div"
+            );
+
+            card.className =
+            "profile-card";
+
+
+            let imageHTML;
+
+
+            if(profile.profile_image){
+
+                imageHTML =
+
+                `<img
+                class="profile-image-small"
+                src="${escapeHTML(profile.profile_image)}"
+                alt="Profilbild">`;
+
+            }
+
+            else{
+
+                const letter =
+                escapeHTML(
+                    (
+                        profile.username
+                        ||
+                        driver.name
+                        ||
+                        "?"
+                    )
+                    .charAt(0)
+                    .toUpperCase()
+                );
+
+
+                imageHTML =
+
+                `<div
+                class="profile-image-small default-profile">
+
+                ${letter}
+
+                </div>`;
+
+            }
+
+
+            card.innerHTML =
+
+            imageHTML +
+
+            `<div>
+            <b>
+            ${escapeHTML(profile.username)}
+            </b>
+            </div>
+
+            <small>
+            🏎️ ${escapeHTML(driver.auto)}
+            <br>
+            🏆 ${Number(driver.points || 0)} Punkte
+            </small>`;
+
+
+            card.onclick =
+            function(){
+
+                openProfile(
+                    profile.id
+                );
+
+            };
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    list.appendChild(
+        grid
+    );
+
+}
+
+
+/* ==================================================
+   EINZELNES PROFIL ÖFFNEN
+================================================== */
+
+function openProfile(profileId){
+
+    const profile =
+    profiles.find(
+        p =>
+        Number(p.id)
+        ===
+        Number(profileId)
+    );
+
+
+    if(!profile){
+
+        return;
+
+    }
+
+
+    const driver =
+    drivers.find(
+        d =>
+        Number(d.id)
+        ===
+        Number(profile.driver_id)
+    );
+
+
+    if(!driver){
+
+        return;
+
+    }
+
+
+    const content =
+    document.getElementById(
+        "profileViewContent"
+    );
+
+
+    let imageHTML;
+
+
+    if(profile.profile_image){
+
+        imageHTML =
+
+        `<img
+        class="profile-image-large"
+        src="${escapeHTML(profile.profile_image)}"
+        alt="Profilbild">`;
+
+    }
+
+    else{
+
+        const letter =
+        escapeHTML(
+            profile.username
+            .charAt(0)
+            .toUpperCase()
+        );
+
+
+        imageHTML =
+
+        `<div
+        class="profile-image-large default-profile"
+        style="margin:auto;">
+
+        ${letter}
+
+        </div>`;
+
+    }
+
+
+    content.innerHTML =
+
+    imageHTML +
+
+    `<div class="profile-name">
+    ${escapeHTML(profile.username)}
+    </div>
+
+    <div class="profile-stat">
+
+    <b>🎮 PSN Name</b><br>
+    ${escapeHTML(driver.name)}
+
+    </div>
+
+    <div class="profile-stat">
+
+    <b>🔢 Startnummer</b><br>
+    #${escapeHTML(driver.nummer)}
+
+    </div>
+
+    <div class="profile-stat">
+
+    <b>🏎️ Fahrzeug</b><br>
+    ${escapeHTML(driver.auto)}
+
+    </div>
+
+    <div class="profile-stat">
+
+    <b>🏆 Meisterschaft</b><br>
+    ${escapeHTML(driver.meisterschaft)}
+
+    </div>
+
+    <div class="profile-stat">
+
+    <b>🗓️ Renntermin</b><br>
+    ${escapeHTML(driver.cup)}
+
+    </div>
+
+    <div class="profile-stat">
+
+    <b>⭐ Punkte</b><br>
+    ${Number(driver.points || 0)}
+
+    </div>
+
+    <div class="profile-bio">
+
+    <b>📝 Über mich</b>
+
+    <br><br>
+
+    ${
+        profile.bio
+        ?
+        escapeHTML(profile.bio)
+        :
+        "Dieser Fahrer hat noch keine Beschreibung."
+    }
+
+    </div>
+
+    `;
+
+
+    show("profileView");
+
+}
+
+
+/* ==================================================
+   PROFIL LADEN / BEARBEITEN
+================================================== */
+
+function prepareProfileEditor(){
+
+    const select =
+    document.getElementById(
+        "profileDriver"
+    );
+
+
+    if(!select){
+
+        return;
+
+    }
+
+
+    const current =
+    select.value;
+
+
+    if(!current){
+
+        return;
+
+    }
+
+
+    const profile =
+    profiles.find(
+        p =>
+        Number(p.driver_id)
+        ===
+        Number(current)
+    );
+
+
+    if(profile){
 
         document.getElementById(
-            "driverList"
-        ).innerHTML =
+            "profileUsername"
+        ).value =
+        profile.username || "";
 
-        `<div class="error">
-        Keine Verbindung zur Datenbank.
-        </div>`;
+
+        document.getElementById(
+            "profileBio"
+        ).value =
+        profile.bio || "";
 
     }
 
@@ -1381,7 +2550,6 @@ async function register(){
                 await response.text()
             );
 
-
             message.innerHTML =
             `<div class="error">
             Fahrer konnte nicht eingetragen werden.
@@ -1448,7 +2616,6 @@ async function register(){
 
         console.error(error);
 
-
         message.innerHTML =
         `<div class="error">
         Fehler bei der Verbindung zur Datenbank.
@@ -1460,7 +2627,7 @@ async function register(){
 
 
 /* ==================================================
-   SEITEN WECHSEL
+   SEITENWECHSEL
 ================================================== */
 
 function show(id){
@@ -1484,6 +2651,20 @@ function show(id){
         section.classList.add(
             "active"
         );
+
+    }
+
+
+    if(id === "profile"){
+
+        renderProfiles();
+
+    }
+
+
+    if(id === "profileCreate"){
+
+        populateProfileDrivers();
 
     }
 
@@ -1523,7 +2704,7 @@ function setLeague(league){
 
 
 /* ==================================================
-   BUTTONS AKTUALISIEREN
+   BUTTONS
 ================================================== */
 
 function updateLeagueButtons(){
@@ -1636,9 +2817,7 @@ function render(){
 
 
         if(
-            filteredDrivers.length
-            ===
-            0
+            filteredDrivers.length === 0
         ){
 
             list.innerHTML =
@@ -1652,17 +2831,59 @@ function render(){
         filteredDrivers.forEach(
             driver => {
 
-                list.innerHTML += `
+                const profile =
+                profiles.find(
+                    p =>
+                    Number(p.driver_id)
+                    ===
+                    Number(driver.id)
+                );
 
-                <div class="driver">
+
+                const profileImage =
+                profile &&
+                profile.profile_image
+                ?
+                `<img
+                src="${escapeHTML(profile.profile_image)}"
+                class="profile-image-small"
+                alt="Profilbild">`
+                :
+                `<div
+                class="profile-image-small default-profile">
+
+                ${
+                    escapeHTML(
+                        driver.name
+                        .charAt(0)
+                        .toUpperCase()
+                    )
+                }
+
+                </div>`;
+
+
+                const div =
+                document.createElement(
+                    "div"
+                );
+
+                div.className =
+                "driver";
+
+
+                div.innerHTML =
+
+                `<div
+                style="display:flex;align-items:center;gap:12px;">
+
+                    ${profileImage}
 
                     <div class="driver-info">
 
                         <b>
-                        #${driver.nummer}
-                        ${escapeHTML(
-                            driver.name
-                        )}
+                        #${escapeHTML(driver.nummer)}
+                        ${escapeHTML(driver.name)}
                         </b>
 
                         <br>
@@ -1670,37 +2891,51 @@ function render(){
                         <small>
 
                         🏎️
-                        ${escapeHTML(
-                            driver.auto
-                        )}
+                        ${escapeHTML(driver.auto)}
 
                         <br>
 
-                        🗓️ Renntermin:
-                        ${escapeHTML(
-                            driver.cup
-                        )}
+                        🗓️
+                        ${escapeHTML(driver.cup)}
 
                         <br>
 
-                        🏆 Meisterschaft:
-                        ${escapeHTML(
-                            driver.meisterschaft
-                        )}
+                        🏆
+                        ${escapeHTML(driver.meisterschaft)}
 
                         </small>
 
                     </div>
 
-                    <div class="points">
-
-                    ${driver.points || 0} P
-
-                    </div>
-
                 </div>
 
-                `;
+                <div class="points">
+
+                ${Number(driver.points || 0)} P
+
+                </div>`;
+
+
+                if(profile){
+
+                    div.style.cursor =
+                    "pointer";
+
+                    div.onclick =
+                    function(){
+
+                        openProfile(
+                            profile.id
+                        );
+
+                    };
+
+                }
+
+
+                list.appendChild(
+                    div
+                );
 
             }
         );
@@ -1772,20 +3007,16 @@ function render(){
                     </td>
 
                     <td>
-                    #${driver.nummer}
-                    ${escapeHTML(
-                        driver.name
-                    )}
+                    #${escapeHTML(driver.nummer)}
+                    ${escapeHTML(driver.name)}
                     </td>
 
                     <td>
-                    ${escapeHTML(
-                        driver.auto
-                    )}
+                    ${escapeHTML(driver.auto)}
                     </td>
 
                     <td>
-                    ${driver.points || 0}
+                    ${Number(driver.points || 0)}
                     </td>
 
                 </tr>
@@ -1818,17 +3049,12 @@ function render(){
 
                 select.innerHTML += `
 
-                <option
-                value="${index}">
+                <option value="${index}">
 
-                #${driver.nummer}
-                ${escapeHTML(
-                    driver.name
-                )}
+                #${escapeHTML(driver.nummer)}
+                ${escapeHTML(driver.name)}
                 -
-                ${escapeHTML(
-                    driver.meisterschaft
-                )}
+                ${escapeHTML(driver.meisterschaft)}
 
                 </option>
 
@@ -1870,10 +3096,8 @@ function render(){
 
                     <span>
 
-                    #${driver.nummer}
-                    ${escapeHTML(
-                        driver.name
-                    )}
+                    #${escapeHTML(driver.nummer)}
+                    ${escapeHTML(driver.name)}
 
                     </span>
 
@@ -1912,8 +3136,7 @@ function render(){
 
 
     if(
-        loginBox
-        &&
+        loginBox &&
         adminPanel
     ){
 
@@ -1938,27 +3161,6 @@ function render(){
         }
 
     }
-
-}
-
-
-/* ==================================================
-   HTML SICHER MACHEN
-================================================== */
-
-function escapeHTML(text){
-
-    const div =
-    document.createElement(
-        "div"
-    );
-
-
-    div.textContent =
-    text ?? "";
-
-
-    return div.innerHTML;
 
 }
 
@@ -2001,7 +3203,7 @@ function login(){
 
 
 /* ==================================================
-   PUNKTE VERGEBEN
+   PUNKTE
 ================================================== */
 
 async function givePoints(){
@@ -2058,9 +3260,7 @@ async function givePoints(){
 
 
     const newPoints =
-    Number(
-        driver.points || 0
-    )
+    Number(driver.points || 0)
     +
     points;
 
@@ -2098,7 +3298,6 @@ async function givePoints(){
                 await response.text()
             );
 
-
             message.innerHTML =
             `<div class="error">
             Punkte konnten nicht gespeichert werden.
@@ -2125,7 +3324,6 @@ async function givePoints(){
     catch(error){
 
         console.error(error);
-
 
         message.innerHTML =
         `<div class="error">
@@ -2190,7 +3388,6 @@ async function removeDriver(index){
                 await response.text()
             );
 
-
             alert(
                 "Fahrer konnte nicht gelöscht werden."
             );
@@ -2202,12 +3399,13 @@ async function removeDriver(index){
 
         await loadDrivers();
 
+        await loadProfiles();
+
     }
 
     catch(error){
 
         console.error(error);
-
 
         alert(
             "Fehler beim Löschen."
@@ -2216,6 +3414,144 @@ async function removeDriver(index){
     }
 
 }
+
+
+/* ==================================================
+   PROFIL SELECT ÄNDERUNG
+================================================== */
+
+document.addEventListener(
+    "change",
+    function(event){
+
+        if(
+            event.target.id
+            ===
+            "profileDriver"
+        ){
+
+            const driverId =
+            event.target.value;
+
+
+            if(!driverId){
+
+                document.getElementById(
+                    "profileUsername"
+                ).value = "";
+
+
+                document.getElementById(
+                    "profileBio"
+                ).value = "";
+
+                return;
+
+            }
+
+
+            const profile =
+            profiles.find(
+                p =>
+                Number(p.driver_id)
+                ===
+                Number(driverId)
+            );
+
+
+            if(profile){
+
+                document.getElementById(
+                    "profileUsername"
+                ).value =
+                profile.username || "";
+
+
+                document.getElementById(
+                    "profileBio"
+                ).value =
+                profile.bio || "";
+
+            }
+
+            else{
+
+                document.getElementById(
+                    "profileUsername"
+                ).value = "";
+
+
+                document.getElementById(
+                    "profileBio"
+                ).value = "";
+
+            }
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   PROFILBILD VORSCHAU
+================================================== */
+
+document.addEventListener(
+    "change",
+    function(event){
+
+        if(
+            event.target.id
+            !==
+            "profileImage"
+        ){
+
+            return;
+
+        }
+
+
+        const file =
+        event.target.files[0];
+
+
+        const preview =
+        document.getElementById(
+            "profileImagePreview"
+        );
+
+
+        if(!file){
+
+            preview.innerHTML = "";
+
+            return;
+
+        }
+
+
+        const reader =
+        new FileReader();
+
+
+        reader.onload =
+        function(e){
+
+            preview.innerHTML =
+
+            `<img
+            src="${e.target.result}"
+            class="profile-image-large"
+            alt="Vorschau">`;
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+    }
+);
 
 
 /* ==================================================
@@ -2230,7 +3566,11 @@ searchCars();
 
 loadDrivers();
 
+loadProfiles();
+
 </script>
 
+
 </body>
+
 </html>
