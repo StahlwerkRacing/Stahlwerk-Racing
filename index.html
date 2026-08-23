@@ -403,7 +403,6 @@ Fahrer werden geladen...
 
 <table>
 
-<table>
 
 <thead>
 
@@ -690,7 +689,7 @@ const data = {
     points: 0
 };
 
-    };
+    
 
 
     try{
@@ -891,11 +890,7 @@ const liga = document.getElementById("filter").value;
 
 const sorted = drivers
   .filter(driver => driver.meisterschaft === liga)
-  .sort((a, b) => Number(b.points || 0) - Number(a.points || 0)); );
-
-        }
-    );
-
+  .sort((a, b) => Number(b.points || 0) - Number(a.points || 0));
 
     sorted.forEach(
         function(driver,index){
