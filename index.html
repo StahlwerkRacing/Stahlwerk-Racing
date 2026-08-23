@@ -337,13 +337,21 @@ placeholder="Startnummer">
 <option>Sonntag</option>
 
 </select>
-<label>Meisterschaft</label>
+<div style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
 
-<select id="meisterschaft">
-  <option>Unter der Woche</option>
-  <option>Samstag</option>
-  <option>Sonntag</option>
-</select>
+<button class="main" style="flex:1;" onclick="setLeague('Unter der Woche')">
+🏆 Unter der Woche
+</button>
+
+<button class="main" style="flex:1;" onclick="setLeague('Samstag')">
+🏁 Samstag
+</button>
+
+<button class="main" style="flex:1;" onclick="setLeague('Sonntag')">
+🏎️ Sonntag
+</button>
+
+</div>
 
 <button
 class="main"
