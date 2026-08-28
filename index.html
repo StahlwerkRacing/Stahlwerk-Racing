@@ -395,6 +395,53 @@ footer{
 }
 
 /* ==================================================
+   COUNTDOWN
+================================================== */
+.countdown-card{
+    text-align:center;
+    border:2px solid #f7c600;
+}
+.countdown-title{
+    color:#f7c600;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+.countdown-subtitle{
+    color:#ccc;
+    margin-bottom:15px;
+}
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+.countdown-box{
+    background:#333;
+    border-radius:10px;
+    padding:14px 8px;
+}
+.countdown-number{
+    display:block;
+    color:#f7c600;
+    font-size:30px;
+    font-weight:bold;
+}
+.countdown-label{
+    display:block;
+    color:#aaa;
+    font-size:12px;
+    margin-top:4px;
+}
+.countdown-finished{
+    color:#f7c600;
+    font-size:22px;
+    font-weight:bold;
+    padding:15px;
+}
+
+/* ==================================================
    RESPONSIVE
 ================================================== */
 
@@ -3552,6 +3599,64 @@ document.addEventListener(
 
     }
 );
+
+
+/* ==================================================
+   COUNTDOWN
+================================================== */
+
+function getNextRaceDate(){
+    const now = new Date();
+    const race = new Date(now);
+
+    // Nächstes Rennen: Samstag um 20:00 Uhr (deutsche Ortszeit)
+    const day = now.getDay(); // Sonntag=0, Samstag=6
+    let daysUntilSaturday = (6 - day + 7) % 7;
+
+    race.setDate(now.getDate() + daysUntilSaturday);
+    race.setHours(20, 0, 0, 0);
+
+    // Wenn das Rennen heute bereits vorbei ist, nächste Woche nehmen
+    if(race.getTime() <= now.getTime()){
+        race.setDate(race.getDate() + 7);
+    }
+
+    return race;
+}
+
+let nextRaceDate = getNextRaceDate();
+
+function updateCountdown(){
+    const now = new Date();
+
+    if(now.getTime() >= nextRaceDate.getTime()){
+        nextRaceDate = getNextRaceDate();
+    }
+
+    const difference = nextRaceDate.getTime() - now.getTime();
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((difference / (1000 * 60)) % 60);
+    const seconds = Math.floor((difference / 1000) % 60);
+
+    const daysEl = document.getElementById("countdownDays");
+    const hoursEl = document.getElementById("countdownHours");
+    const minutesEl = document.getElementById("countdownMinutes");
+    const secondsEl = document.getElementById("countdownSeconds");
+
+    if(!daysEl || !hoursEl || !minutesEl || !secondsEl){
+        return;
+    }
+
+    daysEl.textContent = String(days).padStart(2,"0");
+    hoursEl.textContent = String(hours).padStart(2,"0");
+    minutesEl.textContent = String(minutes).padStart(2,"0");
+    secondsEl.textContent = String(seconds).padStart(2,"0");
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
 
 
 /* ==================================================
