@@ -2587,21 +2587,43 @@ async function register(){
     }
 
 
-    const nameExists =
+    /*
+       WICHTIG:
+
+       Der PSN-Name wird jetzt NICHT mehr
+       global geprüft.
+
+       Ein Fahrer darf also z.B.:
+
+       Samstag
+       Sonntag
+       Unter der Woche
+
+       gleichzeitig fahren.
+
+       Er darf sich aber nicht zweimal
+       für denselben Cup anmelden.
+    */
+
+    const nameExistsInCup =
     drivers.some(
         driver =>
         String(driver.name)
         .toLowerCase()
         ===
         name.toLowerCase()
+        &&
+        String(driver.cup)
+        ===
+        String(cup)
     );
 
 
-    if(nameExists){
+    if(nameExistsInCup){
 
         message.innerHTML =
         `<div class="error">
-        Dieser PSN Name ist bereits angemeldet.
+        Dieser PSN Name ist bereits für diesen Cup angemeldet.
         </div>`;
 
         return;
@@ -2609,20 +2631,38 @@ async function register(){
     }
 
 
-    const numberExists =
+    /*
+       Auch die Startnummer wird nur
+       innerhalb des ausgewählten Cups
+       geprüft.
+
+       Beispiel:
+
+       Samstag #10    ✅
+       Sonntag #10    ✅
+       Unter der Woche #10 ✅
+
+       Samstag #10    ❌
+    */
+
+    const numberExistsInCup =
     drivers.some(
         driver =>
         Number(driver.nummer)
         ===
         Number(nummer)
+        &&
+        String(driver.cup)
+        ===
+        String(cup)
     );
 
 
-    if(numberExists){
+    if(numberExistsInCup){
 
         message.innerHTML =
         `<div class="error">
-        Diese Startnummer ist bereits vergeben.
+        Diese Startnummer ist bereits für diesen Cup vergeben.
         </div>`;
 
         return;
