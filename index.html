@@ -1,237 +1,1129 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Stahlwerk Racing</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#111;color:white}
-header{background:#222;padding:25px;text-align:center;border-bottom:4px solid #f7c600}
-h1{color:#f7c600;margin:0}
-header p{margin-bottom:0;color:#ccc}
-nav{display:flex;justify-content:center;gap:8px;background:#1a1a1a;padding:10px;flex-wrap:wrap}
-nav button,.league-buttons button{background:#333;color:white;border:none;padding:10px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
-nav button:hover,.league-buttons button:hover,.league-buttons button.active{background:#f7c600;color:#111}
-section{display:none;padding:20px;max-width:1100px;margin:auto}
-section.active{display:block}
-.card{background:#222;border-radius:12px;padding:20px;margin-bottom:15px}
-input,select,textarea{width:100%;padding:11px;margin:8px 0;border:none;border-radius:8px;background:#fff;color:#111}
-textarea{min-height:110px;resize:vertical}
-.main{width:100%;padding:12px;background:#f7c600;color:#111;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
-.main:hover{background:#ffd83d}
-.secondary{width:100%;padding:12px;background:#333;color:white;border:none;border-radius:8px;font-weight:bold;cursor:pointer}
-.secondary:hover{background:#444}
-.league-buttons{display:flex;gap:8px;margin:15px 0;flex-wrap:wrap}
-.league-buttons button{flex:1;min-width:150px}
-.car-search{display:grid;grid-template-columns:2fr 1fr;gap:10px}
-.car-results{max-height:350px;overflow-y:auto;margin-top:5px;border-radius:8px}
-.car-result{background:#333;padding:12px;margin-bottom:5px;border-radius:7px;cursor:pointer;transition:.15s}
-.car-result:hover,.car-result.selected{background:#f7c600;color:#111}
-.car-result.selected{font-weight:bold}
-.selected-car{background:#3b3000;color:#ffe082;padding:12px;border-radius:8px;margin:10px 0}
-.car-count{color:#aaa;font-size:13px;margin-top:5px}
-.driver{display:flex;justify-content:space-between;align-items:center;background:#333;padding:12px;border-radius:8px;margin-top:8px;gap:10px}
-.driver-info{line-height:1.5}
-.points{font-weight:bold;color:#f7c600;white-space:nowrap}
-.small{background:#c62828;color:white;border:none;padding:7px 10px;border-radius:6px;cursor:pointer}
-.small:hover{background:#e53935}
-.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:15px}
-.profile-card{background:#333;border-radius:12px;padding:15px;cursor:pointer;transition:.15s;text-align:center}
-.profile-card:hover{background:#444;transform:translateY(-2px)}
-.profile-image-small{width:90px;height:90px;object-fit:cover;border-radius:50%;border:3px solid #f7c600;background:#222;margin-bottom:10px}
-.profile-page{text-align:center}
-.profile-image-large{width:160px;height:160px;object-fit:cover;border-radius:50%;border:5px solid #f7c600;background:#222}
-.profile-name{font-size:28px;font-weight:bold;color:#f7c600;margin-top:12px}
-.profile-stat{background:#333;padding:15px;border-radius:10px;margin-top:10px;text-align:left}
-.profile-stat b{color:#f7c600}
-.profile-bio{background:#333;border-radius:10px;padding:15px;margin-top:15px;text-align:left;white-space:pre-wrap}
-.default-profile{display:flex;align-items:center;justify-content:center;background:#222;color:#f7c600;font-size:35px;font-weight:bold}
-table{width:100%;border-collapse:collapse;margin-top:15px}
-th,td{padding:12px 10px;border-bottom:1px solid #444;text-align:left;vertical-align:middle}
-th{color:#f7c600}
-.admin-points-input{width:110px!important;margin:0!important;padding:9px!important}
-.admin-save-button{width:auto!important;padding:9px 12px!important}
-.notice{background:#3b3000;padding:12px;border-radius:8px;color:#ffe082;margin-bottom:12px}
-.loading{text-align:center;color:#aaa;padding:20px}
-.empty{text-align:center;color:#aaa;padding:20px}
-.error{background:#4a1515;color:#ffb3b3;padding:12px;border-radius:8px;margin-top:10px}
-.success{background:#164d20;color:#b8ffbf;padding:12px;border-radius:8px;margin-top:10px}
-footer{text-align:center;color:#777;padding:30px}
-.countdown-card{text-align:center;border:2px solid #f7c600}
-.countdown-title{color:#f7c600;font-size:24px;font-weight:bold;margin-bottom:8px}
-.countdown-subtitle{color:#ccc;margin-bottom:15px}
-.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:15px}
-.countdown-box{background:#333;border-radius:10px;padding:14px 8px}
-.countdown-number{display:block;color:#f7c600;font-size:30px;font-weight:bold}
-.countdown-label{display:block;color:#aaa;font-size:12px;margin-top:4px}
-@media(max-width:800px){.profile-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:650px){.car-search{grid-template-columns:1fr}.driver{flex-direction:column;align-items:flex-start}.points{align-self:flex-end}table{font-size:13px}th,td{padding:8px 5px}.profile-grid{grid-template-columns:1fr}.profile-image-large{width:130px;height:130px}}
+
+/* ==================================================
+   GRUNDLAYOUT
+================================================== */
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#111;
+    color:white;
+}
+
+header{
+    background:#222;
+    padding:25px;
+    text-align:center;
+    border-bottom:4px solid #f7c600;
+}
+
+h1{
+    color:#f7c600;
+    margin:0;
+}
+
+header p{
+    margin-bottom:0;
+    color:#ccc;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    background:#1a1a1a;
+    padding:10px;
+    flex-wrap:wrap;
+}
+
+nav button,
+.league-buttons button{
+    background:#333;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+nav button:hover,
+.league-buttons button:hover,
+.league-buttons button.active{
+    background:#f7c600;
+    color:#111;
+}
+
+section{
+    display:none;
+    padding:20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+section.active{
+    display:block;
+}
+
+.card{
+    background:#222;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:15px;
+}
+
+/* ==================================================
+   DUNKLE EINGABEFELDER
+================================================== */
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:11px;
+    margin:8px 0;
+    border:1px solid #555;
+    border-radius:8px;
+    background:#333;
+    color:#fff;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#999;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#f7c600;
+    box-shadow:0 0 0 1px #f7c600;
+}
+
+select option{
+    background:#333;
+    color:#fff;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.main{
+    width:100%;
+    padding:12px;
+    background:#f7c600;
+    color:#111;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.main:hover{
+    background:#ffd83d;
+}
+
+.secondary{
+    width:100%;
+    padding:12px;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.secondary:hover{
+    background:#444;
+}
+
+.league-buttons{
+    display:flex;
+    gap:8px;
+    margin:15px 0;
+    flex-wrap:wrap;
+}
+
+.league-buttons button{
+    flex:1;
+    min-width:150px;
+}
+
+/* ==================================================
+   FAHRZEUGE
+================================================== */
+
+.car-search{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+}
+
+.car-results{
+    max-height:350px;
+    overflow-y:auto;
+    margin-top:5px;
+    border-radius:8px;
+}
+
+.car-result{
+    background:#333;
+    padding:12px;
+    margin-bottom:5px;
+    border-radius:7px;
+    cursor:pointer;
+    transition:0.15s;
+}
+
+.car-result:hover{
+    background:#f7c600;
+    color:#111;
+}
+
+.car-result.selected{
+    background:#f7c600;
+    color:#111;
+    font-weight:bold;
+}
+
+.selected-car{
+    background:#3b3000;
+    color:#ffe082;
+    padding:12px;
+    border-radius:8px;
+    margin:10px 0;
+}
+
+.car-count{
+    color:#aaa;
+    font-size:13px;
+    margin-top:5px;
+}
+
+/* ==================================================
+   FAHRER
+================================================== */
+
+.driver{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#333;
+    padding:12px;
+    border-radius:8px;
+    margin-top:8px;
+    gap:10px;
+}
+
+.driver-info{
+    line-height:1.5;
+}
+
+.points{
+    font-weight:bold;
+    color:#f7c600;
+    white-space:nowrap;
+}
+
+.small{
+    background:#c62828;
+    color:white;
+    border:none;
+    padding:7px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.small:hover{
+    background:#e53935;
+}
+
+/* ==================================================
+   PROFILE
+================================================== */
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.profile-card{
+    background:#333;
+    border-radius:12px;
+    padding:15px;
+    cursor:pointer;
+    transition:0.15s;
+    text-align:center;
+}
+
+.profile-card:hover{
+    background:#444;
+    transform:translateY(-2px);
+}
+
+.profile-image-small{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:50%;
+    border:3px solid #f7c600;
+    background:#222;
+    margin-bottom:10px;
+}
+
+.profile-page{
+    text-align:center;
+}
+
+.profile-image-large{
+    width:160px;
+    height:160px;
+    object-fit:cover;
+    border-radius:50%;
+    border:5px solid #f7c600;
+    background:#222;
+}
+
+.profile-name{
+    font-size:28px;
+    font-weight:bold;
+    color:#f7c600;
+    margin-top:12px;
+}
+
+.profile-stat{
+    background:#333;
+    padding:15px;
+    border-radius:10px;
+    margin-top:10px;
+    text-align:left;
+}
+
+.profile-stat b{
+    color:#f7c600;
+}
+
+.profile-bio{
+    background:#333;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    text-align:left;
+    white-space:pre-wrap;
+}
+
+.default-profile{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#222;
+    color:#f7c600;
+    font-size:35px;
+    font-weight:bold;
+}
+
+/* ==================================================
+   TABELLEN
+================================================== */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th,
+td{
+    padding:12px 10px;
+    border-bottom:1px solid #444;
+    text-align:left;
+    vertical-align:middle;
+}
+
+th{
+    color:#f7c600;
+}
+
+/* ==================================================
+   ADMIN PUNKTE
+================================================== */
+
+.admin-points-input{
+    width:110px !important;
+    margin:0 !important;
+    background:#333 !important;
+    color:#fff !important;
+    border:1px solid #555 !important;
+}
+
+.admin-save-button{
+    width:auto !important;
+    padding:9px 12px !important;
+    margin:0 !important;
+}
+
+.admin-save-button:hover{
+    background:#ffd83d;
+}
+
+/* ==================================================
+   MELDUNGEN
+================================================== */
+
+.notice{
+    background:#3b3000;
+    padding:12px;
+    border-radius:8px;
+    color:#ffe082;
+    margin-bottom:12px;
+}
+
+.loading{
+    text-align:center;
+    color:#aaa;
+    padding:20px;
+}
+
+.empty{
+    text-align:center;
+    color:#aaa;
+    padding:20px;
+}
+
+.error{
+    background:#4a1515;
+    color:#ffb3b3;
+    padding:12px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+.success{
+    background:#164d20;
+    color:#b8ffbf;
+    padding:12px;
+    border-radius:8px;
+    margin-top:10px;
+}
+
+/* ==================================================
+   FOOTER
+================================================== */
+
+footer{
+    text-align:center;
+    color:#777;
+    padding:30px;
+}
+
+/* ==================================================
+   COUNTDOWN
+================================================== */
+
+.countdown-card{
+    text-align:center;
+    border:2px solid #f7c600;
+}
+
+.countdown-title{
+    color:#f7c600;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.countdown-subtitle{
+    color:#ccc;
+    margin-bottom:15px;
+}
+
+.countdown{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.countdown-box{
+    background:#333;
+    border-radius:10px;
+    padding:14px 8px;
+}
+
+.countdown-number{
+    display:block;
+    color:#f7c600;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.countdown-label{
+    display:block;
+    color:#aaa;
+    font-size:12px;
+    margin-top:4px;
+}
+
+@media(max-width:800px){
+
+    .profile-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .car-search{
+        grid-template-columns:1fr;
+    }
+
+    .driver{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .points{
+        align-self:flex-end;
+    }
+
+    table{
+        font-size:13px;
+    }
+
+    th,
+    td{
+        padding:8px 5px;
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-image-large{
+        width:130px;
+        height:130px;
+    }
+
+}
+
 </style>
+
 </head>
+
 <body>
-<header><h1>🏁 Stahlwerk Racing</h1><p>GT7 Endurance League</p></header>
+
+<header>
+
+<h1>🏁 Stahlwerk Racing</h1>
+<p>GT7 Endurance League</p>
+
+</header>
+
 <nav>
+
 <button onclick="show('start')">Start</button>
 <button onclick="show('anmeldung')">Anmeldung</button>
 <button onclick="show('fahrer')">Fahrer</button>
 <button onclick="show('profile')">Profile</button>
 <button onclick="show('tabelle')">Tabelle</button>
 <button onclick="show('admin')">Admin</button>
+
 </nav>
 
+<!-- ==================================================
+     START
+================================================== -->
+
 <section id="start" class="active">
+
 <div class="card">
+
 <h2>🏁 Willkommen bei Stahlwerk Racing</h2>
-<p>Willkommen auf der offiziellen Website der Stahlwerk Racing GT7 Endurance League.</p>
-<p>Nächster Lauf: <b>Nürburgring • Samstag 20:00</b></p>
-<button class="main" onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">💬 Discord beitreten</button>
+
+<p>
+Willkommen auf der offiziellen Website der
+Stahlwerk Racing GT7 Endurance League.
+</p>
+
+<p>
+Nächster Lauf:
+<b>Nürburgring • Samstag 20:00</b>
+</p>
+
+<button
+class="main"
+onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
+
+💬 Discord beitreten
+
+</button>
+
 </div>
+
+
 <div class="card countdown-card">
-<div class="countdown-title">⏱️ Countdown zum nächsten Rennen</div>
-<div id="countdownSubtitle" class="countdown-subtitle">Nürburgring • Samstag um 20:00 Uhr</div>
+
+<div class="countdown-title">
+⏱️ Countdown zum nächsten Rennen
+</div>
+
+<div id="countdownSubtitle" class="countdown-subtitle">
+Nürburgring • Samstag um 20:00 Uhr
+</div>
+
 <div id="countdown" class="countdown">
-<div class="countdown-box"><span id="countdownDays" class="countdown-number">00</span><span class="countdown-label">Tage</span></div>
-<div class="countdown-box"><span id="countdownHours" class="countdown-number">00</span><span class="countdown-label">Stunden</span></div>
-<div class="countdown-box"><span id="countdownMinutes" class="countdown-number">00</span><span class="countdown-label">Minuten</span></div>
-<div class="countdown-box"><span id="countdownSeconds" class="countdown-number">00</span><span class="countdown-label">Sekunden</span></div>
+
+<div class="countdown-box">
+<span id="countdownDays" class="countdown-number">00</span>
+<span class="countdown-label">Tage</span>
 </div>
+
+<div class="countdown-box">
+<span id="countdownHours" class="countdown-number">00</span>
+<span class="countdown-label">Stunden</span>
 </div>
-<div class="card"><h2>👤 Fahrerprofile</h2><p>Erstelle dein eigenes Stahlwerk-Racing-Fahrerprofil mit Profilbild, Fahrzeug, Meisterschaft und Punkten.</p><button class="main" onclick="show('profileCreate')">👤 Profil erstellen</button></div>
+
+<div class="countdown-box">
+<span id="countdownMinutes" class="countdown-number">00</span>
+<span class="countdown-label">Minuten</span>
+</div>
+
+<div class="countdown-box">
+<span id="countdownSeconds" class="countdown-number">00</span>
+<span class="countdown-label">Sekunden</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>👤 Fahrerprofile</h2>
+
+<p>
+Erstelle dein eigenes Stahlwerk-Racing-Fahrerprofil
+mit Profilbild, Fahrzeug, Meisterschaft und Punkten.
+</p>
+
+<button
+class="main"
+onclick="show('profileCreate')">
+
+👤 Profil erstellen
+
+</button>
+
+</div>
+
 </section>
+
+
+<!-- ==================================================
+     ANMELDUNG
+================================================== -->
 
 <section id="anmeldung">
+
 <div class="card">
+
 <h2>🏎️ Fahrer anmelden</h2>
-<input id="name" placeholder="PSN Name" autocomplete="off">
-<input id="nr" type="number" placeholder="Startnummer">
-<label>Fahrzeug</label>
+
+<input
+id="name"
+placeholder="PSN Name"
+autocomplete="off">
+
+<input
+id="nr"
+type="number"
+placeholder="Startnummer">
+
+
+<label>
+Fahrzeug
+</label>
+
+
 <div class="car-search">
-<input id="carSearch" placeholder="🔎 Fahrzeug suchen..." autocomplete="off" oninput="searchCars()">
-<select id="manufacturerFilter" onchange="searchCars()"><option value="">Alle Hersteller</option></select>
+
+<input
+id="carSearch"
+placeholder="🔎 Fahrzeug suchen..."
+autocomplete="off"
+oninput="searchCars()">
+
+
+<select
+id="manufacturerFilter"
+onchange="searchCars()">
+
+<option value="">
+Alle Hersteller
+</option>
+
+</select>
+
 </div>
-<div id="carCount" class="car-count">Fahrzeuge werden geladen...</div>
-<div id="carResults" class="car-results"><div class="empty">Fahrzeug suchen...</div></div>
-<div id="selectedCar" class="selected-car">Noch kein Fahrzeug ausgewählt.</div>
-<label>Renntermin</label>
+
+
+<div
+id="carCount"
+class="car-count">
+
+Fahrzeuge werden geladen...
+
+</div>
+
+
+<div
+id="carResults"
+class="car-results">
+
+<div class="empty">
+Fahrzeug suchen...
+</div>
+
+</div>
+
+
+<div
+id="selectedCar"
+class="selected-car">
+
+Noch kein Fahrzeug ausgewählt.
+
+</div>
+
+
+<label>
+Renntermin
+</label>
+
 <select id="cup">
+
 <option>Unter der Woche</option>
 <option>Samstag</option>
 <option>Sonntag</option>
+
 </select>
-<label>Meisterschaft</label>
+
+
+<label>
+Meisterschaft
+</label>
+
 <select id="meisterschaft">
+
 <option>Unter der Woche</option>
 <option>Samstag</option>
 <option>Sonntag</option>
+
 </select>
-<button class="main" onclick="register()">🏎️ Fahrer eintragen</button>
+
+
+<button
+class="main"
+onclick="register()">
+
+🏎️ Fahrer eintragen
+
+</button>
+
+
 <div id="registerMessage"></div>
+
 </div>
+
 </section>
+
+
+<!-- ==================================================
+     FAHRER
+================================================== -->
 
 <section id="fahrer">
+
 <div class="card">
+
 <h2>🏎️ Fahrer</h2>
+
 <div class="league-buttons">
-<button id="driverLeagueWeek" onclick="setLeague('Unter der Woche')">Unter der Woche</button>
-<button id="driverLeagueSaturday" onclick="setLeague('Samstag')">Samstag</button>
-<button id="driverLeagueSunday" onclick="setLeague('Sonntag')">Sonntag</button>
+
+<button
+id="driverLeagueWeek"
+onclick="setLeague('Unter der Woche')">
+Unter der Woche
+</button>
+
+<button
+id="driverLeagueSaturday"
+onclick="setLeague('Samstag')">
+Samstag
+</button>
+
+<button
+id="driverLeagueSunday"
+onclick="setLeague('Sonntag')">
+Sonntag
+</button>
+
 </div>
-<div id="driverList"><div class="loading">Fahrer werden geladen...</div></div>
+
+
+<div id="driverList">
+
+<div class="loading">
+Fahrer werden geladen...
 </div>
+
+</div>
+
+</div>
+
 </section>
+
+
+<!-- ==================================================
+     PROFILE
+================================================== -->
 
 <section id="profile">
+
 <div class="card">
+
 <h2>👤 Fahrerprofile</h2>
-<p>Hier findest du die Profile der Stahlwerk-Racing-Fahrer.</p>
-<button class="main" onclick="show('profileCreate')">➕ Eigenes Profil erstellen / bearbeiten</button>
-<div id="profileList"><div class="loading">Profile werden geladen...</div></div>
+
+<p>
+Hier findest du die Profile der Stahlwerk-Racing-Fahrer.
+</p>
+
+<button
+class="main"
+onclick="show('profileCreate')">
+
+➕ Eigenes Profil erstellen / bearbeiten
+
+</button>
+
+
+<div id="profileList">
+
+<div class="loading">
+Profile werden geladen...
 </div>
+
+</div>
+
+</div>
+
 </section>
+
+
+<!-- ==================================================
+     PROFIL ERSTELLEN
+================================================== -->
 
 <section id="profileCreate">
+
 <div class="card">
+
 <h2>👤 Fahrerprofil erstellen</h2>
-<div class="notice">Dein Fahrer muss bereits in der Fahrer-Datenbank eingetragen sein.</div>
-<label>Dein PSN Name</label>
-<select id="profileDriver"><option value="">Fahrer auswählen...</option></select>
-<label>Profilname</label>
-<input id="profileUsername" placeholder="z.B. StahlwerkFelix" maxlength="40">
-<label>Profilbild</label>
-<input id="profileImage" type="file" accept="image/png,image/jpeg,image/webp">
-<div id="profileImagePreview" style="text-align:center;margin:15px 0"></div>
-<label>Über mich</label>
-<textarea id="profileBio" placeholder="Schreib etwas über dich..." maxlength="500"></textarea>
-<button class="main" onclick="saveProfile()">💾 Profil speichern</button>
-<div id="profileMessage"></div>
+
+<div class="notice">
+
+Dein Fahrer muss bereits in der Fahrer-Datenbank
+eingetragen sein.
+
 </div>
+
+<label>
+Dein PSN Name
+</label>
+
+<select id="profileDriver">
+
+<option value="">
+Fahrer auswählen...
+</option>
+
+</select>
+
+
+<label>
+Profilname
+</label>
+
+<input
+id="profileUsername"
+placeholder="z.B. StahlwerkFelix"
+maxlength="40">
+
+
+<label>
+Profilbild
+</label>
+
+<input
+id="profileImage"
+type="file"
+accept="image/png,image/jpeg,image/webp">
+
+
+<div
+id="profileImagePreview"
+style="text-align:center;margin:15px 0;">
+
+</div>
+
+
+<label>
+Über mich
+</label>
+
+<textarea
+id="profileBio"
+placeholder="Schreib etwas über dich..."
+maxlength="500"></textarea>
+
+
+<button
+class="main"
+onclick="saveProfile()">
+
+💾 Profil speichern
+
+</button>
+
+
+<div id="profileMessage"></div>
+
+</div>
+
 </section>
+
+
+<!-- ==================================================
+     EINZELNES PROFIL
+================================================== -->
 
 <section id="profileView">
+
 <div class="card profile-page">
-<button class="secondary" onclick="show('profile')">← Zurück zu den Profilen</button>
-<div id="profileViewContent" style="margin-top:20px"><div class="loading">Profil wird geladen...</div></div>
+
+<button
+class="secondary"
+onclick="show('profile')">
+
+← Zurück zu den Profilen
+
+</button>
+
+
+<div
+id="profileViewContent"
+style="margin-top:20px;">
+
+<div class="loading">
+Profil wird geladen...
 </div>
+
+</div>
+
+</div>
+
 </section>
 
+
+<!-- ==================================================
+     TABELLE
+================================================== -->
+
 <section id="tabelle">
+
 <div class="card">
+
 <h2>🏆 Meisterschaft</h2>
+
 <div class="league-buttons">
-<button id="tableLeagueWeek" onclick="setLeague('Unter der Woche')">Unter der Woche</button>
-<button id="tableLeagueSaturday" onclick="setLeague('Samstag')">Samstag</button>
-<button id="tableLeagueSunday" onclick="setLeague('Sonntag')">Sonntag</button>
+
+<button
+id="tableLeagueWeek"
+onclick="setLeague('Unter der Woche')">
+Unter der Woche
+</button>
+
+<button
+id="tableLeagueSaturday"
+onclick="setLeague('Samstag')">
+Samstag
+</button>
+
+<button
+id="tableLeagueSunday"
+onclick="setLeague('Sonntag')">
+Sonntag
+</button>
+
 </div>
-<select id="filter" onchange="setLeague(this.value)">
+
+
+<select
+id="filter"
+onchange="setLeague(this.value)">
+
 <option>Unter der Woche</option>
 <option>Samstag</option>
 <option>Sonntag</option>
+
 </select>
+
+
 <table>
+
 <thead>
+
 <tr>
+
 <th>Platz</th>
 <th>Fahrer</th>
 <th>Fahrzeug</th>
 <th>Punkte</th>
+
 </tr>
+
 </thead>
+
 <tbody id="tableBody"></tbody>
+
 </table>
+
 </div>
+
 </section>
+
+
+<!-- ==================================================
+     ADMIN
+================================================== -->
 
 <section id="admin">
 
-<div id="loginBox" class="card">
-<div class="notice">🔐 Admin Login</div>
-<input id="pw" type="password" placeholder="Admin Passwort">
-<button class="main" onclick="login()">Einloggen</button>
+
+<div
+id="loginBox"
+class="card">
+
+<div class="notice">
+
+🔐 Admin Login
+
 </div>
 
-<div id="adminPanel" style="display:none">
+
+<input
+id="pw"
+type="password"
+placeholder="Admin Passwort">
+
+
+<button
+class="main"
+onclick="login()">
+
+Einloggen
+
+</button>
+
+</div>
+
+
+<div
+id="adminPanel"
+style="display:none;">
+
+<button
+class="secondary"
+onclick="logout()"
+style="margin-bottom:15px;">
+
+🔒 Admin abmelden
+
+</button>
+
+
+<!-- ==================================================
+     ADMIN PUNKTE
+================================================== -->
 
 <div class="card">
 
 <h2>🏆 Punkte vergeben</h2>
 
-<label>Cup filtern</label>
+<p style="color:#aaa;">
+Wähle zuerst einen Cup aus. Danach werden nur die
+Fahrer dieses Cups angezeigt.
+</p>
 
-<select id="adminCupFilter" onchange="renderAdminPointsTable">
-<option value="">Alle Cups</option>
-<option>Unter der Woche</option>
-<option>Samstag</option>
-<option>Sonntag</option>
+
+<label>
+Cup auswählen
+</label>
+
+<select
+id="adminCupFilter"
+onchange="renderAdminPointsTable()">
+
+<option value="">
+Bitte Cup auswählen...
+</option>
+
+<option>
+Unter der Woche
+</option>
+
+<option>
+Samstag
+</option>
+
+<option>
+Sonntag
+</option>
+
 </select>
 
-<div style="overflow-x:auto">
+
+<div style="overflow-x:auto;">
 
 <table>
 
 <thead>
+
 <tr>
+
 <th>Platz</th>
 <th>Fahrer</th>
 <th>Startnummer</th>
@@ -239,18 +1131,28 @@ footer{text-align:center;color:#777;padding:30px}
 <th>Meisterschaft</th>
 <th>Punkte</th>
 <th>Aktion</th>
+
 </tr>
+
 </thead>
 
-<tbody id="adminPointsBody"></tbody>
+<tbody id="adminPointsBody">
+
+</tbody>
 
 </table>
 
 </div>
 
+
 <div id="pointsMessage"></div>
 
 </div>
+
+
+<!-- ==================================================
+     ADMIN FAHRER LÖSCHEN
+================================================== -->
 
 <div class="card">
 
@@ -264,11 +1166,22 @@ footer{text-align:center;color:#777;padding:30px}
 
 </section>
 
-<footer>Stahlwerk Racing © 2026</footer>
+
+<footer>
+
+Stahlwerk Racing © 2026
+
+</footer>
+
 
 <script src="cars.js"></script>
 
+
 <script>
+
+/* ==================================================
+   SUPABASE
+================================================== */
 
 const SUPABASE_URL =
 "https://apvstlhttuaeenqdcrtk.supabase.co";
@@ -276,8 +1189,18 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_2CZK_bsj_HSMLlSax9eAGQ_xWF90ibr";
 
+
+/* ==================================================
+   ADMIN
+================================================== */
+
 const PASSWORD =
 "stahlwerk26";
+
+
+/* ==================================================
+   VARIABLEN
+================================================== */
 
 let drivers = [];
 
@@ -291,6 +1214,10 @@ let selectedLeague =
 let selectedCar =
 "";
 
+
+/* ==================================================
+   SUPABASE REQUEST
+================================================== */
 
 async function supabaseRequest(url,options={}){
 
@@ -309,6 +1236,7 @@ async function supabaseRequest(url,options={}){
 
     };
 
+
     return await fetch(
         url,
         options
@@ -317,22 +1245,37 @@ async function supabaseRequest(url,options={}){
 }
 
 
+/* ==================================================
+   HTML SICHER MACHEN
+================================================== */
+
 function escapeHTML(text){
 
     const div =
-    document.createElement("div");
+    document.createElement(
+        "div"
+    );
+
 
     div.textContent =
     text ?? "";
+
 
     return div.innerHTML;
 
 }
 
 
+/* ==================================================
+   GT7 FAHRZEUGE PRÜFEN
+================================================== */
+
 function validateCars(){
 
-    if(typeof GT7_CARS === "undefined"){
+    if(
+        typeof GT7_CARS ===
+        "undefined"
+    ){
 
         console.error(
             "GT7_CARS wurde nicht gefunden."
@@ -352,17 +1295,49 @@ function validateCars(){
     const duplicates =
     names.filter(
         (name,index) =>
-        names.indexOf(name) !== index
+        names.indexOf(name)
+        !==
+        index
+    );
+
+
+    const uniqueDuplicates =
+    [
+        ...new Set(
+            duplicates
+        )
+    ];
+
+
+    console.log(
+        "GT7 FAHRZEUGLISTE"
     );
 
 
     console.log(
-        "GT7 FAHRZEUGLISTE",
-        {
-            Fahrzeuge:GT7_CARS.length,
-            Doppelte:[...new Set(duplicates)]
-        }
+        "Fahrzeuge:",
+        GT7_CARS.length
     );
+
+
+    console.log(
+        "Doppelte:",
+        uniqueDuplicates.length
+    );
+
+
+    if(
+        uniqueDuplicates.length
+        >
+        0
+    ){
+
+        console.error(
+            "DOPPELTE FAHRZEUGE:",
+            uniqueDuplicates
+        );
+
+    }
 
 
     const count =
@@ -374,7 +1349,8 @@ function validateCars(){
     if(count){
 
         count.textContent =
-        GT7_CARS.length +
+        GT7_CARS.length
+        +
         " Fahrzeuge geladen";
 
     }
@@ -384,6 +1360,10 @@ function validateCars(){
 
 }
 
+
+/* ==================================================
+   HERSTELLER
+================================================== */
 
 function loadManufacturers(){
 
@@ -403,10 +1383,12 @@ function loadManufacturers(){
     }
 
 
+    const manufacturers =
     [
         ...new Set(
             GT7_CARS.map(
-                car => car.manufacturer
+                car =>
+                car.manufacturer
             )
         )
     ]
@@ -416,8 +1398,10 @@ function loadManufacturers(){
             b,
             "de"
         )
-    )
-    .forEach(
+    );
+
+
+    manufacturers.forEach(
         manufacturer => {
 
             const option =
@@ -444,6 +1428,10 @@ function loadManufacturers(){
 }
 
 
+/* ==================================================
+   FAHRZEUGE SUCHEN
+================================================== */
+
 function searchCars(){
 
     const searchInput =
@@ -451,10 +1439,12 @@ function searchCars(){
         "carSearch"
     );
 
+
     const manufacturerInput =
     document.getElementById(
         "manufacturerFilter"
     );
+
 
     const results =
     document.getElementById(
@@ -483,7 +1473,10 @@ function searchCars(){
     manufacturerInput.value;
 
 
-    if(typeof GT7_CARS === "undefined"){
+    if(
+        typeof GT7_CARS ===
+        "undefined"
+    ){
 
         results.innerHTML =
         `<div class="error">
@@ -506,7 +1499,8 @@ function searchCars(){
                 " "
                 +
                 car.name
-            ).toLowerCase();
+            )
+            .toLowerCase();
 
 
             return (
@@ -514,7 +1508,9 @@ function searchCars(){
                 (
                     search === ""
                     ||
-                    fullName.includes(search)
+                    fullName.includes(
+                        search
+                    )
                 )
 
                 &&
@@ -522,7 +1518,9 @@ function searchCars(){
                 (
                     manufacturer === ""
                     ||
-                    car.manufacturer === manufacturer
+                    car.manufacturer
+                    ===
+                    manufacturer
                 )
 
             );
@@ -534,7 +1532,11 @@ function searchCars(){
     results.innerHTML = "";
 
 
-    if(filtered.length === 0){
+    if(
+        filtered.length
+        ===
+        0
+    ){
 
         results.innerHTML =
         `<div class="empty">
@@ -547,7 +1549,10 @@ function searchCars(){
 
 
     filtered
-    .slice(0,100)
+    .slice(
+        0,
+        100
+    )
     .forEach(
         car => {
 
@@ -558,30 +1563,44 @@ function searchCars(){
 
 
             div.className =
-            "car-result"
-            +
-            (
-                selectedCar === car.name
-                ?
-                " selected"
-                :
-                ""
-            );
+            "car-result";
+
+
+            if(
+                selectedCar
+                ===
+                car.name
+            ){
+
+                div.classList.add(
+                    "selected"
+                );
+
+            }
 
 
             div.innerHTML =
             `<b>
-            ${escapeHTML(car.name)}
+            ${escapeHTML(
+                car.name
+            )}
             </b>
             <br>
             <small>
-            ${escapeHTML(car.manufacturer)}
+            ${escapeHTML(
+                car.manufacturer
+            )}
             </small>`;
 
 
             div.onclick =
-            () =>
-            selectCar(car.name);
+            function(){
+
+                selectCar(
+                    car.name
+                );
+
+            };
 
 
             results.appendChild(
@@ -592,7 +1611,11 @@ function searchCars(){
     );
 
 
-    if(filtered.length > 100){
+    if(
+        filtered.length
+        >
+        100
+    ){
 
         const info =
         document.createElement(
@@ -617,6 +1640,10 @@ function searchCars(){
 }
 
 
+/* ==================================================
+   FAHRZEUG AUSWÄHLEN
+================================================== */
+
 function selectCar(car){
 
     selectedCar =
@@ -628,7 +1655,9 @@ function selectCar(car){
     ).innerHTML =
     "🏎️ Ausgewähltes Fahrzeug: <b>"
     +
-    escapeHTML(car)
+    escapeHTML(
+        car
+    )
     +
     "</b>";
 
@@ -638,18 +1667,25 @@ function selectCar(car){
 }
 
 
+/* ==================================================
+   FAHRER LADEN
+================================================== */
+
 async function loadDrivers(){
 
     try{
 
         const response =
         await supabaseRequest(
-            SUPABASE_URL +
+            SUPABASE_URL
+            +
             "/rest/v1/drivers?select=*&order=id.asc"
         );
 
 
-        if(!response.ok){
+        if(
+            !response.ok
+        ){
 
             console.error(
                 await response.text()
@@ -671,6 +1707,7 @@ async function loadDrivers(){
 
             }
 
+
             return;
 
         }
@@ -689,12 +1726,18 @@ async function loadDrivers(){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
     }
 
 }
 
+
+/* ==================================================
+   PROFILE LADEN
+================================================== */
 
 async function loadProfiles(){
 
@@ -702,12 +1745,15 @@ async function loadProfiles(){
 
         const response =
         await supabaseRequest(
-            SUPABASE_URL +
+            SUPABASE_URL
+            +
             "/rest/v1/driver_profiles?select=*&order=id.asc"
         );
 
 
-        if(!response.ok){
+        if(
+            !response.ok
+        ){
 
             console.error(
                 await response.text()
@@ -728,12 +1774,18 @@ async function loadProfiles(){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
     }
 
 }
 
+
+/* ==================================================
+   PROFILE FAHRER SELECT
+================================================== */
 
 function populateProfileDrivers(){
 
@@ -792,6 +1844,10 @@ function populateProfileDrivers(){
 
 }
 
+
+/* ==================================================
+   PROFIL SPEICHERN
+================================================== */
 
 async function saveProfile(){
 
@@ -900,7 +1956,8 @@ async function saveProfile(){
 
 
             if(
-                file.size >
+                file.size
+                >
                 5 * 1024 * 1024
             ){
 
@@ -981,7 +2038,9 @@ async function saveProfile(){
             );
 
 
-            if(!uploadResponse.ok){
+            if(
+                !uploadResponse.ok
+            ){
 
                 console.error(
                     await uploadResponse.text()
@@ -1008,31 +2067,12 @@ async function saveProfile(){
         }
 
 
-        const payload = {
-
-            driver_id:
-            Number(driverId),
-
-            username:
-            username,
-
-            profile_image:
-            imageUrl,
-
-            bio:
-            bio
-
-        };
-
-
-        let response;
-
-
         if(!profile){
 
-            response =
+            const response =
             await supabaseRequest(
-                SUPABASE_URL +
+                SUPABASE_URL
+                +
                 "/rest/v1/driver_profiles",
                 {
 
@@ -1044,20 +2084,50 @@ async function saveProfile(){
                     },
 
                     body:
-                    JSON.stringify(
-                        payload
-                    )
+                    JSON.stringify({
+
+                        driver_id:
+                        Number(driverId),
+
+                        username:
+                        username,
+
+                        profile_image:
+                        imageUrl,
+
+                        bio:
+                        bio
+
+                    })
 
                 }
             );
+
+
+            if(!response.ok){
+
+                console.error(
+                    await response.text()
+                );
+
+
+                message.innerHTML =
+                `<div class="error">
+                Profil konnte nicht erstellt werden.
+                </div>`;
+
+                return;
+
+            }
 
         }
 
         else{
 
-            response =
+            const response =
             await supabaseRequest(
-                SUPABASE_URL +
+                SUPABASE_URL
+                +
                 "/rest/v1/driver_profiles?id=eq."
                 +
                 profile.id,
@@ -1087,17 +2157,17 @@ async function saveProfile(){
                 }
             );
 
-        }
 
+            if(!response.ok){
 
-        if(!response.ok){
+                message.innerHTML =
+                `<div class="error">
+                Profil konnte nicht aktualisiert werden.
+                </div>`;
 
-            message.innerHTML =
-            `<div class="error">
-            Profil konnte nicht gespeichert werden.
-            </div>`;
+                return;
 
-            return;
+            }
 
         }
 
@@ -1112,8 +2182,11 @@ async function saveProfile(){
 
 
         setTimeout(
-            () =>
-            show("profile"),
+            function(){
+
+                show("profile");
+
+            },
             800
         );
 
@@ -1121,7 +2194,9 @@ async function saveProfile(){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
 
         message.innerHTML =
@@ -1133,6 +2208,10 @@ async function saveProfile(){
 
 }
 
+
+/* ==================================================
+   PROFILE ANZEIGEN
+================================================== */
 
 function renderProfiles(){
 
@@ -1149,10 +2228,15 @@ function renderProfiles(){
     }
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+    "";
 
 
-    if(profiles.length === 0){
+    if(
+        profiles.length
+        ===
+        0
+    ){
 
         list.innerHTML =
         `<div class="empty">
@@ -1203,22 +2287,26 @@ function renderProfiles(){
             "profile-card";
 
 
-            const image =
-            profile.profile_image
+            let imageHTML;
 
-            ?
 
-            `<img
-            class="profile-image-small"
-            src="${escapeHTML(profile.profile_image)}"
-            alt="Profilbild">`
+            if(
+                profile.profile_image
+            ){
 
-            :
+                imageHTML =
+                `<img
+                class="profile-image-small"
+                src="${escapeHTML(
+                    profile.profile_image
+                )}"
+                alt="Profilbild">`;
 
-            `<div
-            class="profile-image-small default-profile">
+            }
 
-            ${
+            else{
+
+                const letter =
                 escapeHTML(
                     (
                         profile.username
@@ -1229,33 +2317,50 @@ function renderProfiles(){
                     )
                     .charAt(0)
                     .toUpperCase()
-                )
-            }
+                );
 
-            </div>`;
+
+                imageHTML =
+                `<div
+                class="profile-image-small default-profile">
+
+                ${letter}
+
+                </div>`;
+
+            }
 
 
             card.innerHTML =
-            image
+            imageHTML
             +
             `<div>
             <b>
-            ${escapeHTML(profile.username)}
+            ${escapeHTML(
+                profile.username
+            )}
             </b>
             </div>
 
             <small>
-            🏎️ ${escapeHTML(driver.auto)}
+            🏎️ ${escapeHTML(
+                driver.auto
+            )}
             <br>
-            🏆 ${Number(driver.points || 0)} Punkte
+            🏆 ${Number(
+                driver.points || 0
+            )} Punkte
             </small>`;
 
 
             card.onclick =
-            () =>
-            openProfile(
-                profile.id
-            );
+            function(){
+
+                openProfile(
+                    profile.id
+                );
+
+            };
 
 
             grid.appendChild(
@@ -1272,6 +2377,10 @@ function renderProfiles(){
 
 }
 
+
+/* ==================================================
+   EINZELNES PROFIL
+================================================== */
 
 function openProfile(profileId){
 
@@ -1313,97 +2422,125 @@ function openProfile(profileId){
     );
 
 
-    const image =
-    profile.profile_image
+    let imageHTML;
 
-    ?
 
-    `<img
-    class="profile-image-large"
-    src="${escapeHTML(profile.profile_image)}"
-    alt="Profilbild">`
+    if(profile.profile_image){
 
-    :
+        imageHTML =
+        `<img
+        class="profile-image-large"
+        src="${escapeHTML(
+            profile.profile_image
+        )}"
+        alt="Profilbild">`;
 
-    `<div
-    class="profile-image-large default-profile"
-    style="margin:auto">
+    }
 
-    ${
+    else{
+
+        const letter =
         escapeHTML(
             profile.username
             .charAt(0)
             .toUpperCase()
+        );
+
+
+        imageHTML =
+        `<div
+        class="profile-image-large default-profile"
+        style="margin:auto">
+
+        ${letter}
+
+        </div>`;
+
+    }
+
+
+    content.innerHTML =
+    imageHTML
+
+    +
+
+    `<div class="profile-name">
+    ${escapeHTML(
+        profile.username
+    )}
+    </div>
+
+    <div class="profile-stat">
+    <b>🎮 PSN Name</b><br>
+    ${escapeHTML(
+        driver.name
+    )}
+    </div>
+
+    <div class="profile-stat">
+    <b>🔢 Startnummer</b><br>
+    #${escapeHTML(
+        driver.nummer
+    )}
+    </div>
+
+    <div class="profile-stat">
+    <b>🏎️ Fahrzeug</b><br>
+    ${escapeHTML(
+        driver.auto
+    )}
+    </div>
+
+    <div class="profile-stat">
+    <b>🏆 Meisterschaft</b><br>
+    ${escapeHTML(
+        driver.meisterschaft
+    )}
+    </div>
+
+    <div class="profile-stat">
+    <b>🗓️ Renntermin</b><br>
+    ${escapeHTML(
+        driver.cup
+    )}
+    </div>
+
+    <div class="profile-stat">
+    <b>⭐ Punkte</b><br>
+    ${Number(
+        driver.points || 0
+    )}
+    </div>
+
+    <div class="profile-bio">
+
+    <b>📝 Über mich</b>
+
+    <br><br>
+
+    ${
+        profile.bio
+        ?
+        escapeHTML(
+            profile.bio
         )
+        :
+        "Dieser Fahrer hat noch keine Beschreibung."
     }
 
     </div>`;
 
 
-    content.innerHTML =
-    image
-    +
-    '<div class="profile-name">'
-    +
-    escapeHTML(
-        profile.username
-    )
-    +
-    '</div>'
-    +
-    '<div class="profile-stat"><b>🎮 PSN Name</b><br>'
-    +
-    escapeHTML(driver.name)
-    +
-    '</div>'
-    +
-    '<div class="profile-stat"><b>🔢 Startnummer</b><br>#'
-    +
-    escapeHTML(driver.nummer)
-    +
-    '</div>'
-    +
-    '<div class="profile-stat"><b>🏎️ Fahrzeug</b><br>'
-    +
-    escapeHTML(driver.auto)
-    +
-    '</div>'
-    +
-    '<div class="profile-stat"><b>🏆 Meisterschaft</b><br>'
-    +
-    escapeHTML(driver.meisterschaft)
-    +
-    '</div>'
-    +
-    '<div class="profile-stat"><b>🗓️ Renntermin</b><br>'
-    +
-    escapeHTML(driver.cup)
-    +
-    '</div>'
-    +
-    '<div class="profile-stat"><b>⭐ Punkte</b><br>'
-    +
-    Number(driver.points || 0)
-    +
-    '</div>'
-    +
-    '<div class="profile-bio"><b>📝 Über mich</b><br><br>'
-    +
-    (
-        profile.bio
-        ?
-        escapeHTML(profile.bio)
-        :
-        "Dieser Fahrer hat noch keine Beschreibung."
-    )
-    +
-    '</div>';
-
-
-    show("profileView");
+    show(
+        "profileView"
+    );
 
 }
 
+
+/* ==================================================
+   FAHRER REGISTRIEREN
+================================================== */
 
 async function register(){
 
@@ -1437,7 +2574,7 @@ async function register(){
     );
 
 
-    if(!name){
+    if(name === ""){
 
         message.innerHTML =
         `<div class="error">
@@ -1449,7 +2586,7 @@ async function register(){
     }
 
 
-    if(!nummer){
+    if(nummer === ""){
 
         message.innerHTML =
         `<div class="error">
@@ -1461,7 +2598,7 @@ async function register(){
     }
 
 
-    if(!selectedCar){
+    if(selectedCar === ""){
 
         message.innerHTML =
         `<div class="error">
@@ -1477,28 +2614,26 @@ async function register(){
        Ein Fahrer darf in mehreren Cups
        angemeldet sein.
 
-       Beispiel:
-
-       Felix - Unter der Woche ✅
-       Felix - Samstag ✅
-       Felix - Sonntag ✅
-
-       Aber derselbe PSN Name darf
-       nicht zweimal im gleichen Cup
-       angemeldet werden.
+       Derselbe Fahrer darf aber nicht
+       zweimal im gleichen Cup sein.
     */
 
     const nameExistsInCup =
     drivers.some(
         driver =>
-        String(driver.name)
-        .toLowerCase()
+        String(
+            driver.name
+        ).toLowerCase()
         ===
         name.toLowerCase()
         &&
-        String(driver.cup)
+        String(
+            driver.cup
+        )
         ===
-        String(cup)
+        String(
+            cup
+        )
     );
 
 
@@ -1515,24 +2650,28 @@ async function register(){
 
 
     /*
-       Startnummern sind ebenfalls
-       pro Cup unabhängig.
-
-       #10 Samstag ✅
-       #10 Sonntag ✅
-       #10 Unter der Woche ✅
+       Startnummer ebenfalls nur
+       innerhalb des Cups prüfen.
     */
 
     const numberExistsInCup =
     drivers.some(
         driver =>
-        Number(driver.nummer)
+        Number(
+            driver.nummer
+        )
         ===
-        Number(nummer)
+        Number(
+            nummer
+        )
         &&
-        String(driver.cup)
+        String(
+            driver.cup
+        )
         ===
-        String(cup)
+        String(
+            cup
+        )
     );
 
 
@@ -1552,7 +2691,8 @@ async function register(){
 
         const response =
         await supabaseRequest(
-            SUPABASE_URL +
+            SUPABASE_URL
+            +
             "/rest/v1/drivers",
             {
 
@@ -1610,7 +2750,9 @@ async function register(){
         message.innerHTML =
         `<div class="success">
         ✅ Fahrer erfolgreich für
-        <b>${escapeHTML(cup)}</b>
+        <b>${escapeHTML(
+            cup
+        )}</b>
         eingetragen!
         </div>`;
 
@@ -1652,8 +2794,13 @@ async function register(){
 
 
         setTimeout(
-            () =>
-            show("fahrer"),
+            function(){
+
+                show(
+                    "fahrer"
+                );
+
+            },
             500
         );
 
@@ -1661,7 +2808,9 @@ async function register(){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
 
         message.innerHTML =
@@ -1673,6 +2822,10 @@ async function register(){
 
 }
 
+
+/* ==================================================
+   SEITENWECHSEL
+================================================== */
 
 function show(id){
 
@@ -1722,6 +2875,10 @@ function show(id){
 }
 
 
+/* ==================================================
+   MEISTERSCHAFT
+================================================== */
+
 function setLeague(league){
 
     selectedLeague =
@@ -1746,6 +2903,10 @@ function setLeague(league){
 
 }
 
+
+/* ==================================================
+   BUTTONS
+================================================== */
 
 function updateLeagueButtons(){
 
@@ -1781,33 +2942,39 @@ function updateLeagueButtons(){
     };
 
 
-    (
+    if(
         ids[selectedLeague]
-        ||
-        []
-    )
-    .forEach(
-        id => {
+    ){
 
-            const button =
-            document.getElementById(
-                id
-            );
+        ids[selectedLeague]
+        .forEach(
+            id => {
 
-
-            if(button){
-
-                button.classList.add(
-                    "active"
+                const button =
+                document.getElementById(
+                    id
                 );
 
-            }
 
-        }
-    );
+                if(button){
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+    }
 
 }
 
+
+/* ==================================================
+   RENDER
+================================================== */
 
 function render(){
 
@@ -1828,12 +2995,9 @@ function render(){
     }
 
 
-    /*
-       ÖFFENTLICHER FAHRERBEREICH
-
-       Jetzt ebenfalls automatisch
-       nach den Punkten sortiert.
-    */
+    /* =========================
+       ÖFFENTLICHE FAHRER
+    ========================= */
 
     const list =
     document.getElementById(
@@ -1846,22 +3010,20 @@ function render(){
         const filteredDrivers =
         drivers
         .filter(
-            d =>
-            d.meisterschaft
+            driver =>
+            driver.meisterschaft
             ===
             selectedLeague
         )
         .slice()
         .sort(
             (a,b) =>
-            Number(b.points || 0)
+            Number(
+                b.points || 0
+            )
             -
-            Number(a.points || 0)
-            ||
-            String(a.name)
-            .localeCompare(
-                String(b.name),
-                "de"
+            Number(
+                a.points || 0
             )
         );
 
@@ -1890,9 +3052,13 @@ function render(){
                 const profile =
                 profiles.find(
                     p =>
-                    Number(p.driver_id)
+                    Number(
+                        p.driver_id
+                    )
                     ===
-                    Number(driver.id)
+                    Number(
+                        driver.id
+                    )
                 );
 
 
@@ -1904,7 +3070,9 @@ function render(){
                 ?
 
                 `<img
-                src="${escapeHTML(profile.profile_image)}"
+                src="${escapeHTML(
+                    profile.profile_image
+                )}"
                 class="profile-image-small"
                 alt="Profilbild">`
 
@@ -1943,8 +3111,12 @@ function render(){
                     <div class="driver-info">
 
                         <b>
-                        #${escapeHTML(driver.nummer)}
-                        ${escapeHTML(driver.name)}
+                        #${escapeHTML(
+                            driver.nummer
+                        )}
+                        ${escapeHTML(
+                            driver.name
+                        )}
                         </b>
 
                         <br>
@@ -1952,17 +3124,23 @@ function render(){
                         <small>
 
                         🏎️
-                        ${escapeHTML(driver.auto)}
+                        ${escapeHTML(
+                            driver.auto
+                        )}
 
                         <br>
 
                         🗓️
-                        ${escapeHTML(driver.cup)}
+                        ${escapeHTML(
+                            driver.cup
+                        )}
 
                         <br>
 
                         🏆
-                        ${escapeHTML(driver.meisterschaft)}
+                        ${escapeHTML(
+                            driver.meisterschaft
+                        )}
 
                         </small>
 
@@ -1971,7 +3149,9 @@ function render(){
                 </div>
 
                 <div class="points">
-                ${Number(driver.points || 0)} P
+                ${Number(
+                    driver.points || 0
+                )} P
                 </div>`;
 
 
@@ -1982,10 +3162,13 @@ function render(){
 
 
                     div.onclick =
-                    () =>
-                    openProfile(
-                        profile.id
-                    );
+                    function(){
+
+                        openProfile(
+                            profile.id
+                        );
+
+                    };
 
                 }
 
@@ -2000,12 +3183,9 @@ function render(){
     }
 
 
-    /*
-       ÖFFENTLICHE MEISTERSCHAFTSTABELLE
-
-       Ebenfalls automatisch nach
-       den Punkten sortiert.
-    */
+    /* =========================
+       ÖFFENTLICHE TABELLE
+    ========================= */
 
     const body =
     document.getElementById(
@@ -2018,22 +3198,20 @@ function render(){
         const sorted =
         drivers
         .filter(
-            d =>
-            d.meisterschaft
+            driver =>
+            driver.meisterschaft
             ===
             selectedLeague
         )
         .slice()
         .sort(
             (a,b) =>
-            Number(b.points || 0)
+            Number(
+                b.points || 0
+            )
             -
-            Number(a.points || 0)
-            ||
-            String(a.name)
-            .localeCompare(
-                String(b.name),
-                "de"
+            Number(
+                a.points || 0
             )
         );
 
@@ -2050,11 +3228,15 @@ function render(){
 
             body.innerHTML =
             `<tr>
-            <td
-            colspan="4"
-            style="text-align:center;color:#aaa">
-            Noch keine Fahrer in dieser Meisterschaft.
-            </td>
+
+                <td
+                colspan="4"
+                style="text-align:center;color:#aaa">
+
+                Noch keine Fahrer in dieser Meisterschaft.
+
+                </td>
+
             </tr>`;
 
         }
@@ -2065,17 +3247,32 @@ function render(){
 
                 body.innerHTML +=
                 `<tr>
-                    <td>${index + 1}</td>
+
                     <td>
-                        #${escapeHTML(driver.nummer)}
-                        ${escapeHTML(driver.name)}
+                    ${index + 1}
                     </td>
+
                     <td>
-                        ${escapeHTML(driver.auto)}
+                    #${escapeHTML(
+                        driver.nummer
+                    )}
+                    ${escapeHTML(
+                        driver.name
+                    )}
                     </td>
+
                     <td>
-                        ${Number(driver.points || 0)}
+                    ${escapeHTML(
+                        driver.auto
+                    )}
                     </td>
+
+                    <td>
+                    ${Number(
+                        driver.points || 0
+                    )}
+                    </td>
+
                 </tr>`;
 
             }
@@ -2084,17 +3281,16 @@ function render(){
     }
 
 
-    /*
-       ADMIN PUNKTETABELLE
-    */
+    /* =========================
+       ADMIN PUNKTE
+    ========================= */
 
     renderAdminPointsTable();
 
 
-    /*
-       ADMIN LÖSCHBEREICH
-       CUP STEHT HINTER DEM NAMEN
-    */
+    /* =========================
+       ADMIN LÖSCHEN
+    ========================= */
 
     const adminDrivers =
     document.getElementById(
@@ -2130,11 +3326,18 @@ function render(){
 
                     <span>
 
-                    #${escapeHTML(driver.nummer)}
-                    ${escapeHTML(driver.name)}
-                    - ${escapeHTML(driver.cup)}
+                    #${escapeHTML(
+                        driver.nummer
+                    )}
+                    ${escapeHTML(
+                        driver.name
+                    )}
+                    - ${escapeHTML(
+                        driver.cup
+                    )}
 
                     </span>
+
 
                     <button
                     class="small"
@@ -2151,6 +3354,10 @@ function render(){
 
     }
 
+
+    /* =========================
+       ADMIN PANEL
+    ========================= */
 
     const loginBox =
     document.getElementById(
@@ -2175,6 +3382,7 @@ function render(){
             loginBox.style.display =
             "none";
 
+
             adminPanel.style.display =
             "block";
 
@@ -2184,6 +3392,7 @@ function render(){
 
             loginBox.style.display =
             "block";
+
 
             adminPanel.style.display =
             "none";
@@ -2195,11 +3404,9 @@ function render(){
 }
 
 
-/*
-   ==================================================
+/* ==================================================
    ADMIN PUNKTE-TABELLE
-   ==================================================
-*/
+================================================== */
 
 function renderAdminPointsTable(){
 
@@ -2231,32 +3438,58 @@ function renderAdminPointsTable(){
 
 
     /*
-       Nur Fahrer des ausgewählten Cups
-       anzeigen und gleichzeitig nach
-       Punkten sortieren.
+       SOLANGE KEIN CUP AUSGEWÄHLT IST:
+       KEINE FAHRER UND KEINE SPEICHER-BUTTONS.
     */
 
-    const filtered =
+    if(
+        selectedCup === ""
+    ){
+
+        body.innerHTML =
+        `<tr>
+
+            <td
+            colspan="7"
+            style="text-align:center;color:#aaa">
+
+            Bitte zuerst einen Cup auswählen.
+
+            </td>
+
+        </tr>`;
+
+        return;
+
+    }
+
+
+    /*
+       NUR FAHRER DES GEWÄHLTEN CUPS
+       UND AUTOMATISCH NACH PUNKTEN SORTIERT.
+    */
+
+    const filteredDrivers =
     drivers
     .filter(
         driver =>
-        selectedCup === ""
-        ||
-        String(driver.cup)
+        String(
+            driver.cup
+        )
         ===
-        String(selectedCup)
+        String(
+            selectedCup
+        )
     )
     .slice()
     .sort(
         (a,b) =>
-        Number(b.points || 0)
+        Number(
+            b.points || 0
+        )
         -
-        Number(a.points || 0)
-        ||
-        String(a.name)
-        .localeCompare(
-            String(b.name),
-            "de"
+        Number(
+            a.points || 0
         )
     );
 
@@ -2265,7 +3498,11 @@ function renderAdminPointsTable(){
     "";
 
 
-    if(filtered.length === 0){
+    if(
+        filteredDrivers.length
+        ===
+        0
+    ){
 
         body.innerHTML =
         `<tr>
@@ -2285,7 +3522,7 @@ function renderAdminPointsTable(){
     }
 
 
-    filtered.forEach(
+    filteredDrivers.forEach(
         (driver,index) => {
 
             const row =
@@ -2294,104 +3531,75 @@ function renderAdminPointsTable(){
             );
 
 
-            row.innerHTML =
-            '<td>'
-            +
-            Number(index + 1)
-            +
-            '</td>'
-            +
-            '<td>'
-            +
-            '<b>'
-            +
-            escapeHTML(
-                driver.name
-            )
-            +
-            '</b>'
-            +
-            '<br>'
-            +
-            '<small>'
-            +
-            escapeHTML(
-                driver.cup
-            )
-            +
-            '</small>'
-            +
-            '</td>'
-            +
-            '<td>#'
-            +
-            escapeHTML(
-                driver.nummer
-            )
-            +
-            '</td>'
-            +
-            '<td>'
-            +
-            escapeHTML(
-                driver.auto
-            )
-            +
-            '</td>'
-            +
-            '<td>'
-            +
-            escapeHTML(
-                driver.meisterschaft
-            )
-            +
-            '</td>'
-            +
-            '<td>'
-            +
-            '<input '
-            +
-            'id="adminPoints_'
-            +
-            Number(driver.id)
-            +
-            '" '
-            +
-            'class="admin-points-input" '
-            +
-            'type="number" '
-            +
-            'min="0" '
-            +
-            'step="1" '
-            +
-            'value="'
-            +
-            Number(
-                driver.points || 0
-            )
-            +
-            '">'
-            +
-            '</td>'
-            +
-            '<td>'
-            +
-            '<button '
-            +
-            'class="main admin-save-button" '
-            +
-            'onclick="saveDriverPoints('
-            +
-            Number(driver.id)
-            +
-            ')">'
-            +
-            'Speichern'
-            +
-            '</button>'
-            +
-            '</td>';
+            row.innerHTML = `
+
+            <td>
+                ${index + 1}
+            </td>
+
+            <td>
+                <b>
+                ${escapeHTML(
+                    driver.name
+                )}
+                </b>
+
+                <br>
+
+                <small>
+                ${escapeHTML(
+                    driver.cup
+                )}
+                </small>
+            </td>
+
+            <td>
+                #${escapeHTML(
+                    driver.nummer
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    driver.auto
+                )}
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    driver.meisterschaft
+                )}
+            </td>
+
+            <td>
+
+                <input
+                id="adminPoints_${driver.id}"
+                class="admin-points-input"
+                type="number"
+                min="0"
+                step="1"
+                value="${Number(
+                    driver.points || 0
+                )}">
+
+            </td>
+
+            <td>
+
+                <button
+                class="main admin-save-button"
+                onclick="saveDriverPoints(${Number(
+                    driver.id
+                )})">
+
+                Speichern
+
+                </button>
+
+            </td>
+
+            `;
 
 
             body.appendChild(
@@ -2404,9 +3612,9 @@ function renderAdminPointsTable(){
 }
 
 
-/*
-   Punkte direkt setzen
-*/
+/* ==================================================
+   PUNKTE SPEICHERN
+================================================== */
 
 async function saveDriverPoints(driverId){
 
@@ -2439,7 +3647,9 @@ async function saveDriverPoints(driverId){
     if(
         input.value === ""
         ||
-        !Number.isFinite(points)
+        !Number.isFinite(
+            points
+        )
         ||
         points < 0
     ){
@@ -2519,8 +3729,9 @@ async function saveDriverPoints(driverId){
 
         message.innerHTML =
         `<div class="success">
-        ✅ ${escapeHTML(driver.name)}
-        hat jetzt ${points} Punkte.
+        ✅ ${escapeHTML(
+            driver.name
+        )} hat jetzt ${points} Punkte.
         </div>`;
 
 
@@ -2528,7 +3739,7 @@ async function saveDriverPoints(driverId){
 
 
         setTimeout(
-            () => {
+            function(){
 
                 message.innerHTML =
                 "";
@@ -2541,7 +3752,9 @@ async function saveDriverPoints(driverId){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
 
         message.innerHTML =
@@ -2553,6 +3766,10 @@ async function saveDriverPoints(driverId){
 
 }
 
+
+/* ==================================================
+   ADMIN LOGIN
+================================================== */
 
 function login(){
 
@@ -2570,6 +3787,17 @@ function login(){
 
         admin =
         true;
+
+
+        /*
+           Admin bleibt nach einem
+           Seiten-Neuladen angemeldet.
+        */
+
+        localStorage.setItem(
+            "stahlwerkAdmin",
+            "true"
+        );
 
 
         document.getElementById(
@@ -2592,6 +3820,44 @@ function login(){
 
 }
 
+
+/* ==================================================
+   ADMIN LOGOUT
+================================================== */
+
+function logout(){
+
+    admin =
+    false;
+
+
+    localStorage.removeItem(
+        "stahlwerkAdmin"
+    );
+
+
+    const filter =
+    document.getElementById(
+        "adminCupFilter"
+    );
+
+
+    if(filter){
+
+        filter.value =
+        "";
+
+    }
+
+
+    render();
+
+}
+
+
+/* ==================================================
+   FAHRER LÖSCHEN
+================================================== */
 
 async function removeDriver(index){
 
@@ -2670,7 +3936,9 @@ async function removeDriver(index){
 
     catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
 
 
         alert(
@@ -2682,11 +3950,9 @@ async function removeDriver(index){
 }
 
 
-/*
-   ==================================================
-   PROFIL SELECT
-   ==================================================
-*/
+/* ==================================================
+   PROFIL SELECT / BILD
+================================================== */
 
 document.addEventListener(
     "change",
@@ -2730,9 +3996,13 @@ document.addEventListener(
             const profile =
             profiles.find(
                 p =>
-                Number(p.driver_id)
+                Number(
+                    p.driver_id
+                )
                 ===
-                Number(driverId)
+                Number(
+                    driverId
+                )
             );
 
 
@@ -2785,7 +4055,7 @@ document.addEventListener(
 
 
             reader.onload =
-            e => {
+            function(e){
 
                 preview.innerHTML =
                 `<img
@@ -2806,11 +4076,9 @@ document.addEventListener(
 );
 
 
-/*
-   ==================================================
+/* ==================================================
    COUNTDOWN
-   ==================================================
-*/
+================================================== */
 
 function getNextRaceDate(){
 
@@ -2906,7 +4174,15 @@ function updateCountdown(){
     Math.floor(
         difference
         /
-        (1000 * 60 * 60 * 24)
+        (
+            1000
+            *
+            60
+            *
+            60
+            *
+            24
+        )
     );
 
 
@@ -2915,7 +4191,13 @@ function updateCountdown(){
         (
             difference
             /
-            (1000 * 60 * 60)
+            (
+                1000
+                *
+                60
+                *
+                60
+            )
         )
         %
         24
@@ -2927,7 +4209,11 @@ function updateCountdown(){
         (
             difference
             /
-            (1000 * 60)
+            (
+                1000
+                *
+                60
+            )
         )
         %
         60
@@ -2946,38 +4232,38 @@ function updateCountdown(){
     );
 
 
-    const d =
+    const daysEl =
     document.getElementById(
         "countdownDays"
     );
 
 
-    const h =
+    const hoursEl =
     document.getElementById(
         "countdownHours"
     );
 
 
-    const m =
+    const minutesEl =
     document.getElementById(
         "countdownMinutes"
     );
 
 
-    const s =
+    const secondsEl =
     document.getElementById(
         "countdownSeconds"
     );
 
 
     if(
-        !d
+        !daysEl
         ||
-        !h
+        !hoursEl
         ||
-        !m
+        !minutesEl
         ||
-        !s
+        !secondsEl
     ){
 
         return;
@@ -2985,32 +4271,40 @@ function updateCountdown(){
     }
 
 
-    d.textContent =
-    String(days)
+    daysEl.textContent =
+    String(
+        days
+    )
     .padStart(
         2,
         "0"
     );
 
 
-    h.textContent =
-    String(hours)
+    hoursEl.textContent =
+    String(
+        hours
+    )
     .padStart(
         2,
         "0"
     );
 
 
-    m.textContent =
-    String(minutes)
+    minutesEl.textContent =
+    String(
+        minutes
+    )
     .padStart(
         2,
         "0"
     );
 
 
-    s.textContent =
-    String(seconds)
+    secondsEl.textContent =
+    String(
+        seconds
+    )
     .padStart(
         2,
         "0"
@@ -3028,6 +4322,22 @@ setInterval(
 );
 
 
+/* ==================================================
+   ADMIN LOGIN BEIBEHALTEN
+================================================== */
+
+admin =
+localStorage.getItem(
+    "stahlwerkAdmin"
+)
+===
+"true";
+
+
+/* ==================================================
+   START
+================================================== */
+
 validateCars();
 
 loadManufacturers();
@@ -3041,4 +4351,5 @@ loadProfiles();
 </script>
 
 </body>
+
 </html>
