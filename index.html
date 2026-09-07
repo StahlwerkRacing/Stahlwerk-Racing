@@ -4,17 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Stahlwerk Racing</title>
 
 <style>
-
-/* ==================================================
-   GRUNDLAYOUT
-================================================== */
 
 *{
     box-sizing:border-box;
@@ -148,11 +142,6 @@ textarea{
     min-width:150px;
 }
 
-
-/* ==================================================
-   FAHRZEUGE
-================================================== */
-
 .car-search{
     display:grid;
     grid-template-columns:2fr 1fr;
@@ -200,11 +189,6 @@ textarea{
     margin-top:5px;
 }
 
-
-/* ==================================================
-   FAHRER
-================================================== */
-
 .driver{
     display:flex;
     justify-content:space-between;
@@ -238,11 +222,6 @@ textarea{
 .small:hover{
     background:#e53935;
 }
-
-
-/* ==================================================
-   PROFILE
-================================================== */
 
 .profile-grid{
     display:grid;
@@ -326,11 +305,6 @@ textarea{
     font-weight:bold;
 }
 
-
-/* ==================================================
-   TABELLEN
-================================================== */
-
 table{
     width:100%;
     border-collapse:collapse;
@@ -347,11 +321,6 @@ td{
 th{
     color:#f7c600;
 }
-
-
-/* ==================================================
-   MELDUNGEN
-================================================== */
 
 .notice{
     background:#3b3000;
@@ -389,21 +358,11 @@ th{
     margin-top:10px;
 }
 
-
-/* ==================================================
-   FOOTER
-================================================== */
-
 footer{
     text-align:center;
     color:#777;
     padding:30px;
 }
-
-
-/* ==================================================
-   COUNTDOWN
-================================================== */
 
 .countdown-card{
     text-align:center;
@@ -448,18 +407,6 @@ footer{
     font-size:12px;
     margin-top:4px;
 }
-
-.countdown-finished{
-    color:#f7c600;
-    font-size:22px;
-    font-weight:bold;
-    padding:15px;
-}
-
-
-/* ==================================================
-   RESPONSIVE
-================================================== */
 
 @media(max-width:800px){
 
@@ -508,13 +455,7 @@ footer{
 
 </head>
 
-
 <body>
-
-
-<!-- ==================================================
-     HEADER
-================================================== -->
 
 <header>
 
@@ -523,11 +464,6 @@ footer{
 <p>GT7 Endurance League</p>
 
 </header>
-
-
-<!-- ==================================================
-     NAVIGATION
-================================================== -->
 
 <nav>
 
@@ -558,10 +494,6 @@ Admin
 </nav>
 
 
-<!-- ==================================================
-     START
-================================================== -->
-
 <section id="start" class="active">
 
 <div class="card">
@@ -588,11 +520,6 @@ onclick="window.open('https://discord.gg/XtxfCvXcpE','_blank')">
 
 </div>
 
-
-<!-- ==================================================
-     COUNTDOWN
-================================================== -->
-
 <div class="card countdown-card">
 
 <div class="countdown-title">
@@ -607,6 +534,7 @@ Nürburgring • Samstag um 20:00 Uhr
 <div id="countdown" class="countdown">
 
 <div class="countdown-box">
+
 <span id="countdownDays"
 class="countdown-number">
 00
@@ -615,8 +543,8 @@ class="countdown-number">
 <span class="countdown-label">
 Tage
 </span>
-</div>
 
+</div>
 
 <div class="countdown-box">
 
@@ -631,7 +559,6 @@ Stunden
 
 </div>
 
-
 <div class="countdown-box">
 
 <span id="countdownMinutes"
@@ -644,7 +571,6 @@ Minuten
 </span>
 
 </div>
-
 
 <div class="countdown-box">
 
@@ -662,7 +588,6 @@ Sekunden
 </div>
 
 </div>
-
 
 <div class="card">
 
@@ -686,10 +611,6 @@ onclick="show('profileCreate')">
 </section>
 
 
-<!-- ==================================================
-     ANMELDUNG
-================================================== -->
-
 <section id="anmeldung">
 
 <div class="card">
@@ -706,11 +627,9 @@ id="nr"
 type="number"
 placeholder="Startnummer">
 
-
 <label>
 Fahrzeug
 </label>
-
 
 <div class="car-search">
 
@@ -719,7 +638,6 @@ id="carSearch"
 placeholder="🔎 Fahrzeug suchen..."
 autocomplete="off"
 oninput="searchCars()">
-
 
 <select
 id="manufacturerFilter"
@@ -733,7 +651,6 @@ Alle Hersteller
 
 </div>
 
-
 <div
 id="carCount"
 class="car-count">
@@ -741,7 +658,6 @@ class="car-count">
 Fahrzeuge werden geladen...
 
 </div>
-
 
 <div
 id="carResults"
@@ -753,7 +669,6 @@ Fahrzeug suchen...
 
 </div>
 
-
 <div
 id="selectedCar"
 class="selected-car">
@@ -761,7 +676,6 @@ class="selected-car">
 Noch kein Fahrzeug ausgewählt.
 
 </div>
-
 
 <label>
 Renntermin
@@ -775,7 +689,6 @@ Renntermin
 
 </select>
 
-
 <label>
 Meisterschaft
 </label>
@@ -788,7 +701,6 @@ Meisterschaft
 
 </select>
 
-
 <button
 class="main"
 onclick="register()">
@@ -797,7 +709,6 @@ onclick="register()">
 
 </button>
 
-
 <div id="registerMessage"></div>
 
 </div>
@@ -805,16 +716,11 @@ onclick="register()">
 </section>
 
 
-<!-- ==================================================
-     FAHRER
-================================================== -->
-
 <section id="fahrer">
 
 <div class="card">
 
 <h2>🏎️ Fahrer</h2>
-
 
 <div class="league-buttons">
 
@@ -826,7 +732,6 @@ Unter der Woche
 
 </button>
 
-
 <button
 id="driverLeagueSaturday"
 onclick="setLeague('Samstag')">
@@ -834,7 +739,6 @@ onclick="setLeague('Samstag')">
 Samstag
 
 </button>
-
 
 <button
 id="driverLeagueSunday"
@@ -845,7 +749,6 @@ Sonntag
 </button>
 
 </div>
-
 
 <div id="driverList">
 
@@ -860,10 +763,6 @@ Fahrer werden geladen...
 </section>
 
 
-<!-- ==================================================
-     PROFILE ÜBERSICHT
-================================================== -->
-
 <section id="profile">
 
 <div class="card">
@@ -874,7 +773,6 @@ Fahrer werden geladen...
 Hier findest du die Profile der Stahlwerk-Racing-Fahrer.
 </p>
 
-
 <button
 class="main"
 onclick="show('profileCreate')">
@@ -882,7 +780,6 @@ onclick="show('profileCreate')">
 ➕ Eigenes Profil erstellen / bearbeiten
 
 </button>
-
 
 <div id="profileList">
 
@@ -897,16 +794,11 @@ Profile werden geladen...
 </section>
 
 
-<!-- ==================================================
-     PROFIL ERSTELLEN
-================================================== -->
-
 <section id="profileCreate">
 
 <div class="card">
 
 <h2>👤 Fahrerprofil erstellen</h2>
-
 
 <div class="notice">
 
@@ -914,7 +806,6 @@ Dein Fahrer muss bereits in der Fahrer-Datenbank
 eingetragen sein.
 
 </div>
-
 
 <label>
 Dein PSN Name
@@ -928,7 +819,6 @@ Fahrer auswählen...
 
 </select>
 
-
 <label>
 Profilname
 </label>
@@ -937,7 +827,6 @@ Profilname
 id="profileUsername"
 placeholder="z.B. StahlwerkFelix"
 maxlength="40">
-
 
 <label>
 Profilbild
@@ -948,13 +837,11 @@ id="profileImage"
 type="file"
 accept="image/png,image/jpeg,image/webp">
 
-
 <div
 id="profileImagePreview"
 style="text-align:center;margin:15px 0;">
 
 </div>
-
 
 <label>
 Über mich
@@ -965,7 +852,6 @@ id="profileBio"
 placeholder="Schreib etwas über dich..."
 maxlength="500"></textarea>
 
-
 <button
 class="main"
 onclick="saveProfile()">
@@ -974,17 +860,12 @@ onclick="saveProfile()">
 
 </button>
 
-
 <div id="profileMessage"></div>
 
 </div>
 
 </section>
 
-
-<!-- ==================================================
-     EINZELNES PROFIL
-================================================== -->
 
 <section id="profileView">
 
@@ -997,7 +878,6 @@ onclick="show('profile')">
 ← Zurück zu den Profilen
 
 </button>
-
 
 <div
 id="profileViewContent"
@@ -1014,16 +894,11 @@ Profil wird geladen...
 </section>
 
 
-<!-- ==================================================
-     TABELLE
-================================================== -->
-
 <section id="tabelle">
 
 <div class="card">
 
 <h2>🏆 Meisterschaft</h2>
-
 
 <div class="league-buttons">
 
@@ -1035,7 +910,6 @@ Unter der Woche
 
 </button>
 
-
 <button
 id="tableLeagueSaturday"
 onclick="setLeague('Samstag')">
@@ -1043,7 +917,6 @@ onclick="setLeague('Samstag')">
 Samstag
 
 </button>
-
 
 <button
 id="tableLeagueSunday"
@@ -1055,7 +928,6 @@ Sonntag
 
 </div>
 
-
 <select
 id="filter"
 onchange="setLeague(this.value)">
@@ -1065,7 +937,6 @@ onchange="setLeague(this.value)">
 <option>Sonntag</option>
 
 </select>
-
 
 <table>
 
@@ -1093,12 +964,7 @@ onchange="setLeague(this.value)">
 </section>
 
 
-<!-- ==================================================
-     ADMIN
-================================================== -->
-
 <section id="admin">
-
 
 <div
 id="loginBox"
@@ -1110,12 +976,10 @@ class="card">
 
 </div>
 
-
 <input
 id="pw"
 type="password"
 placeholder="Admin Passwort">
-
 
 <button
 class="main"
@@ -1127,25 +991,20 @@ Einloggen
 
 </div>
 
-
 <div
 id="adminPanel"
 style="display:none;">
-
 
 <div class="card">
 
 <h2>🏆 Punkte vergeben</h2>
 
-
 <select id="driverSelect"></select>
-
 
 <input
 id="pts"
 type="number"
 placeholder="Punkte">
-
 
 <button
 class="main"
@@ -1155,11 +1014,9 @@ Punkte vergeben
 
 </button>
 
-
 <div id="pointsMessage"></div>
 
 </div>
-
 
 <div class="card">
 
@@ -1174,10 +1031,6 @@ Punkte vergeben
 </section>
 
 
-<!-- ==================================================
-     FOOTER
-================================================== -->
-
 <footer>
 
 Stahlwerk Racing © 2026
@@ -1185,18 +1038,9 @@ Stahlwerk Racing © 2026
 </footer>
 
 
-<!-- ==================================================
-     GT7 FAHRZEUGE
-================================================== -->
-
 <script src="cars.js"></script>
 
-
 <script>
-
-/* ==================================================
-   SUPABASE
-================================================== */
 
 const SUPABASE_URL =
 "https://apvstlhttuaeenqdcrtk.supabase.co";
@@ -1204,18 +1048,8 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_2CZK_bsj_HSMLlSax9eAGQ_xWF90ibr";
 
-
-/* ==================================================
-   ADMIN
-================================================== */
-
 const PASSWORD =
 "stahlwerk26";
-
-
-/* ==================================================
-   VARIABLEN
-================================================== */
 
 let drivers = [];
 
@@ -1229,10 +1063,6 @@ let selectedLeague =
 let selectedCar =
 "";
 
-
-/* ==================================================
-   SUPABASE REQUEST
-================================================== */
 
 async function supabaseRequest(url,options={}){
 
@@ -1259,16 +1089,10 @@ async function supabaseRequest(url,options={}){
 }
 
 
-/* ==================================================
-   HTML SICHER MACHEN
-================================================== */
-
 function escapeHTML(text){
 
     const div =
-    document.createElement(
-        "div"
-    );
+    document.createElement("div");
 
     div.textContent =
     text ?? "";
@@ -1277,10 +1101,6 @@ function escapeHTML(text){
 
 }
 
-
-/* ==================================================
-   GT7 FAHRZEUGE PRÜFEN
-================================================== */
 
 function validateCars(){
 
@@ -1294,12 +1114,10 @@ function validateCars(){
 
     }
 
-
     const names =
     GT7_CARS.map(
         car => car.name
     );
-
 
     const duplicates =
     names.filter(
@@ -1307,27 +1125,22 @@ function validateCars(){
         names.indexOf(name) !== index
     );
 
-
     const uniqueDuplicates =
     [...new Set(duplicates)];
-
 
     console.log(
         "GT7 FAHRZEUGLISTE"
     );
-
 
     console.log(
         "Fahrzeuge:",
         GT7_CARS.length
     );
 
-
     console.log(
         "Doppelte:",
         uniqueDuplicates.length
     );
-
 
     if(uniqueDuplicates.length > 0){
 
@@ -1338,12 +1151,10 @@ function validateCars(){
 
     }
 
-
     const count =
     document.getElementById(
         "carCount"
     );
-
 
     if(count){
 
@@ -1353,15 +1164,10 @@ function validateCars(){
 
     }
 
-
     return true;
 
 }
 
-
-/* ==================================================
-   HERSTELLER
-================================================== */
 
 function loadManufacturers(){
 
@@ -1369,7 +1175,6 @@ function loadManufacturers(){
     document.getElementById(
         "manufacturerFilter"
     );
-
 
     if(
         !filter ||
@@ -1379,7 +1184,6 @@ function loadManufacturers(){
         return;
 
     }
-
 
     const manufacturers =
     [
@@ -1396,7 +1200,6 @@ function loadManufacturers(){
         )
     );
 
-
     manufacturers.forEach(
         manufacturer => {
 
@@ -1405,14 +1208,11 @@ function loadManufacturers(){
                 "option"
             );
 
-
             option.value =
             manufacturer;
 
-
             option.textContent =
             manufacturer;
-
 
             filter.appendChild(
                 option
@@ -1424,10 +1224,6 @@ function loadManufacturers(){
 }
 
 
-/* ==================================================
-   FAHRZEUGE SUCHEN
-================================================== */
-
 function searchCars(){
 
     const searchInput =
@@ -1435,18 +1231,15 @@ function searchCars(){
         "carSearch"
     );
 
-
     const manufacturerInput =
     document.getElementById(
         "manufacturerFilter"
     );
 
-
     const results =
     document.getElementById(
         "carResults"
     );
-
 
     if(
         !searchInput ||
@@ -1458,16 +1251,13 @@ function searchCars(){
 
     }
 
-
     const search =
     searchInput.value
     .trim()
     .toLowerCase();
 
-
     const manufacturer =
     manufacturerInput.value;
-
 
     if(
         typeof GT7_CARS === "undefined"
@@ -1482,7 +1272,6 @@ function searchCars(){
 
     }
 
-
     const filtered =
     GT7_CARS.filter(
         car => {
@@ -1495,7 +1284,6 @@ function searchCars(){
                 +
                 car.name
             ).toLowerCase();
-
 
             return (
 
@@ -1516,9 +1304,7 @@ function searchCars(){
         }
     );
 
-
     results.innerHTML = "";
-
 
     if(filtered.length === 0){
 
@@ -1531,7 +1317,6 @@ function searchCars(){
 
     }
 
-
     filtered
     .slice(0,100)
     .forEach(
@@ -1542,10 +1327,8 @@ function searchCars(){
                 "div"
             );
 
-
             div.className =
             "car-result";
-
 
             if(
                 selectedCar === car.name
@@ -1557,7 +1340,6 @@ function searchCars(){
 
             }
 
-
             div.innerHTML =
             `<b>
             ${escapeHTML(car.name)}
@@ -1566,7 +1348,6 @@ function searchCars(){
             <small>
             ${escapeHTML(car.manufacturer)}
             </small>`;
-
 
             div.onclick =
             function(){
@@ -1577,14 +1358,12 @@ function searchCars(){
 
             };
 
-
             results.appendChild(
                 div
             );
 
         }
     );
-
 
     if(filtered.length > 100){
 
@@ -1593,14 +1372,11 @@ function searchCars(){
             "div"
         );
 
-
         info.className =
         "empty";
 
-
         info.textContent =
         "Bitte genauer suchen. Maximal 100 Treffer werden angezeigt.";
-
 
         results.appendChild(
             info
@@ -1611,15 +1387,10 @@ function searchCars(){
 }
 
 
-/* ==================================================
-   FAHRZEUG AUSWÄHLEN
-================================================== */
-
 function selectCar(car){
 
     selectedCar =
     car;
-
 
     document.getElementById(
         "selectedCar"
@@ -1630,15 +1401,10 @@ function selectCar(car){
     +
     "</b>";
 
-
     searchCars();
 
 }
 
-
-/* ==================================================
-   FAHRER LADEN
-================================================== */
 
 async function loadDrivers(){
 
@@ -1650,19 +1416,16 @@ async function loadDrivers(){
             "/rest/v1/drivers?select=*&order=id.asc"
         );
 
-
         if(!response.ok){
 
             console.error(
                 await response.text()
             );
 
-
             const list =
             document.getElementById(
                 "driverList"
             );
-
 
             if(list){
 
@@ -1677,10 +1440,8 @@ async function loadDrivers(){
 
         }
 
-
         drivers =
         await response.json();
-
 
         populateProfileDrivers();
 
@@ -1697,10 +1458,6 @@ async function loadDrivers(){
 }
 
 
-/* ==================================================
-   PROFILE LADEN
-================================================== */
-
 async function loadProfiles(){
 
     try{
@@ -1710,7 +1467,6 @@ async function loadProfiles(){
             SUPABASE_URL +
             "/rest/v1/driver_profiles?select=*&order=id.asc"
         );
-
 
         if(!response.ok){
 
@@ -1722,10 +1478,8 @@ async function loadProfiles(){
 
         }
 
-
         profiles =
         await response.json();
-
 
         renderProfiles();
 
@@ -1740,10 +1494,6 @@ async function loadProfiles(){
 }
 
 
-/* ==================================================
-   PROFILE FAHRER SELECT
-================================================== */
-
 function populateProfileDrivers(){
 
     const select =
@@ -1751,19 +1501,16 @@ function populateProfileDrivers(){
         "profileDriver"
     );
 
-
     if(!select){
 
         return;
 
     }
 
-
     select.innerHTML =
     `<option value="">
     Fahrer auswählen...
     </option>`;
-
 
     drivers.forEach(
         driver => {
@@ -1773,17 +1520,16 @@ function populateProfileDrivers(){
                 "option"
             );
 
-
             option.value =
             driver.id;
-
 
             option.textContent =
             "#" +
             driver.nummer +
             " " +
-            driver.name;
-
+            driver.name +
+            " - " +
+            driver.cup;
 
             select.appendChild(
                 option
@@ -1795,10 +1541,6 @@ function populateProfileDrivers(){
 }
 
 
-/* ==================================================
-   PROFIL SPEICHERN
-================================================== */
-
 async function saveProfile(){
 
     const driverId =
@@ -1806,30 +1548,25 @@ async function saveProfile(){
         "profileDriver"
     ).value;
 
-
     const username =
     document.getElementById(
         "profileUsername"
     ).value.trim();
-
 
     const bio =
     document.getElementById(
         "profileBio"
     ).value.trim();
 
-
     const imageInput =
     document.getElementById(
         "profileImage"
     );
 
-
     const message =
     document.getElementById(
         "profileMessage"
     );
-
 
     if(!driverId){
 
@@ -1842,7 +1579,6 @@ async function saveProfile(){
 
     }
 
-
     if(!username){
 
         message.innerHTML =
@@ -1854,7 +1590,6 @@ async function saveProfile(){
 
     }
 
-
     const driver =
     drivers.find(
         d =>
@@ -1862,7 +1597,6 @@ async function saveProfile(){
         ===
         String(driverId)
     );
-
 
     if(!driver){
 
@@ -1875,7 +1609,6 @@ async function saveProfile(){
 
     }
 
-
     try{
 
         let profile =
@@ -1886,18 +1619,12 @@ async function saveProfile(){
             Number(driverId)
         );
 
-
         let imageUrl =
         profile
         ?
         profile.profile_image
         :
         null;
-
-
-        /* =========================
-           BILD HOCHLADEN
-        ========================= */
 
         if(
             imageInput.files &&
@@ -1906,7 +1633,6 @@ async function saveProfile(){
 
             const file =
             imageInput.files[0];
-
 
             if(
                 file.size >
@@ -1922,14 +1648,12 @@ async function saveProfile(){
 
             }
 
-
             const allowed =
             [
                 "image/jpeg",
                 "image/png",
                 "image/webp"
             ];
-
 
             if(
                 !allowed.includes(
@@ -1946,13 +1670,11 @@ async function saveProfile(){
 
             }
 
-
             const extension =
             file.name
             .split(".")
             .pop()
             .toLowerCase();
-
 
             const fileName =
             "driver-" +
@@ -1961,7 +1683,6 @@ async function saveProfile(){
             Date.now() +
             "." +
             extension;
-
 
             const uploadResponse =
             await supabaseRequest(
@@ -1983,17 +1704,11 @@ async function saveProfile(){
                 }
             );
 
-
             if(!uploadResponse.ok){
 
-                const errorText =
-                await uploadResponse.text();
-
-
                 console.error(
-                    errorText
+                    await uploadResponse.text()
                 );
-
 
                 message.innerHTML =
                 `<div class="error">
@@ -2004,7 +1719,6 @@ async function saveProfile(){
 
             }
 
-
             imageUrl =
             SUPABASE_URL +
             "/storage/v1/object/public/profile-images/"
@@ -2012,11 +1726,6 @@ async function saveProfile(){
             fileName;
 
         }
-
-
-        /* =========================
-           PROFIL ERSTELLEN
-        ========================= */
 
         if(!profile){
 
@@ -2053,13 +1762,7 @@ async function saveProfile(){
                 }
             );
 
-
             if(!response.ok){
-
-                console.error(
-                    await response.text()
-                );
-
 
                 message.innerHTML =
                 `<div class="error">
@@ -2074,10 +1777,6 @@ async function saveProfile(){
         }
 
         else{
-
-            /* =========================
-               PROFIL AKTUALISIEREN
-            ========================= */
 
             const response =
             await supabaseRequest(
@@ -2111,13 +1810,7 @@ async function saveProfile(){
                 }
             );
 
-
             if(!response.ok){
-
-                console.error(
-                    await response.text()
-                );
-
 
                 message.innerHTML =
                 `<div class="error">
@@ -2130,15 +1823,12 @@ async function saveProfile(){
 
         }
 
-
         message.innerHTML =
         `<div class="success">
         ✅ Profil erfolgreich gespeichert!
         </div>`;
 
-
         await loadProfiles();
-
 
         setTimeout(
             function(){
@@ -2155,7 +1845,6 @@ async function saveProfile(){
 
         console.error(error);
 
-
         message.innerHTML =
         `<div class="error">
         Fehler beim Speichern des Profils.
@@ -2166,10 +1855,6 @@ async function saveProfile(){
 }
 
 
-/* ==================================================
-   PROFILE ANZEIGEN
-================================================== */
-
 function renderProfiles(){
 
     const list =
@@ -2177,16 +1862,13 @@ function renderProfiles(){
         "profileList"
     );
 
-
     if(!list){
 
         return;
 
     }
 
-
     list.innerHTML = "";
-
 
     if(profiles.length === 0){
 
@@ -2199,16 +1881,13 @@ function renderProfiles(){
 
     }
 
-
     const grid =
     document.createElement(
         "div"
     );
 
-
     grid.className =
     "profile-grid";
-
 
     profiles.forEach(
         profile => {
@@ -2221,26 +1900,21 @@ function renderProfiles(){
                 Number(profile.driver_id)
             );
 
-
             if(!driver){
 
                 return;
 
             }
 
-
             const card =
             document.createElement(
                 "div"
             );
 
-
             card.className =
             "profile-card";
 
-
             let imageHTML;
-
 
             if(profile.profile_image){
 
@@ -2267,7 +1941,6 @@ function renderProfiles(){
                     .toUpperCase()
                 );
 
-
                 imageHTML =
                 `<div
                 class="profile-image-small default-profile">
@@ -2277,7 +1950,6 @@ function renderProfiles(){
                 </div>`;
 
             }
-
 
             card.innerHTML =
             imageHTML +
@@ -2294,7 +1966,6 @@ function renderProfiles(){
             🏆 ${Number(driver.points || 0)} Punkte
             </small>`;
 
-
             card.onclick =
             function(){
 
@@ -2304,7 +1975,6 @@ function renderProfiles(){
 
             };
 
-
             grid.appendChild(
                 card
             );
@@ -2312,17 +1982,12 @@ function renderProfiles(){
         }
     );
 
-
     list.appendChild(
         grid
     );
 
 }
 
-
-/* ==================================================
-   EINZELNES PROFIL ÖFFNEN
-================================================== */
 
 function openProfile(profileId){
 
@@ -2334,13 +1999,11 @@ function openProfile(profileId){
         Number(profileId)
     );
 
-
     if(!profile){
 
         return;
 
     }
-
 
     const driver =
     drivers.find(
@@ -2350,22 +2013,18 @@ function openProfile(profileId){
         Number(profile.driver_id)
     );
 
-
     if(!driver){
 
         return;
 
     }
 
-
     const content =
     document.getElementById(
         "profileViewContent"
     );
 
-
     let imageHTML;
-
 
     if(profile.profile_image){
 
@@ -2386,7 +2045,6 @@ function openProfile(profileId){
             .toUpperCase()
         );
 
-
         imageHTML =
         `<div
         class="profile-image-large default-profile"
@@ -2397,7 +2055,6 @@ function openProfile(profileId){
         </div>`;
 
     }
-
 
     content.innerHTML =
     imageHTML +
@@ -2452,15 +2109,10 @@ function openProfile(profileId){
 
     </div>`;
 
-    
     show("profileView");
 
 }
 
-
-/* ==================================================
-   PROFIL LADEN / BEARBEITEN
-================================================== */
 
 function prepareProfileEditor(){
 
@@ -2469,24 +2121,20 @@ function prepareProfileEditor(){
         "profileDriver"
     );
 
-
     if(!select){
 
         return;
 
     }
 
-
     const current =
     select.value;
-
 
     if(!current){
 
         return;
 
     }
-
 
     const profile =
     profiles.find(
@@ -2496,14 +2144,12 @@ function prepareProfileEditor(){
         Number(current)
     );
 
-
     if(profile){
 
         document.getElementById(
             "profileUsername"
         ).value =
         profile.username || "";
-
 
         document.getElementById(
             "profileBio"
@@ -2516,7 +2162,8 @@ function prepareProfileEditor(){
 
 
 /* ==================================================
-   FAHRER REGISTRIEREN
+   WICHTIG:
+   MEHRERE CUPS PRO FAHRER
 ================================================== */
 
 async function register(){
@@ -2526,30 +2173,25 @@ async function register(){
         "name"
     ).value.trim();
 
-
     const nummer =
     document.getElementById(
         "nr"
     ).value;
-
 
     const cup =
     document.getElementById(
         "cup"
     ).value;
 
-
     const meisterschaft =
     document.getElementById(
         "meisterschaft"
     ).value;
 
-
     const message =
     document.getElementById(
         "registerMessage"
     );
-
 
     if(name === ""){
 
@@ -2562,7 +2204,6 @@ async function register(){
 
     }
 
-
     if(nummer === ""){
 
         message.innerHTML =
@@ -2573,7 +2214,6 @@ async function register(){
         return;
 
     }
-
 
     if(selectedCar === ""){
 
@@ -2588,21 +2228,19 @@ async function register(){
 
 
     /*
-       WICHTIG:
+       Der PSN Name wird nur noch
+       innerhalb des gewählten Cups geprüft.
 
-       Der PSN-Name wird jetzt NICHT mehr
-       global geprüft.
+       Dadurch sind z.B. möglich:
 
-       Ein Fahrer darf also z.B.:
+       Felix - Unter der Woche
+       Felix - Samstag
+       Felix - Sonntag
 
-       Samstag
-       Sonntag
-       Unter der Woche
+       Nicht möglich:
 
-       gleichzeitig fahren.
-
-       Er darf sich aber nicht zweimal
-       für denselben Cup anmelden.
+       Felix - Samstag
+       Felix - Samstag
     */
 
     const nameExistsInCup =
@@ -2618,7 +2256,6 @@ async function register(){
         String(cup)
     );
 
-
     if(nameExistsInCup){
 
         message.innerHTML =
@@ -2633,16 +2270,14 @@ async function register(){
 
     /*
        Auch die Startnummer wird nur
-       innerhalb des ausgewählten Cups
-       geprüft.
+       innerhalb des gewählten Cups geprüft.
 
        Beispiel:
 
-       Samstag #10    ✅
-       Sonntag #10    ✅
-       Unter der Woche #10 ✅
+       #10 Samstag
+       #10 Sonntag
 
-       Samstag #10    ❌
+       ist erlaubt.
     */
 
     const numberExistsInCup =
@@ -2656,7 +2291,6 @@ async function register(){
         ===
         String(cup)
     );
-
 
     if(numberExistsInCup){
 
@@ -2715,7 +2349,6 @@ async function register(){
                 await response.text()
             );
 
-
             message.innerHTML =
             `<div class="error">
             Fahrer konnte nicht eingetragen werden.
@@ -2728,7 +2361,9 @@ async function register(){
 
         message.innerHTML =
         `<div class="success">
-        ✅ Fahrer erfolgreich eingetragen!
+        ✅ Fahrer erfolgreich für
+        <b>${escapeHTML(cup)}</b>
+        eingetragen!
         </div>`;
 
 
@@ -2736,25 +2371,20 @@ async function register(){
             "name"
         ).value = "";
 
-
         document.getElementById(
             "nr"
         ).value = "";
-
 
         document.getElementById(
             "carSearch"
         ).value = "";
 
-
         selectedCar = "";
-
 
         document.getElementById(
             "selectedCar"
         ).textContent =
         "Noch kein Fahrzeug ausgewählt.";
-
 
         document.getElementById(
             "carResults"
@@ -2782,7 +2412,6 @@ async function register(){
 
         console.error(error);
 
-
         message.innerHTML =
         `<div class="error">
         Fehler bei der Verbindung zur Datenbank.
@@ -2792,10 +2421,6 @@ async function register(){
 
 }
 
-
-/* ==================================================
-   SEITENWECHSEL
-================================================== */
 
 function show(id){
 
@@ -2808,10 +2433,8 @@ function show(id){
         )
     );
 
-
     const section =
     document.getElementById(id);
-
 
     if(section){
 
@@ -2821,13 +2444,11 @@ function show(id){
 
     }
 
-
     if(id === "profile"){
 
         renderProfiles();
 
     }
-
 
     if(id === "profileCreate"){
 
@@ -2835,27 +2456,20 @@ function show(id){
 
     }
 
-
     render();
 
 }
 
-
-/* ==================================================
-   MEISTERSCHAFT
-================================================== */
 
 function setLeague(league){
 
     selectedLeague =
     league;
 
-
     const filter =
     document.getElementById(
         "filter"
     );
-
 
     if(filter){
 
@@ -2864,15 +2478,10 @@ function setLeague(league){
 
     }
 
-
     render();
 
 }
 
-
-/* ==================================================
-   BUTTONS
-================================================== */
 
 function updateLeagueButtons(){
 
@@ -2886,7 +2495,6 @@ function updateLeagueButtons(){
             "active"
         )
     );
-
 
     const ids = {
 
@@ -2907,7 +2515,6 @@ function updateLeagueButtons(){
 
     };
 
-
     if(ids[selectedLeague]){
 
         ids[selectedLeague]
@@ -2918,7 +2525,6 @@ function updateLeagueButtons(){
                 document.getElementById(
                     id
                 );
-
 
                 if(button){
 
@@ -2936,20 +2542,14 @@ function updateLeagueButtons(){
 }
 
 
-/* ==================================================
-   RENDER
-================================================== */
-
 function render(){
 
     updateLeagueButtons();
-
 
     const filter =
     document.getElementById(
         "filter"
     );
-
 
     if(filter){
 
@@ -2958,10 +2558,6 @@ function render(){
 
     }
 
-
-    /* =========================
-       FAHRER
-    ========================= */
 
     const list =
     document.getElementById(
@@ -2979,9 +2575,7 @@ function render(){
             selectedLeague
         );
 
-
         list.innerHTML = "";
-
 
         if(
             filteredDrivers.length === 0
@@ -3088,7 +2682,6 @@ function render(){
                     div.style.cursor =
                     "pointer";
 
-
                     div.onclick =
                     function(){
 
@@ -3110,10 +2703,6 @@ function render(){
 
     }
 
-
-    /* =========================
-       TABELLE
-    ========================= */
 
     const body =
     document.getElementById(
@@ -3197,10 +2786,6 @@ function render(){
     }
 
 
-    /* =========================
-       ADMIN
-    ========================= */
-
     const select =
     document.getElementById(
         "driverSelect"
@@ -3223,6 +2808,8 @@ function render(){
                 ${escapeHTML(driver.name)}
                 -
                 ${escapeHTML(driver.meisterschaft)}
+                -
+                ${escapeHTML(driver.cup)}
 
                 </option>
 
@@ -3233,6 +2820,12 @@ function render(){
 
     }
 
+
+    /*
+       ADMIN:
+       HIER STEHT JETZT AUCH DER CUP
+       HINTER DEM FAHRER.
+    */
 
     const adminDrivers =
     document.getElementById(
@@ -3266,9 +2859,9 @@ function render(){
 
                     #${escapeHTML(driver.nummer)}
                     ${escapeHTML(driver.name)}
+                    - ${escapeHTML(driver.cup)}
 
                     </span>
-
 
                     <button
                     class="small"
@@ -3287,10 +2880,6 @@ function render(){
 
     }
 
-
-    /* =========================
-       ADMIN PANEL
-    ========================= */
 
     const loginBox =
     document.getElementById(
@@ -3314,7 +2903,6 @@ function render(){
             loginBox.style.display =
             "none";
 
-
             adminPanel.style.display =
             "block";
 
@@ -3325,7 +2913,6 @@ function render(){
             loginBox.style.display =
             "block";
 
-
             adminPanel.style.display =
             "none";
 
@@ -3335,10 +2922,6 @@ function render(){
 
 }
 
-
-/* ==================================================
-   ADMIN LOGIN
-================================================== */
 
 function login(){
 
@@ -3372,10 +2955,6 @@ function login(){
 
 }
 
-
-/* ==================================================
-   PUNKTE
-================================================== */
 
 async function givePoints(){
 
@@ -3505,10 +3084,6 @@ async function givePoints(){
 }
 
 
-/* ==================================================
-   FAHRER LÖSCHEN
-================================================== */
-
 async function removeDriver(index){
 
     const driver =
@@ -3524,7 +3099,19 @@ async function removeDriver(index){
 
     if(
         !confirm(
-            "Fahrer wirklich löschen?"
+            "Fahrer wirklich löschen?\n\n"
+            +
+            "#"
+            +
+            driver.nummer
+            +
+            " "
+            +
+            driver.name
+            +
+            " - "
+            +
+            driver.cup
         )
     ){
 
@@ -3584,10 +3171,6 @@ async function removeDriver(index){
 
 }
 
-
-/* ==================================================
-   PROFIL SELECT ÄNDERUNG
-================================================== */
 
 document.addEventListener(
     "change",
@@ -3662,10 +3245,6 @@ document.addEventListener(
 );
 
 
-/* ==================================================
-   PROFILBILD VORSCHAU
-================================================== */
-
 document.addEventListener(
     "change",
     function(event){
@@ -3722,25 +3301,16 @@ document.addEventListener(
 );
 
 
-/* ==================================================
-   COUNTDOWN
-================================================== */
-
 function getNextRaceDate(){
 
     const now =
     new Date();
 
-
     const race =
     new Date(now);
 
-
-    // Nächstes Rennen: Samstag um 20:00 Uhr
-
     const daysUntilSaturday =
     (6 - now.getDay() + 7) % 7;
-
 
     race.setDate(
         now.getDate()
@@ -3748,17 +3318,12 @@ function getNextRaceDate(){
         daysUntilSaturday
     );
 
-
     race.setHours(
         20,
         0,
         0,
         0
     );
-
-
-    // Wenn das Rennen bereits vorbei ist,
-    // nächste Woche verwenden
 
     if(
         race.getTime()
@@ -3773,7 +3338,6 @@ function getNextRaceDate(){
         );
 
     }
-
 
     return race;
 
@@ -3922,10 +3486,6 @@ setInterval(
 );
 
 
-/* ==================================================
-   START
-================================================== */
-
 validateCars();
 
 loadManufacturers();
@@ -3937,7 +3497,6 @@ loadDrivers();
 loadProfiles();
 
 </script>
-
 
 </body>
 
