@@ -644,7 +644,13 @@ body{
 #bg-video{
   position:fixed;inset:0;width:100%;height:100%;object-fit:cover;
   z-index:0;pointer-events:none;background:#050a12;
+  transition:opacity .25s ease;
 }
+/* Hintergrund per Doppelklick zwischen Video und Bild wechseln */
+body.bg-image-mode{
+  background:#050a12 url("911-rsr-background.jpg") center center / cover fixed no-repeat;
+}
+body.bg-image-mode #bg-video{display:none;}
 body:after{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
   background:linear-gradient(180deg,rgba(3,8,15,.60) 0%,rgba(3,8,15,.78) 48%,rgba(3,8,15,.94) 100%);
@@ -766,6 +772,35 @@ hr{border:0;border-top:1px solid var(--line)}
     outline-offset:3px;
 }
 
+
+/* ==================================================
+   STAHLWERK RACING TV
+================================================== */
+.tv-layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(240px,1fr);gap:18px;align-items:start}
+.tv-player-wrap{background:#05090e;border:1px solid #33485d;border-radius:14px;overflow:hidden}
+.tv-player{display:block;width:100%;max-height:70vh;aspect-ratio:16/9;background:#05090e}
+.tv-player-info{padding:16px}
+.tv-player-info h3{margin:0 0 8px}
+.tv-muted{color:#aab8c8;font-size:.94rem;line-height:1.55}
+.tv-playlist{display:grid;gap:10px}
+.tv-replay-button{width:100%;text-align:left;background:#172331;border:1px solid #34495e;border-radius:10px;padding:13px;color:#edf5ff;cursor:pointer}
+.tv-replay-button:hover,.tv-replay-button:focus-visible{border-color:#6c9bc4;background:#1e3042}
+.tv-replay-button strong{display:block;margin-bottom:5px}
+.tv-empty{padding:18px;border:1px dashed #52677b;border-radius:10px;color:#bac7d5;line-height:1.6}
+.tv-upload-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.tv-upload-row input[type="file"]{display:none}
+.tv-select-replay{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#20364b,#172331);border:1px solid #52718e;border-radius:10px;padding:12px 16px;color:#edf5ff;font-weight:700;cursor:pointer;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.tv-select-replay:hover,.tv-select-replay:focus-visible{background:linear-gradient(135deg,#2a4862,#20364b);border-color:#8bb8dc;transform:translateY(-1px);outline:none}
+.tv-select-replay:focus-visible{outline:2px solid #8bb8dc;outline-offset:3px}
+
+.tv-replay-menu{display:grid;gap:8px;margin-top:12px;width:100%;max-width:560px}
+.tv-replay-menu[hidden]{display:none}
+.tv-replay-menu .tv-replay-button{display:block;width:100%;text-align:left}
+.tv-empty{padding:12px 14px;border:1px dashed #526579;border-radius:10px;color:#c6d2df;background:#101923}
+
+.tv-tag{display:inline-block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:#9fc9ef;border:1px solid #42617e;border-radius:20px;padding:4px 9px;margin-bottom:8px}
+@media(max-width:760px){.tv-layout{grid-template-columns:1fr}}
+
 </style>
 
 </head>
@@ -797,6 +832,10 @@ hr{border:0;border-top:1px solid var(--line)}
 
 <button onclick="show('start')">
 Start
+</button>
+
+<button onclick="show('tv')">
+Racing TV
 </button>
 
 <button onclick="show('anmeldung')">
@@ -946,6 +985,40 @@ onclick="show('profileCreate')">
 </button>
 
 </div>
+
+</section>
+
+
+<!-- ==================================================
+     RACING TV / RENNARCHIV
+================================================== -->
+
+<section id="tv">
+  <div class="card">
+    <span class="tv-tag">Stahlwerk Racing Media</span>
+    <h2>🎬 Stahlwerk Racing TV</h2>
+    <p>Hier findest du die öffentlich hochgeladenen GT7-Rennreplays, Highlights und Onboard-Aufnahmen. Jeder Besucher kann dieselben Videos auswählen.</p>
+  </div>
+
+  <div class="tv-layout">
+    <div class="tv-player-wrap">
+      <video id="replayPlayer" class="tv-player" controls playsinline preload="metadata" poster="911-rsr-background.jpg">
+        Dein Browser unterstützt dieses Videoformat nicht.
+      </video>
+      <div class="tv-player-info">
+        <h3 id="replayTitle">Noch kein Replay ausgewählt</h3>
+        <p id="replayDescription" class="tv-muted">Sobald ein Clip ausgewählt ist, wird er hier abgespielt.</p>
+        <div class="tv-upload-row">
+          <button class="tv-select-replay" id="selectReplayButton" type="button" aria-expanded="false" aria-controls="replayPlaylist">🎬 Replay auswählen ▾</button>
+        </div>
+        <div id="replayPlaylist" class="tv-replay-menu" hidden aria-label="Öffentliche Replays"></div>
+        <p class="tv-muted">Die Liste enthält Videos, die auf der Website veröffentlicht wurden. Die Auswahl funktioniert für alle Besucher.</p>
+      </div>
+    </div>
+
+
+  </div>
+
 
 </section>
 
@@ -5643,6 +5716,76 @@ setInterval(
 
 
 /* ==================================================
+   STAHLWERK RACING TV / ÖFFENTLICHE REPLAY-AUSWAHL
+================================================== */
+// Lade die Videodateien in den Ordner "replays" im GitHub-Repository.
+// Trage jede Datei anschließend hier ein. Alle Besucher sehen dieselbe Liste.
+// Beispiel:
+// { title: "Spa Highlights", track: "Spa-Francorchamps", drivers: "Stahlwerk Racing", file: "replays/spa-highlights.mp4" }
+const STAHLWERK_REPLAYS = [
+    // { title: "Spa Highlights", track: "Spa-Francorchamps", drivers: "Stahlwerk Racing", file: "replays/spa-highlights.mp4" },
+    // { title: "Nordschleife Onboard", track: "Nürburgring Nordschleife", drivers: "Stahlwerk Racing", file: "replays/nordschleife-onboard.mp4" }
+];
+
+function renderReplayPlaylist(){
+    const list = document.getElementById("replayPlaylist");
+    if(!list) return;
+    list.innerHTML = "";
+    if(!STAHLWERK_REPLAYS.length){
+        const empty = document.createElement("div");
+        empty.className = "tv-empty";
+        empty.textContent = "Noch keine öffentlichen Replays verfügbar. Sobald Videos ins GitHub-Repository hochgeladen und in der Replay-Liste eingetragen wurden, erscheinen sie hier für alle Besucher.";
+        list.appendChild(empty);
+        return;
+    }
+    STAHLWERK_REPLAYS.forEach((replay, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "tv-replay-button";
+        const title = document.createElement("strong");
+        title.textContent = replay.title || `Replay ${index + 1}`;
+        const details = document.createElement("span");
+        details.textContent = [replay.track, replay.drivers].filter(Boolean).join(" · ") || "GT7 Replay";
+        button.append(title, details);
+        button.addEventListener("click", () => {
+            playPublicReplay(index);
+            list.hidden = true;
+            const selectButton = document.getElementById("selectReplayButton");
+            if(selectButton) selectButton.setAttribute("aria-expanded", "false");
+        });
+        list.appendChild(button);
+    });
+}
+
+function playPublicReplay(index){
+    const replay = STAHLWERK_REPLAYS[index];
+    if(!replay) return;
+    const player = document.getElementById("replayPlayer");
+    player.src = replay.file;
+    player.load();
+    document.getElementById("replayTitle").textContent = replay.title || "GT7 Replay";
+    document.getElementById("replayDescription").textContent = [replay.track, replay.drivers].filter(Boolean).join(" · ") || "Stahlwerk Racing Rennarchiv";
+    player.play().catch(() => {});
+}
+
+const selectReplayButton = document.getElementById("selectReplayButton");
+const replayPlaylist = document.getElementById("replayPlaylist");
+if(selectReplayButton && replayPlaylist){
+    selectReplayButton.addEventListener("click", () => {
+        const willOpen = replayPlaylist.hidden;
+        replayPlaylist.hidden = !willOpen;
+        selectReplayButton.setAttribute("aria-expanded", String(willOpen));
+    });
+}
+
+/* ==================================================
+   HINTERGRUND PER DOPPELKLICK UMSCHALTEN
+================================================== */
+document.addEventListener("dblclick", function(){
+    document.body.classList.toggle("bg-image-mode");
+});
+
+/* ==================================================
    GESPEICHERTEN ADMIN-LOGIN LADEN
 ================================================== */
 
@@ -5659,6 +5802,8 @@ localStorage.getItem(
 ================================================== */
 
 validateCars();
+
+renderReplayPlaylist();
 
 loadManufacturers();
 
